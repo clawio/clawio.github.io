@@ -22,6 +22,17 @@
             top: 50%;
             transform: translateY(-50%);
         }
+        
+        .animation {
+            transition: all 1.5s;
+        }
+        .animation.hide {
+            opacity: 0;
+            padding-top: 64px;
+        }
+        .animation.show {
+            opacity: 1;
+        }
     
         #info > h1 {
             font-weight: 400;
@@ -98,7 +109,7 @@
     </style>
 </head>
 <body>
-    <div id="wrapper">
+    <div id="wrapper" class="animation hide">
         <section id="info">
             <h1>ClawIO</h1>
             <p id="description">
@@ -120,10 +131,12 @@
     </footer>
 
     <script>
-        (function (document) {
-            var subscriptionForm = document.getElementById('subscription');
+        (function (window, document) {
+            var subscriptionForm = document.getElementById('subscription'),
+                wrapper = document.getElementById('wrapper');
 
-            function handleSubscription (event) {
+            // Handling form
+            /* function handleSubscription (event) {
                 event.preventDefault();
 
                 console.log('Subscribing...', event);
@@ -131,9 +144,14 @@
                 event.target[0].value = '';
             }
 
-            subscriptionForm.addEventListener('submit', handleSubscription);
+            subscriptionForm.addEventListener('submit', handleSubscription); */
+            
+            // Animating the whole content
+            window.setTimeout(function () {
+                wrapper.className = 'animation show';
+            });
 
-        }(document));
+        }(window, document));
     </script>
 </body>
 </html>
