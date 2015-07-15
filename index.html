@@ -1,14 +1,56 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
+<meta charset="uft-8">
 <style>
-body {padding: 0px; margin: 0; overflow: hidden; height: 400px; background-color: black; z-index:255}
-p {color: white}
+	html, body {
+	    height: 100%;
+	}
+
+	body {
+		margin: 0;
+		background-color: #000;
+		color: #fff;
+	    text-align: center;
+		font-family: sans-serif;
+	}
+
+	#wrapper {
+	    position: relative;
+	    top: 40%;
+	    transform: translateY(-40%);
+	}
+
+	#info > h1 {
+	    font-weight: 400;
+	    margin: 0;
+	    font-size: 46px;
+	    /* text-shadow: 0 2px 5px rgba(0,0,0, .5); */
+	}
+	#description {
+	    max-width: 512px;
+	    margin: 12px auto 0 auto;
+	    padding: 8px 0;
+	    background: rgba(0,0,0, .3);
+	    border-radius: 4px;
+	    font-size: 17px;
+	}
+
+	canvas {
+		position: fixed;
+		left: 0; top: 0;
+		z-index: -1;
+	}
 </style>
 </head>
 <body>
-<div><p>ClawIO<br>Scalable Distributed High-Performance Cloud Storage Synchronization and Sharing Service</p></div>
 <canvas id="canvas"></canvas>
-</body>
+<div id="wrapper">
+	<section id="info">
+        <h1>ClawIO</h1>
+        <p id="description">Scalable Distributed High-Performance Cloud Storage Synchronization and Sharing Service</p>
+    </section>
+</div>
 <script>
 window.onload = function() {
 	
@@ -139,4 +181,5 @@ window.onload = function() {
 
 } 
 </script>
+</body>
 </html>
