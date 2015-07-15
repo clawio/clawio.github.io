@@ -169,7 +169,8 @@
                     SCREEN_HEIGHT = canvas.getAttribute('height') | 0,
                     HALF_WIDTH = SCREEN_WIDTH / 2,
                     HALF_HEIGHT = SCREEN_HEIGHT / 2,
-                    NUM_POINTS = 256,
+                    PI_2 = 2 * Math.PI,
+                    NUM_POINTS = 200,
                     FOV = 256;
 
                 function rotatePointAroundY(point3d, angle) {
@@ -194,17 +195,20 @@
                     var scale = FOV / (FOV + z3d),
                         x2d = (x3d * scale) + HALF_WIDTH,
                         y2d = (y3d * scale) + HALF_HEIGHT;
-                    
-                    c.lineWidth = scale; 
-                    c.strokeStyle = 'rgba(255,255,255, .8)';
 
                     c.beginPath();
                     // Square
+                    /*
+                    c.strokeStyle = 'rgba(255,255,255, .8)';
+                    c.lineWidth = scale;
                     c.moveTo(x2d, y2d); 
                     c.lineTo(x2d + scale, y2d); 
                     c.stroke();
-                    // Circle -- testing
-                    // c.arc(x2d, y2d, 1, 0, 2 * Math.PI, true);
+                    */
+                    // Circle
+                    c.arc(x2d, y2d, 1 + scale / 2, 0, PI_2, true);
+                    c.fillStyle = '#fff';
+                    c.fill();
                 }
 
                 var points = [];
