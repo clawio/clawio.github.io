@@ -1,10 +1,12 @@
 <html>
 <head>
 <style>
-body {padding: 0px; margin: 0; overflow: hidden; height: 400px;}
+body {padding: 0px; margin: 0; overflow: hidden; height: 400px; background-color: black; z-index:255}
+p {color: white}
 </style>
 </head>
 <body>
+<div><p>ClawIO<br>Scalable Distributed High-Performance Cloud Storage Synchronization and Sharing Service</p></div>
 <canvas id="canvas"></canvas>
 </body>
 <script>
@@ -21,7 +23,7 @@ window.onload = function() {
 	
 	//Create an array of circles
 	var circles = []; 
-	var circles_count = 20;
+	var circles_count = 200;
 	
 	for(var i = 0; i < circles_count; i++ ){
 		circles.push(new create_circle());
@@ -38,12 +40,12 @@ window.onload = function() {
 		this.vy = -this.vx;
 		
 		//Random Radius
-		this.r = 10 + Math.random()*50;
+		this.r = 0.1 + Math.random()*5;
 	}
 	
 	//Create line particles
 	var lines = [];
-	var lines_count = 15;
+	var lines_count = 200;
 
 	for(var i = 0; i < lines_count; i++){
 		lines.push(new create_lines());
@@ -55,18 +57,18 @@ window.onload = function() {
 		this.y = Math.random()*H;
 		
 		//Random Velocities
-		this.vx = 0.1+Math.random()*0.8;
+		this.vx = 0.5+Math.random()*0.8;
 		this.vy = -this.vx;
 		
 		//Random Length
-		this.l = 5 + Math.random()*20;
+		this.l = 5 + Math.random()*10;
 	}
 	
 	//Function to draw the background
 	function draw() {
 		//Create the gradient
 		var grad = ctx.createLinearGradient(0, 0, W, H);
-		grad.addColorStop(0, 'rgb(1, 106, 1)');
+		grad.addColorStop(0, 'rgb(0,0,0)');
 		grad.addColorStop(0.9, 'rgb(0, 0, 0)');
 		
 		//Fill the canvas with the gradient
@@ -80,9 +82,9 @@ window.onload = function() {
 			
 			//Gradient for circle to create blur
 			var blur_grad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.r);
-			blur_grad.addColorStop(0, "rgba(0,120,1,0.5)");
-        	blur_grad.addColorStop(0.85, "rgba(0,120,1,0.5)");
-        	blur_grad.addColorStop(1, "rgba(0,120,1,0.0)");
+			blur_grad.addColorStop(0, "rgba(255,255,255,0.5)");
+        	blur_grad.addColorStop(0.85, "rgba(255,255,255,0.5)");
+        	blur_grad.addColorStop(1, "rgba(255,255,255,0.0)");
 			
 			//Draw the circle and fill it with the blur gradient
 			ctx.beginPath();
@@ -115,9 +117,9 @@ window.onload = function() {
 			ctx.save();
 			ctx.moveTo(l.x, l.y);
 			ctx.shadowColor = "white";
-			ctx.shadowBlur = 10;
+			ctx.shadowBlur = 0;
 			ctx.lineTo(l.x + l.l, l.y - l.l);
-			ctx.strokeStyle = "rgba(0,120,1,0.5)";
+			ctx.strokeStyle = "rgba(0,255,255,0.5)";
 			ctx.stroke();
 			ctx.restore();
 			
@@ -133,7 +135,7 @@ window.onload = function() {
 		}
 	}
 	
-	setInterval(draw, 25);
+	setInterval(draw, 10);
 
 } 
 </script>
