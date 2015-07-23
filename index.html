@@ -9,7 +9,7 @@
 
     body {
         margin: 0;
-        background-color: #000;
+        background-color: rgb(18,156,233);
         color: #fff;
         text-align: center;
         font-family: sans-serif;
@@ -22,7 +22,7 @@
     }
 
     #logo {
-	margin-bottom: 50px; 
+	height: 200px;
     }
 
     #info > h1 {
@@ -36,12 +36,17 @@
         max-width: 512px;
         margin: 12px auto 0 auto;
         padding: 8px 0;
-        background: rgba(0,0,0, .3);
+        background: rgba(255,255,255,0.8);
         border-radius: 4px;
         font-size: 17px;
         line-height: 1.6em;
+        color: rgb(18,156,233);
     }
-
+    
+#decription a {
+	text-decoration: none,
+	color: rhb(18,156,233);
+}
     canvas {
         position: fixed;
         left: 0; top: 0;
@@ -53,10 +58,13 @@
 <canvas id="canvas"></canvas>
 <div id="wrapper">
     <section id="info">
-        <img src="tmp_logo/sticker_filled.png" alt="ClawIO logo" id="logo">
-        <h1>ClawIO</h1>
-        <p id="description">Scalable Sync and Share</p>
-        <p><b>Under development</b></p>
+        <div id="description">
+        	<img src="logo.svg" alt="ClawIO logo" id="logo">
+       		<p><b>Scalable Sync and Share is coming</b></p>
+		<p>Contribute at <a style="color: rgb(18, 156, 233); text-decoration: none;" href="https://github.com/clawio"><b>GitHub</b></a></p>
+		
+		
+	</div>
     </section>
 </div>
 <script>
@@ -90,7 +98,7 @@
 
         // Create an array of circles
         var circles = [],
-            circles_count = 200;
+            circles_count = 400;
 
         for (var i = 0; i < circles_count; i++) {
             circles.push(new create_circle());
@@ -121,8 +129,7 @@
         function draw() {
             // Create the gradient
             var grad = ctx.createLinearGradient(0, 0, W, H);
-            grad.addColorStop(0, 'rgb(18, 150, 230)');
-            grad.addColorStop(0, 'rgb(18, 150, 230)');
+            grad.addColorStop(0, 'rgb(18,156,233)');
 
             // Fill the canvas with the gradient
             ctx.globalCompositeOperation = 'source-over';
@@ -217,3 +224,4 @@
 </script>
 </body>
 </html>
+
