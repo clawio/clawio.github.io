@@ -1,2 +1,8 @@
-_site/*
-_node_modules/*
+.bundle/config
+bin/
+vendor/
+.sass-cache/
+vendor/
+.ruby-version
+_site/
+node_modules/
