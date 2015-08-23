@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+
+    <title>
+      Link &middot; Primer
+    </title>
+
+    <link rel="stylesheet" href="/docs.css">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon-precomposed" href="/img/icon.png">
+    <link rel="icon" href="/favicon.ico">
+  </head>
+  <body>
+
+    <header class="masthead">
+      <div class="container">
+        <a href="/" class="masthead-logo">
+          <!--<span class="mega-octicon octicon-package"></span>-->
+          <img src="/img/icon.png" height="33px" width="150px">
+        </a>
+
+        <nav class="masthead-nav">
+          <a  href="/api/v1/">API Docs</a>
+          <a href="/install">Install</a>
+          <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
+          <a  href="/about">About</a>
+        </nav>
+      </div>
+    </header>
+
+    
+
+    <div class="container">
+      <div class="columns docs-layout">
+  <div class="one-fourth column">
+    
+      <nav class="menu docs-menu">
+  <a class="menu-item " href="/api/v1/">
+    API
+  </a>
+  <a class="menu-item " href="/api/v1/storage/">
+    Storage
+  </a>
+  <a class="menu-item selected" href="/api/v1/link/">
+    Link
+  </a>
+  <!--
+  <a class="menu-item " href="/api/v1/share/">
+    Share
+  </a>
+  -->
+</nav>
+
+<nav class="menu docs-menu">
+  <a class="menu-item " href="/api/v1/webdav/">
+    WebDAV
+  </a>
+  <a class="menu-item " href="/api/v1/storagedav/">
+    StorageDAV
+  </a>
+  <a class="menu-item " href="/api/v1/linkdav/">
+    LinkDAV
+  </a>
+</nav>
+
+<!--
+<nav class="menu docs-menu">
+  <a class="menu-item " href="/api/v1/owncloud/">
+    OwnCloud
+  </a>
+  <a class="menu-item " href="/api/v1/ocshare/">
+    OC Share
+  </a>
+  <a class="menu-item " href="/api/v1/ocwebdav">
+    OC WebDAV
+  </a>
+</nav>
+-->
+
+    
+  </div>
+  <div class="three-fourths column markdown-body">
+    <h1 class="page-title">
+      Link
+    </h1>
+    <div class="markdown-body">
+      <p>This describes the API endpoints for managing the links.</p>
+
+<h1 id="contents">Contents</h1>
+
+<ul id="markdown-toc">
+  <li><a href="#contents" id="markdown-toc-contents">Contents</a></li>
+  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
+  <li><a href="#models" id="markdown-toc-models">Models</a>    <ul>
+      <li><a href="#link-permission" id="markdown-toc-link-permission">Link Permission</a></li>
+      <li><a href="#link-metadata" id="markdown-toc-link-metadata">Link Metadata</a></li>
+    </ul>
+  </li>
+  <li><a href="#create-a-link" id="markdown-toc-create-a-link">Create a link</a>    <ul>
+      <li><a href="#body-parameters" id="markdown-toc-body-parameters">Body parameters</a></li>
+      <li><a href="#response" id="markdown-toc-response">Response</a></li>
+    </ul>
+  </li>
+  <li><a href="#update-a-link" id="markdown-toc-update-a-link">Update a link</a>    <ul>
+      <li><a href="#path-parameters" id="markdown-toc-path-parameters">Path parameters</a></li>
+      <li><a href="#body-parameters-1" id="markdown-toc-body-parameters-1">Body parameters</a></li>
+      <li><a href="#response-1" id="markdown-toc-response-1">Response</a></li>
+    </ul>
+  </li>
+  <li><a href="#delete-a-link" id="markdown-toc-delete-a-link">Delete a link</a>    <ul>
+      <li><a href="#path-parameters-1" id="markdown-toc-path-parameters-1">Path parameters</a></li>
+      <li><a href="#response-2" id="markdown-toc-response-2">Response</a></li>
+    </ul>
+  </li>
+  <li><a href="#get-the-metadata-of-a-resource-using-the-link" id="markdown-toc-get-the-metadata-of-a-resource-using-the-link">Get the metadata of a resource using the link</a>    <ul>
+      <li><a href="#path-parameters-2" id="markdown-toc-path-parameters-2">Path parameters</a></li>
+      <li><a href="#query-parameters" id="markdown-toc-query-parameters">Query Parameters</a></li>
+      <li><a href="#response-3" id="markdown-toc-response-3">Response</a></li>
+    </ul>
+  </li>
+  <li><a href="#remove-a-resource-using-the-link" id="markdown-toc-remove-a-resource-using-the-link">Remove a resource using the link</a>    <ul>
+      <li><a href="#path-parameters-3" id="markdown-toc-path-parameters-3">Path parameters</a></li>
+      <li><a href="#response-4" id="markdown-toc-response-4">Response</a></li>
+    </ul>
+  </li>
+  <li><a href="#upload-an-object-using-the-link" id="markdown-toc-upload-an-object-using-the-link">Upload an object using the link</a>    <ul>
+      <li><a href="#path-parameters-4" id="markdown-toc-path-parameters-4">Path parameters</a></li>
+      <li><a href="#query-parameters-1" id="markdown-toc-query-parameters-1">Query parameters</a></li>
+      <li><a href="#headers" id="markdown-toc-headers">Headers</a></li>
+      <li><a href="#body-parameters-2" id="markdown-toc-body-parameters-2">Body parameters</a></li>
+      <li><a href="#response-5" id="markdown-toc-response-5">Response</a></li>
+      <li><a href="#example" id="markdown-toc-example">Example</a></li>
+    </ul>
+  </li>
+  <li><a href="#download-an-object-using-the-link" id="markdown-toc-download-an-object-using-the-link">Download an object using the link</a>    <ul>
+      <li><a href="#path-parameters-5" id="markdown-toc-path-parameters-5">Path parameters</a></li>
+      <li><a href="#response-6" id="markdown-toc-response-6">Response</a></li>
+    </ul>
+  </li>
+  <li><a href="#create-a-container-using-the-link" id="markdown-toc-create-a-container-using-the-link">Create a container using the link</a>    <ul>
+      <li><a href="#path-parameters-6" id="markdown-toc-path-parameters-6">Path parameters</a></li>
+      <li><a href="#response-7" id="markdown-toc-response-7">Response</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>The Link API manages links.</p>
+
+<p>A link is method to share resources without having to be a user of the system. Using links you can expose your internal resources to external collaborators with a mix of security considerations:</p>
+
+<ul>
+  <li><strong>Password protected links</strong>: A password has to be provided to access the resources inside the link.</li>
+  <li><strong>Expiration time</strong>: The links can have a expiration date.</li>
+  <li><strong>Permissions</strong>: The operations that can be done with a link are enforced by a set of permissions.</li>
+</ul>
+
+<h1 id="models">Models</h1>
+
+<h2 id="link-permission">Link Permission</h2>
+<p>The operations that can be done on a link are governed by the <strong>Link Permission</strong> model:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>stat</code></td>
+      <td><code>boolean</code></td>
+      <td>Grants getting metadata from a resource.</td>
+    </tr>
+    <tr>
+      <td><code>list</code></td>
+      <td><code>boolean</code></td>
+      <td>Grant listing resources inside a container.</td>
+    </tr>
+    <tr>
+      <td><code>add</code></td>
+      <td><code>boolean</code></td>
+      <td>Grants adding resources to the container.</td>
+    </tr>
+    <tr>
+      <td><code>get</code></td>
+      <td><code>boolean</code></td>
+      <td>Grants downloading an object.</td>
+    </tr>
+    <tr>
+      <td><code>remove</code></td>
+      <td><code>boolean</code></td>
+      <td>Grants removing resources from the container.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>There are two types of links:</p>
+
+<ol>
+  <li>
+    <p><strong>Object link</strong>: When the link points to an object the only link permissions that apply are : <code>stat</code>, <code>get</code> and <code>remove</code>.</p>
+  </li>
+  <li>
+    <p><strong>Container link</strong>: When the link points to a container all the permissions applies, following these rules:</p>
+  </li>
+</ol>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code>stat</code></td>
+      <td><code>boolean</code></td>
+      <td>Grants getting metadata from the container and ALL resources inside.</td>
+    </tr>
+    <tr>
+      <td><code>list</code></td>
+      <td><code>boolean</code></td>
+      <td>Grant listing resources inside a container and ALL sub-containers.</td>
+    </tr>
+    <tr>
+      <td><code>add</code></td>
+      <td><code>boolean</code></td>
+      <td>Grants adding resources to the container and in ALL sub-containers.</td>
+    </tr>
+    <tr>
+      <td><code>get</code></td>
+      <td><code>boolean</code></td>
+      <td>Grants downloading objects inside the container and in ALL sub-containers.</td>
+    </tr>
+    <tr>
+      <td><code>remove</code></td>
+      <td><code>boolean</code></td>
+      <td>Grants removing resources from the container and in ALL sub-containers.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Besides the link permissions, the last word is dictated by the storage permissions. For example, if you set <code>add</code> permission to a container in the link permission model but the storage permission model forbids this permission, then you cannot <code>add</code></strong>.</p>
+
+<h2 id="link-metadata">Link Metadata</h2>
+<p>The <strong>Link Metadata</strong> model is an extension of the <a href="/api/v1/storage/#metadata">Storage Metadata</a>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>checksum</code></td>
+      <td><code>string</code></td>
+      <td>The checksum of the resource.</td>
+    </tr>
+    <tr>
+      <td><code>checksum_type</code></td>
+      <td><code>string</code></td>
+      <td>The type of checksum used for the checksum.</td>
+    </tr>
+    <tr>
+      <td><code>children</code></td>
+      <td><code>array</code></td>
+      <td>An array containing <a href="#link-metadata">link metadata</a> about the resources inside a container.</td>
+    </tr>
+    <tr>
+      <td><code>etag</code></td>
+      <td><code>string</code></td>
+      <td>The ETag of the resource</td>
+    </tr>
+    <tr>
+      <td><code>extra</code></td>
+      <td><code>any</code></td>
+      <td>Custom information returned by the storage. It can be any JSON type.</td>
+    </tr>
+    <tr>
+      <td><code>id</code></td>
+      <td><code>string</code></td>
+      <td>The Resource URI in ID format.</td>
+    </tr>
+    <tr>
+      <td><code>is_container</code></td>
+      <td><code>boolean</code></td>
+      <td>Indicates if the resource is a container.</td>
+    </tr>
+    <tr>
+      <td><code>mimetype</code></td>
+      <td><code>string</code></td>
+      <td>The mimetype of the resource. Containers MUST return <code>inode/directory</code>.</td>
+    </tr>
+    <tr>
+      <td><code>modified</code></td>
+      <td><code>number</code></td>
+      <td>The modification time of the resource in UTC Unix time.</td>
+    </tr>
+    <tr>
+      <td><code>path</code></td>
+      <td><code>string</code></td>
+      <td>The Resource URI in Path format.</td>
+    </tr>
+    <tr>
+      <td><code>permissions</code></td>
+      <td><code>object</code></td>
+      <td>The <a href="/api/v1/storage/#permission">permissions</a> for the resource.</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>number</code></td>
+      <td>The size of the resource.</td>
+    </tr>
+    <tr>
+      <td><code>opaque_path</code></td>
+      <td><code>string</code></td>
+      <td>An opaque path to access sub-resources.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>When getting link metadata, the <code>id</code> and <code>path</code> fields SHOULD be blanked to avoid disclosure of information.</p>
+
+<p>The <code>opaque_path</code> is the path that end users MUST use to do storage-alike operations. The <code>opquep_ath</code> structure is : <code>&lt;token&gt;/[path]</code>.</p>
+
+<h1 id="create-a-link">Create a link</h1>
+
+<p>The token that identifies the link MUST be <strong>unique</strong> across all the links in the system. The link SHOULD change if it is regenerated (create-delete-create).</p>
+
+<pre><code>POST /link/create
+</code></pre>
+
+<h2 id="body-parameters">Body parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>resource_uri</code></td>
+      <td><code>string</code></td>
+      <td>The Resource URI of the resource.</td>
+    </tr>
+    <tr>
+      <td><code>password</code></td>
+      <td><code>string</code></td>
+      <td>A password to protect the link.</td>
+    </tr>
+    <tr>
+      <td><code>expiration</code></td>
+      <td><code>number</code></td>
+      <td>A expiration date in UTC Unix time for the resource.</td>
+    </tr>
+    <tr>
+      <td><code>permissions</code></td>
+      <td><code>object</code></td>
+      <td>The <a href="#link-permission">permissions</a> for the link.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response">Response</h2>
+
+<pre><code>Status: 201 Created
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+}
+</code></pre>
+
+<h1 id="update-a-link">Update a link</h1>
+
+<p>Just the owner of the link has the right to update it.</p>
+
+<p><strong>The link token after an update MUST remain the same</strong></p>
+
+<pre><code>PUT /link/update/:token
+</code></pre>
+
+<h2 id="path-parameters">Path parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>token</code></td>
+      <td><code>string</code></td>
+      <td>The link token.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="body-parameters-1">Body parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>password</code></td>
+      <td><code>string</code></td>
+      <td>A password to protect the link.</td>
+    </tr>
+    <tr>
+      <td><code>expiration</code></td>
+      <td><code>number</code></td>
+      <td>A expiration date in UTC Unix time for the resource.</td>
+    </tr>
+    <tr>
+      <td><code>permissions</code></td>
+      <td><code>object(LinkPermission)</code></td>
+      <td>The permissions for the link.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response-1">Response</h2>
+
+<pre><code>Status: 200 OK
+</code></pre>
+
+<h1 id="delete-a-link">Delete a link</h1>
+
+<p>Just the owner of the link has the right to delete it.</p>
+
+<pre><code>DELETE /link/delete/:token
+</code></pre>
+
+<h2 id="path-parameters-1">Path parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>token</code></td>
+      <td><code>string</code></td>
+      <td>The link token.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response-2">Response</h2>
+
+<pre><code>Status: 204 No Content
+</code></pre>
+
+<h1 id="get-the-metadata-of-a-resource-using-the-link">Get the metadata of a resource using the link</h1>
+
+<pre><code>GET /link/stat/:token/[:path][?children=boolean]
+</code></pre>
+
+<h2 id="path-parameters-2">Path parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>token</code></td>
+      <td><code>string</code></td>
+      <td>The link token.</td>
+    </tr>
+    <tr>
+      <td><code>path</code></td>
+      <td><code>string</code></td>
+      <td>The path for reaching sub-resources.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="query-parameters">Query Parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>children</code></td>
+      <td><code>boolean</code></td>
+      <td>If the resource is a container, ask for the resources inside.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response-3">Response</h2>
+
+<pre><code>GET /link/stat/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ/
+
+Status: 200 OK
+
+{
+    "checksum": "",
+    "checksum_type": "",
+    "children": null,
+    "etag": "1439495898",
+    "extra": null,
+    "id": "",
+    "is_container": false,
+    "mimetype": "application/pdf",
+    "modified": 1439495898,
+    "path": "",
+    "permissions": {
+        "add": false,
+        "link": false,
+        "list": false,
+        "remove": true,
+        "share": false,
+        "stat": true
+    },
+    "size": 238,
+    "opaque_path": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ",
+}
+</code></pre>
+
+<p><em>Stating a link pointing to a container</em></p>
+
+<pre><code>GET /link/stat/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ/photos
+Status: 200 OK
+
+{
+    "checksum": "",
+    "checksum_type": "",
+    "children": null,
+    "etag": "1439495898",
+    "extra": null,
+    "id": "",
+    "is_container": true,
+    "mimetype": "inode/directory",
+    "modified": 1439495898,
+    "path": "",
+    "permissions": {
+        "add": true,
+        "link": false,
+        "list": true,
+        "remove": true,
+        "share": false,
+        "stat": true
+    },
+    "size": 0,
+    "opaque_path": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ/photos",
+}
+</code></pre>
+
+<h1 id="remove-a-resource-using-the-link">Remove a resource using the link</h1>
+
+<pre><code>DELETE /link/rm/:token/[:path]
+</code></pre>
+
+<h2 id="path-parameters-3">Path parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>token</code></td>
+      <td><code>string</code></td>
+      <td>The link token.</td>
+    </tr>
+    <tr>
+      <td><code>path</code></td>
+      <td><code>string</code></td>
+      <td>The path for reaching sub-resources.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response-4">Response</h2>
+
+<pre><code>Status: 204 No Content
+</code></pre>
+
+<h1 id="upload-an-object-using-the-link">Upload an object using the link</h1>
+
+<pre><code>PUT /link/put/:token/[:path][?checksuminfo]
+</code></pre>
+
+<h2 id="path-parameters-4">Path parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>token</code></td>
+      <td><code>string</code></td>
+      <td>The link token.</td>
+    </tr>
+    <tr>
+      <td><code>path</code></td>
+      <td><code>string</code></td>
+      <td>The path for reaching sub-resources.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="query-parameters-1">Query parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>cheksum</code></td>
+      <td><code>string</code></td>
+      <td>The checksum type and checksum in the format: <code>&lt;checksum_type&gt;:&lt;checksum&gt;</code></td>
+      <td>md5:138019839208309</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="headers">Headers</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>X-Claw-Checksum</code></td>
+      <td><code>string</code></td>
+      <td>The checksum type and checksum in the format: <code>&lt;checksum_type&gt;:&lt;checksum&gt;</code></td>
+      <td>md5:138019839208309</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="body-parameters-2">Body parameters</h2>
+<p>The body is the <strong>binary data</strong> of the object.</p>
+
+<h2 id="response-5">Response</h2>
+
+<pre><code>Status: 201 Created
+</code></pre>
+
+<h2 id="example">Example</h2>
+<pre><code>curl https://yourdomain.com/api/v1/link/put/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ/photos/bunny.png?checksum=md5:d6df47d400edf3f738b3015378f6ea53 --data-binary @/etc/passwd
+</code></pre>
+
+<h1 id="download-an-object-using-the-link">Download an object using the link</h1>
+
+<pre><code>GET /link/get/:token/[:path]
+</code></pre>
+
+<h2 id="path-parameters-5">Path parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>token</code></td>
+      <td><code>string</code></td>
+      <td>The link token.</td>
+    </tr>
+    <tr>
+      <td><code>path</code></td>
+      <td><code>string</code></td>
+      <td>The path for reaching sub-resources.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response-6">Response</h2>
+
+<pre><code>Status: 200 OK
+X-Claw-Checksum: md5:138019839208309
+
+Binary data ...
+</code></pre>
+
+<h1 id="create-a-container-using-the-link">Create a container using the link</h1>
+
+<pre><code>POST /link/createcontainer/:token/[:path]
+</code></pre>
+
+<h2 id="path-parameters-6">Path parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>token</code></td>
+      <td><code>string</code></td>
+      <td>The link token.</td>
+    </tr>
+    <tr>
+      <td><code>path</code></td>
+      <td><code>string</code></td>
+      <td>The path for reaching sub-resources.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response-7">Response</h2>
+
+<pre><code>Status: 201 Created
+</code></pre>
+
+    </div>
+  </div>
+</div>
+
+
+      <footer class="footer">
+        Copyright ClawIO 2015.<br>
+      </footer>
+    </div>
+
+    <script src="/js/anchor.min.js"></script>
+    <script>
+      var selector = '.markdown-body h2, .markdown-body h3';
+      anchors.options = {
+        placement: 'left',
+        class: 'anchor-link'
+      };
+      anchors.add(selector);
+    </script>
+  </body>
+</html>

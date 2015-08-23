@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+
+    <title>
+      Storage &middot; Primer
+    </title>
+
+    <link rel="stylesheet" href="/docs.css">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon-precomposed" href="/img/icon.png">
+    <link rel="icon" href="/favicon.ico">
+  </head>
+  <body>
+
+    <header class="masthead">
+      <div class="container">
+        <a href="/" class="masthead-logo">
+          <!--<span class="mega-octicon octicon-package"></span>-->
+          <img src="/img/icon.png" height="33px" width="150px">
+        </a>
+
+        <nav class="masthead-nav">
+          <a  href="/api/v1/">API Docs</a>
+          <a href="/install">Install</a>
+          <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
+          <a  href="/about">About</a>
+        </nav>
+      </div>
+    </header>
+
+    
+
+    <div class="container">
+      <div class="columns docs-layout">
+  <div class="one-fourth column">
+    
+      <nav class="menu docs-menu">
+  <a class="menu-item " href="/api/v1/">
+    API
+  </a>
+  <a class="menu-item selected" href="/api/v1/storage/">
+    Storage
+  </a>
+  <a class="menu-item " href="/api/v1/link/">
+    Link
+  </a>
+  <!--
+  <a class="menu-item " href="/api/v1/share/">
+    Share
+  </a>
+  -->
+</nav>
+
+<nav class="menu docs-menu">
+  <a class="menu-item " href="/api/v1/webdav/">
+    WebDAV
+  </a>
+  <a class="menu-item " href="/api/v1/storagedav/">
+    StorageDAV
+  </a>
+  <a class="menu-item " href="/api/v1/linkdav/">
+    LinkDAV
+  </a>
+</nav>
+
+<!--
+<nav class="menu docs-menu">
+  <a class="menu-item " href="/api/v1/owncloud/">
+    OwnCloud
+  </a>
+  <a class="menu-item " href="/api/v1/ocshare/">
+    OC Share
+  </a>
+  <a class="menu-item " href="/api/v1/ocwebdav">
+    OC WebDAV
+  </a>
+</nav>
+-->
+
+    
+  </div>
+  <div class="three-fourths column markdown-body">
+    <h1 class="page-title">
+      Storage
+    </h1>
+    <div class="markdown-body">
+      <p>This describes the API endpoints for managing the storage.</p>
+
+<h1 id="contents">Contents</h1>
+
+<ul id="markdown-toc">
+  <li><a href="#contents" id="markdown-toc-contents">Contents</a></li>
+  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
+  <li><a href="#models" id="markdown-toc-models">Models</a>    <ul>
+      <li><a href="#capability" id="markdown-toc-capability">Capability</a></li>
+      <li><a href="#metadata" id="markdown-toc-metadata">Metadata</a></li>
+      <li><a href="#permission" id="markdown-toc-permission">Permission</a></li>
+    </ul>
+  </li>
+  <li><a href="#get-the-capabilities-of-a-storage" id="markdown-toc-get-the-capabilities-of-a-storage">Get the capabilities of a storage</a>    <ul>
+      <li><a href="#path-parameters" id="markdown-toc-path-parameters">Path parameters</a></li>
+      <li><a href="#response" id="markdown-toc-response">Response</a></li>
+    </ul>
+  </li>
+  <li><a href="#get-the-metadata-of-a-resource" id="markdown-toc-get-the-metadata-of-a-resource">Get the metadata of a resource</a>    <ul>
+      <li><a href="#path-parameters-1" id="markdown-toc-path-parameters-1">Path parameters</a></li>
+      <li><a href="#query-parameters" id="markdown-toc-query-parameters">Query Parameters</a></li>
+      <li><a href="#response-1" id="markdown-toc-response-1">Response</a></li>
+    </ul>
+  </li>
+  <li><a href="#remove-a-resource" id="markdown-toc-remove-a-resource">Remove a resource</a>    <ul>
+      <li><a href="#response-2" id="markdown-toc-response-2">Response</a></li>
+    </ul>
+  </li>
+  <li><a href="#upload-an-object" id="markdown-toc-upload-an-object">Upload an object</a>    <ul>
+      <li><a href="#path-parameters-2" id="markdown-toc-path-parameters-2">Path parameters</a></li>
+      <li><a href="#query-parameters-1" id="markdown-toc-query-parameters-1">Query parameters</a></li>
+      <li><a href="#headers" id="markdown-toc-headers">Headers</a></li>
+      <li><a href="#body-parameters" id="markdown-toc-body-parameters">Body parameters</a></li>
+      <li><a href="#response-3" id="markdown-toc-response-3">Response</a></li>
+    </ul>
+  </li>
+  <li><a href="#upload-an-object-in-chunks" id="markdown-toc-upload-an-object-in-chunks">Upload an object in chunks</a>    <ul>
+      <li><a href="#path-parameters-3" id="markdown-toc-path-parameters-3">Path parameters</a></li>
+      <li><a href="#query-parameters-2" id="markdown-toc-query-parameters-2">Query parameters</a></li>
+      <li><a href="#body-parameters-1" id="markdown-toc-body-parameters-1">Body parameters</a></li>
+      <li><a href="#response-4" id="markdown-toc-response-4">Response</a></li>
+      <li><a href="#example" id="markdown-toc-example">Example</a></li>
+      <li><a href="#path-parameters-4" id="markdown-toc-path-parameters-4">Path parameters</a></li>
+      <li><a href="#response-5" id="markdown-toc-response-5">Response</a></li>
+    </ul>
+  </li>
+  <li><a href="#create-a-container" id="markdown-toc-create-a-container">Create a container</a>    <ul>
+      <li><a href="#path-parameters-5" id="markdown-toc-path-parameters-5">Path parameters</a></li>
+      <li><a href="#response-6" id="markdown-toc-response-6">Response</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>The Storage API manages storages and their resources.</p>
+
+<p>A resource can be:</p>
+
+<ul>
+  <li><code>Object</code>: it contains binary data. Depending on the storage it can be a file, a BLOB object or anything that is not a Container.</li>
+  <li><code>Container</code>: it contains other resources. Depending on the storage it can be a folder, a bucket or anything that is not an Object.</li>
+</ul>
+
+<p>A Resource URI is powerful addressing scheme to identify diferent storages.
+It is usually referenced by the  <code>:resourceuri</code> placeholder.</p>
+
+<p>The Resource URI can take two forms:</p>
+
+<ol>
+  <li>
+    <p><strong>Path format</strong>: When referencing a resource by a path:</p>
+
+    <pre><code> storage-scheme://[[authinfo@]host]]/path[?query][#fragment]
+</code></pre>
+
+    <p>Examples:</p>
+
+    <pre><code> local:///docs/thesis.pdf
+ swift://bucket1.tenant1.com/docs/thesis.pdf
+ s3://user:password@bucket2.tenant2.example.com/docs/thesis.pdf
+</code></pre>
+
+    <p>The use of <code>authinfo@host</code> can be used in distributed storage systems. This is useful when you want talk to the closest geographically server, for example.</p>
+  </li>
+  <li>
+    <p><strong>ID format</strong>: When referencing a resource by ID</p>
+
+    <pre><code> storage-scheme:opaque[?query][#fragment]
+</code></pre>
+
+    <p>The <code>opaque</code> part can be anything and it is defined by each storage.
+ Some storages may use a number, other may use a hash and others maybe a path.</p>
+
+    <p>Examples:</p>
+
+    <pre><code> local:docs/thesis.pdf
+ eos:139128318809
+ s3:de305d54-75b4-431b-adb2-eb6b9e546014 
+</code></pre>
+  </li>
+</ol>
+
+<h1 id="models">Models</h1>
+
+<h2 id="capability">Capability</h2>
+<p>The features that the storage can offer are specified in the <strong>Capability</strong> model:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>stat</code></td>
+      <td><code>boolean</code></td>
+      <td>Stat a reosource.</td>
+    </tr>
+    <tr>
+      <td><code>add</code></td>
+      <td><code>boolean</code></td>
+      <td>Add resources to a container.</td>
+    </tr>
+    <tr>
+      <td><code>remove</code></td>
+      <td><code>boolean</code></td>
+      <td>Remove resources from a container.</td>
+    </tr>
+    <tr>
+      <td><code>copy</code></td>
+      <td><code>boolean</code></td>
+      <td>Copy a resource.</td>
+    </tr>
+    <tr>
+      <td><code>rename</code></td>
+      <td><code>boolean</code></td>
+      <td>Rename a resource.</td>
+    </tr>
+    <tr>
+      <td><code>3rdcopy</code></td>
+      <td><code>boolean</code></td>
+      <td>Thrird party copy of a resource.</td>
+    </tr>
+    <tr>
+      <td><code>3rdrename</code></td>
+      <td><code>boolean</code></td>
+      <td>Third party rename of a resource.</td>
+    </tr>
+    <tr>
+      <td><code>putobject</code></td>
+      <td><code>boolean</code></td>
+      <td>Upload the full object.</td>
+    </tr>
+    <tr>
+      <td><code>putobjectinchunks</code></td>
+      <td><code>boolean</code></td>
+      <td>Upload the object in chunks.</td>
+    </tr>
+    <tr>
+      <td><code>getobject</code></td>
+      <td><code>boolean</code></td>
+      <td>Download the full object.</td>
+    </tr>
+    <tr>
+      <td><code>getobjectbybyterange</code></td>
+      <td><code>boolean</code></td>
+      <td>Download some bytes of the object.</td>
+    </tr>
+    <tr>
+      <td><code>createcont</code></td>
+      <td><code>boolean</code></td>
+      <td>Create a container.</td>
+    </tr>
+    <tr>
+      <td><code>verifyclientchecksum</code></td>
+      <td><code>boolean</code></td>
+      <td>Verify client checksums.</td>
+    </tr>
+    <tr>
+      <td><code>sendserverchecksum</code></td>
+      <td><code>boolean</code></td>
+      <td>Send server-computed checksum.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Version features</em></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code>listversions</code></td>
+      <td><code>boolean</code></td>
+      <td>List versions of a resource.</td>
+    </tr>
+    <tr>
+      <td><code>getversion</code></td>
+      <td><code>boolean</code></td>
+      <td>Download a version.</td>
+    </tr>
+    <tr>
+      <td><code>createversion</code></td>
+      <td><code>boolean</code></td>
+      <td>Create a version.</td>
+    </tr>
+    <tr>
+      <td><code>deleteversion</code></td>
+      <td><code>boolean</code></td>
+      <td>Delete a version.</td>
+    </tr>
+    <tr>
+      <td><code>rollbackversion</code></td>
+      <td><code>boolean</code></td>
+      <td>Rollback to a previous version.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Trashbin features</em></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code>listjunk</code></td>
+      <td><code>boolean</code></td>
+      <td>List junk files (deleted files).</td>
+    </tr>
+    <tr>
+      <td><code>restorejunk</code></td>
+      <td><code>boolean</code></td>
+      <td>Restore a junk a file.</td>
+    </tr>
+    <tr>
+      <td><code>purgejunk</code></td>
+      <td><code>boolean</code></td>
+      <td>Purge a junk file.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="metadata">Metadata</h2>
+<p>All resources have metadata attached. This information is kept in the <strong>Metadata</strong> model:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>checksum</code></td>
+      <td><code>string</code></td>
+      <td>The checksum of the resource.</td>
+    </tr>
+    <tr>
+      <td><code>checksumtype</code></td>
+      <td><code>string</code></td>
+      <td>The type of checksum used for the checksum.</td>
+    </tr>
+    <tr>
+      <td><code>children</code></td>
+      <td><code>array(Metadata)</code></td>
+      <td>An array containing metadata about the resources inside a folder.</td>
+    </tr>
+    <tr>
+      <td><code>etag</code></td>
+      <td><code>string</code></td>
+      <td>The ETag of the resource</td>
+    </tr>
+    <tr>
+      <td><code>extra</code></td>
+      <td><code>any</code></td>
+      <td>Custom information returned by the storage. It can be any JSON type.</td>
+    </tr>
+    <tr>
+      <td><code>id</code></td>
+      <td><code>string</code></td>
+      <td>The Resource URI in ID format.</td>
+    </tr>
+    <tr>
+      <td><code>iscontainer</code></td>
+      <td><code>boolean</code></td>
+      <td>Indicates if the resource is a folder.</td>
+    </tr>
+    <tr>
+      <td><code>mimetype</code></td>
+      <td><code>string</code></td>
+      <td>The mimetype of the resource. Containers MUST return <code>inode/directory</code>.</td>
+    </tr>
+    <tr>
+      <td><code>modified</code></td>
+      <td><code>number</code></td>
+      <td>The modification time of the resource in UTC Unix time.</td>
+    </tr>
+    <tr>
+      <td><code>path</code></td>
+      <td><code>string</code></td>
+      <td>The Resource URI in Path format.</td>
+    </tr>
+    <tr>
+      <td><code>permissions</code></td>
+      <td><code>object</code></td>
+      <td>The <a href="/api/v1/permission">permissions</a> for the resource.</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>number</code></td>
+      <td>The size of the resource. Folders MAY return the aggregated children´s size.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="permission">Permission</h2>
+<p>The operations that can be done on a resource are governed by the <strong>Permission</strong> model:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>stat</code></td>
+      <td><code>boolean</code></td>
+      <td>Grants getting metadata from a resource.</td>
+    </tr>
+    <tr>
+      <td><code>list</code></td>
+      <td><code>boolean</code></td>
+      <td>Grant listing of resources inside a container.</td>
+    </tr>
+    <tr>
+      <td><code>add</code></td>
+      <td><code>boolean</code></td>
+      <td>Grants adding resources to the container.</td>
+    </tr>
+    <tr>
+      <td><code>get</code></td>
+      <td><code>boolean</code></td>
+      <td>Grants downloading an object.</td>
+    </tr>
+    <tr>
+      <td><code>remove</code></td>
+      <td><code>boolean</code></td>
+      <td>Grants removing resources from the container.</td>
+    </tr>
+    <tr>
+      <td><code>link</code></td>
+      <td><code>boolean</code></td>
+      <td>Grants creating links for the resource.</td>
+    </tr>
+    <tr>
+      <td><code>share</code></td>
+      <td><code>boolean</code></td>
+      <td>Grants internal sharing for the container.</td>
+    </tr>
+    <tr>
+      <td><code>fedshare</code></td>
+      <td><code>boolean</code></td>
+      <td>Grants federated (external) sharing for the container.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="get-the-capabilities-of-a-storage">Get the capabilities of a storage</h1>
+
+<pre><code>GET /storage/capabilities/:storagescheme
+</code></pre>
+
+<h2 id="path-parameters">Path parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>storagescheme</code></td>
+      <td><code>string</code></td>
+      <td>The <code>&lt;storage-scheme&gt;</code> element in a Resource URI.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response">Response</h2>
+<pre><code>GET /storage/capabilities/eos
+
+Status: 200 OK
+
+{
+    "checksum": "",
+    "checksumtype": "",
+    "children": null,
+    "etag": "1439495898",
+    "extra": null,
+    "id": "local:docs",
+    "iscontainer": true,
+    "mimetype": "inode/directory",
+    "modified": 1439495898,
+    "path": "local:///docs"",
+    "permissions": {
+        "add": true,
+        "link": true,
+        "list": true,
+        "remove": true,
+        "share": true,
+        "stat": true
+    },
+    "size": 238
+}
+</code></pre>
+
+<h1 id="get-the-metadata-of-a-resource">Get the metadata of a resource</h1>
+
+<pre><code>GET /storage/stat/:resourceuri[?children]
+</code></pre>
+
+<h2 id="path-parameters-1">Path parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>resourceuri</code></td>
+      <td><code>string</code></td>
+      <td>A Resource URI</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="query-parameters">Query Parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>children</code></td>
+      <td><code>boolean</code></td>
+      <td>If the resource is a container, ask for the resources inside.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response-1">Response</h2>
+
+<pre><code>Status: 200 OK
+
+{
+    "checksum": "",
+    "checksumtype": "",
+    "children": null,
+    "etag": "1439495898",
+    "extra": null,
+    "id": "local:docs",
+    "iscol": true,
+    "mimetype": "inode/directory",
+    "modified": 1439495898,
+    "path": "local:///docs"",
+    "permissions": {
+        "add": true,
+        "link": true,
+        "list": true,
+        "remove": true,
+        "share": true,
+        "stat": true
+    },
+    "size": 238
+}
+</code></pre>
+
+<h1 id="remove-a-resource">Remove a resource</h1>
+
+<pre><code>DELETE /storage/rm/:resourceuri[?children]
+</code></pre>
+
+<h2 id="response-2">Response</h2>
+
+<pre><code>Status: 204 No Content
+</code></pre>
+
+<h1 id="upload-an-object">Upload an object</h1>
+
+<pre><code>PUT /storage/put/:resourceuri[?checksuminfo]
+</code></pre>
+
+<h2 id="path-parameters-2">Path parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>resourceuri</code></td>
+      <td><code>string</code></td>
+      <td>A Resource URI</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="query-parameters-1">Query parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>cheksum</code></td>
+      <td><code>string</code></td>
+      <td>The checksumtype and checksum in the format: <code>&lt;checksumtype&gt;:&lt;checksum&gt;</code></td>
+      <td>md5:138019839208309</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="headers">Headers</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>X-Claw-Checksum</code></td>
+      <td><code>string</code></td>
+      <td>The checksumtype and checksum in the format: <code>&lt;checksumtype&gt;:&lt;checksum&gt;</code></td>
+      <td>md5:138019839208309</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="body-parameters">Body parameters</h2>
+<p>The body is the <strong>binary data</strong> of the object.</p>
+
+<h2 id="response-3">Response</h2>
+
+<pre><code>Status: 201 Created
+</code></pre>
+
+<h1 id="upload-an-object-in-chunks">Upload an object in chunks</h1>
+
+<pre><code>PUT /storage/putchunk/:resourceuri[?uploadid=string&amp;offset=number]
+</code></pre>
+
+<h2 id="path-parameters-3">Path parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>resourceuri</code></td>
+      <td><code>string</code></td>
+      <td>A Resource URI</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="query-parameters-2">Query parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>uploadid</code></td>
+      <td><code>string</code></td>
+      <td>The ID for the chunk upload transaction.</td>
+    </tr>
+    <tr>
+      <td><code>offset</code></td>
+      <td><code>string</code></td>
+      <td>The start offset of the data being transmitted.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In the first chunk the <code>uploadid</code> and <code>offset</code> MUST NOT be sent.</p>
+
+<p>With the <code>offset</code> parameter and the <code>Content-Length</code> header is easy to figure out the byte range of the chunk in the original object.</p>
+
+<p><strong>Typical usage</strong>:</p>
+
+<ol>
+  <li>Send a PUT request to <strong>/storage/putchunk/:resourceuri</strong> with the first chunk of the file without setting <code>uploadid</code> nor <code>offset</code>, and receive an <code>uploadid</code> in return.</li>
+  <li>Repeatedly (even in parallel) PUT subsequent chunks to <strong>/storage/putchunk/:resourceuri?uploadid=string&amp;offset=number</strong> using the <code>uploadid</code> to identify the upload in progress and an <code>offset</code> representing the number of bytes transferred so far.</li>
+  <li>After the last chunk, POST to <strong>/commitchunkupload[?checksuminfo=string]</strong> to complete the upload.</li>
+</ol>
+
+<p>**The implementation of this spec MUST handle parallel chunk uploads.   **</p>
+
+<h2 id="body-parameters-1">Body parameters</h2>
+<p>The body is the <strong>binary data</strong> of the object.</p>
+
+<h2 id="response-4">Response</h2>
+
+<pre><code>Status: 201 Created
+
+{
+    "uploadid": "550e8400-e29b-41d4-a716-446655440000"
+}
+</code></pre>
+
+<h2 id="example">Example</h2>
+<pre><code>curl -u username https://yourdomain.com/api/v1/storage/put/local:///docs/new-thesis.pdf?checksum=md5:d6df47d400edf3f738b3015378f6ea53 --data-binary @/etc/passwd
+</code></pre>
+
+<p>Typical usage:</p>
+
+<p>Send a PUT request to /chunked_upload with the first chunk of the file without setting upload_id, and receive an upload_id in return.
+Repeatedly PUT subsequent chunks using the upload_id to identify the upload in progress and an offset representing the number of bytes transferred so far.
+After each chunk has been uploaded, the server returns a new offset representing the total amount transferred.
+After the last chunk, POST to /commit_chunked_upload to complete the upload.
+# Download an object</p>
+
+<pre><code>GET /storage/get/:resourceuri
+</code></pre>
+
+<h2 id="path-parameters-4">Path parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>resourceuri</code></td>
+      <td><code>string</code></td>
+      <td>A Resource URI</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response-5">Response</h2>
+
+<pre><code>Status: 200 OK
+X-Claw-ServerChecksum: md5:138019839208309
+
+Binary data ...
+</code></pre>
+
+<h1 id="create-a-container">Create a container</h1>
+
+<pre><code>POST /storage/createcontainer/:resourceuri
+</code></pre>
+
+<h2 id="path-parameters-5">Path parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>resourceuri</code></td>
+      <td><code>string</code></td>
+      <td>A Resource URI</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response-6">Response</h2>
+
+<pre><code>Status: 201 Created
+</code></pre>
+
+    </div>
+  </div>
+</div>
+
+
+      <footer class="footer">
+        Copyright ClawIO 2015.<br>
+      </footer>
+    </div>
+
+    <script src="/js/anchor.min.js"></script>
+    <script>
+      var selector = '.markdown-body h2, .markdown-body h3';
+      anchors.options = {
+        placement: 'left',
+        class: 'anchor-link'
+      };
+      anchors.add(selector);
+    </script>
+  </body>
+</html>

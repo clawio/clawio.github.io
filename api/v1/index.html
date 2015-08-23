@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+
+    <title>
+      API &middot; Primer
+    </title>
+
+    <link rel="stylesheet" href="/docs.css">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon-precomposed" href="/img/icon.png">
+    <link rel="icon" href="/favicon.ico">
+  </head>
+  <body>
+
+    <header class="masthead">
+      <div class="container">
+        <a href="/" class="masthead-logo">
+          <!--<span class="mega-octicon octicon-package"></span>-->
+          <img src="/img/icon.png" height="33px" width="150px">
+        </a>
+
+        <nav class="masthead-nav">
+          <a class="active" href="/api/v1/">API Docs</a>
+          <a href="/install">Install</a>
+          <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
+          <a  href="/about">About</a>
+        </nav>
+      </div>
+    </header>
+
+    
+
+    <div class="container">
+      <div class="columns docs-layout">
+  <div class="one-fourth column">
+    
+      <nav class="menu docs-menu">
+  <a class="menu-item selected" href="/api/v1/">
+    API
+  </a>
+  <a class="menu-item " href="/api/v1/storage/">
+    Storage
+  </a>
+  <a class="menu-item " href="/api/v1/link/">
+    Link
+  </a>
+  <!--
+  <a class="menu-item " href="/api/v1/share/">
+    Share
+  </a>
+  -->
+</nav>
+
+<nav class="menu docs-menu">
+  <a class="menu-item " href="/api/v1/webdav/">
+    WebDAV
+  </a>
+  <a class="menu-item " href="/api/v1/storagedav/">
+    StorageDAV
+  </a>
+  <a class="menu-item " href="/api/v1/linkdav/">
+    LinkDAV
+  </a>
+</nav>
+
+<!--
+<nav class="menu docs-menu">
+  <a class="menu-item " href="/api/v1/owncloud/">
+    OwnCloud
+  </a>
+  <a class="menu-item " href="/api/v1/ocshare/">
+    OC Share
+  </a>
+  <a class="menu-item " href="/api/v1/ocwebdav">
+    OC WebDAV
+  </a>
+</nav>
+-->
+
+    
+  </div>
+  <div class="three-fourths column markdown-body">
+    <h1 class="page-title">
+      API
+    </h1>
+    <div class="markdown-body">
+      <p>This describes the resources that make up the official ClawIO API v1. If you have any problems please contact <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#104;&#117;&#103;&#111;&#064;&#099;&#108;&#097;&#119;&#105;&#111;&#046;&#099;&#111;">me</a>.</p>
+
+<h1 id="contents">Contents</h1>
+
+<ul id="markdown-toc">
+  <li><a href="#contents" id="markdown-toc-contents">Contents</a></li>
+  <li><a href="#current-version" id="markdown-toc-current-version">Current Version</a></li>
+  <li><a href="#scheme" id="markdown-toc-scheme">Scheme</a></li>
+  <li><a href="#blank-fields" id="markdown-toc-blank-fields">Blank fields</a></li>
+  <li><a href="#utf-8-encoding" id="markdown-toc-utf-8-encoding">UTF-8 encoding</a></li>
+  <li><a href="#timestamps" id="markdown-toc-timestamps">Timestamps</a></li>
+  <li><a href="#parameters" id="markdown-toc-parameters">Parameters</a></li>
+  <li><a href="#root-endpoint" id="markdown-toc-root-endpoint">Root Endpoint</a></li>
+  <li><a href="#clients-errors" id="markdown-toc-clients-errors">Clients Errors</a></li>
+  <li><a href="#http-redirects" id="markdown-toc-http-redirects">HTTP Redirects</a></li>
+  <li><a href="#http-verbs" id="markdown-toc-http-verbs">HTTP Verbs</a></li>
+  <li><a href="#authentication" id="markdown-toc-authentication">Authentication</a>    <ul>
+      <li><a href="#basic-authentication" id="markdown-toc-basic-authentication">Basic Authentication</a></li>
+      <li><a href="#jwt-token-sent-in-a-header" id="markdown-toc-jwt-token-sent-in-a-header">JWT Token (sent in a header)</a></li>
+      <li><a href="#jwt-token-sent-as-parameter" id="markdown-toc-jwt-token-sent-as-parameter">JWT Token (sent as parameter)</a></li>
+    </ul>
+  </li>
+  <li><a href="#cross-origin-resource-sharing" id="markdown-toc-cross-origin-resource-sharing">Cross Origin Resource Sharing</a></li>
+</ul>
+
+<h1 id="current-version">Current Version</h1>
+<p>The current version of the API is <strong>v1</strong>.</p>
+
+<h1 id="scheme">Scheme</h1>
+<p>All API access should be done over HTTPS, and accessed from <strong>https:/yourdomain.com/api/v1/</strong>. All data is sent and received as JSON otherwise specified.</p>
+
+<pre><code>curl -i https://yourdomain.com/api/v1/storage/stat/eos:///photos
+
+HTTP/1.1 200 OK
+
+{
+    "checksum": "",
+    "checksum_type": "",
+    "children": null,
+    "etag": "1439495898",
+    "extra": null,
+    "id": "eos:///2993644435",
+    "is_container": true,
+    "mimetype": "inode/directory",
+    "modified": 1439495898,
+    "path": "eos:///photos",
+    "permissions": 24,
+    "size": 238
+}
+</code></pre>
+
+<h1 id="blank-fields">Blank fields</h1>
+<p>Blank fields default to these values:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Default value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>string</code></td>
+      <td><code>""</code></td>
+    </tr>
+    <tr>
+      <td><code>number</code></td>
+      <td><code>0</code></td>
+    </tr>
+    <tr>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+    </tr>
+    <tr>
+      <td><code>object</code></td>
+      <td><code>null</code>, instead of <code>{}</code></td>
+    </tr>
+    <tr>
+      <td><code>array</code></td>
+      <td><code>null</code>, instead of <code>[]</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="utf-8-encoding">UTF-8 encoding</h1>
+
+<p>Every string passed to and from the ClawIO API needs to be UTF-8 encoded. For maximum compatibility, normalize to <a href="http://unicode.org/reports/tr15/">Unicode Normalization Form C (NFC)</a> before UTF-8 encoding</p>
+
+<h1 id="timestamps">Timestamps</h1>
+<p>All timestamps are returned in <a href="http://en.wikipedia.org/wiki/Unix_time">UTC epoch seconds</a> like:</p>
+
+<p><code>1439684357</code></p>
+
+<h1 id="parameters">Parameters</h1>
+<p>Many API methods take optional parameters. For GET requests, any parameters not specified as a segment in the path can be passed as an HTTP query string parameter:</p>
+
+<pre><code>$ curl -i -u username "https://yourdomain.com/api/v1/files/stat/eos:///photos?children=true
+</code></pre>
+
+<p>In this example, the <code>eos:///photos</code> value is provided for the <code>:resourceuri</code> parameter in the path while `:children is passed in the query string.</p>
+
+<p>For POST, PATCH, PUT, and DELETE requests, parameters not included in the URL should be encoded as JSON with a Content-Type of ‘application/json’:</p>
+
+<pre><code>$ curl -i -u username -d '{"resourceuri":"eos:///photos", "expiration": 199234554}' https://yourdomain.com/api/v1/links/create
+</code></pre>
+
+<h1 id="root-endpoint">Root Endpoint</h1>
+
+<p>You can issue a GET request to the root endpoint to get all the endpoint categories that the API supports:</p>
+
+<pre><code>$ curl https://yourdomain.com/api/v1 -u username:password
+
+{
+  "storageurl": "https://yourdomain.com/api/v1/storage",
+  "linkurl": "https://yourdomain.com/api/v1/link",
+}
+</code></pre>
+
+<h1 id="clients-errors">Clients Errors</h1>
+
+<p>There are three possible types of client errors on API calls that receive request bodies:</p>
+
+<ul>
+  <li>
+    <p>Sending invalid JSON or the wrong type of JSON values will result in a <code>415 Unsuported Media Type</code> response.</p>
+
+    <pre><code>  HTTP/1.1 415 Unsupported Media Type
+</code></pre>
+  </li>
+  <li>
+    <p>Sending invalid fields will result in a <code>422 Unprocessable Entity</code> response.</p>
+
+    <pre><code>  HTTP/1.1 422 Unprocessable Entity
+  Content-Length: 149
+	
+  {
+     "error":{
+        "resource":"Link",
+        "field":"resource_uri",
+        "code":"empty_field",
+     }
+  }
+</code></pre>
+  </li>
+</ul>
+
+<p>All error objects from <code>422</code> responses have resource and field properties so that your client
+can tell what the problem is.  There’s also an error code to let you
+know what is wrong with the field.  These are the possible validation error
+codes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Error Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>empty_field</code></td>
+      <td>This means a required field on a resource has not been set or has a blank value.</td>
+    </tr>
+    <tr>
+      <td><code>invalid</code></td>
+      <td>This means the formatting of a field is invalid.  The documentation for that resource should be able to give you more specific information.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Resources may also send custom validation errors (where <code>code</code> is <code>custom</code>). Custom errors will always have a <code>message</code> field describing the error, as well as a <code>documentation_url</code> field pointing to some content that might help you resolve the error.</p>
+
+<h1 id="http-redirects">HTTP Redirects</h1>
+
+<p>API v1 uses HTTP redirection where appropriate. Clients should assume that any
+request may result in a redirection. Receiving an HTTP redirection is <em>not</em> an
+error and clients should follow that redirect. Redirect responses will have a
+<code>Location</code> header field which contains the URI of the resource to which the
+client should repeat the requests.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Status Code</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>301</code></td>
+      <td>Permanent redirection. The URI you used to make the request has been superseded by the one specified in the <code>Location</code> header field. This and all future requests to this resource should be directed to the new URI.</td>
+    </tr>
+    <tr>
+      <td><code>302</code>, <code>307</code></td>
+      <td>Temporary redirection. The request should be repeated verbatim to the URI specified in the <code>Location</code> header field but clients should continue to use the original URI for future requests.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Other redirection status codes may be used in accordance with the HTTP 1.1 spec.</p>
+
+<h1 id="http-verbs">HTTP Verbs</h1>
+
+<p>Where possible, API v1 strives to use appropriate HTTP verbs for each
+action.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Verb</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>HEAD</code></td>
+      <td>Can be issued against any resource to get just the HTTP header info.</td>
+    </tr>
+    <tr>
+      <td><code>GET</code></td>
+      <td>Used for retrieving resources.</td>
+    </tr>
+    <tr>
+      <td><code>POST</code></td>
+      <td>Used for creating resources.</td>
+    </tr>
+    <tr>
+      <td><code>PATCH</code></td>
+      <td>Used for updating resources with partial JSON data.  For instance, a Link resource has <code>expiration</code> and <code>password</code> attributes.  A PATCH request may accept one or more of the attributes to update the resource.  PATCH is a relatively new and uncommon HTTP verb, so resource endpoints also accept <code>POST</code> requests.</td>
+    </tr>
+    <tr>
+      <td><code>PUT</code></td>
+      <td>Used for replacing resources or collections. For <code>PUT</code> requests with no <code>body</code> attribute, be sure to set the <code>Content-Length</code> header to zero.</td>
+    </tr>
+    <tr>
+      <td><code>DELETE</code></td>
+      <td>Used for deleting resources.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="authentication">Authentication</h1>
+<p>There are three ways to authenticate through ClawIO API v1.  Requests that
+require authentication will return <code>401 Not Authorized</code>. In some places <code>404 Not Found</code> will be returned instead, this is to prevent the accidental leakage
+of information like password protected Links to unauthorized users.</p>
+
+<h2 id="basic-authentication">Basic Authentication</h2>
+
+<pre><code>$ curl -u "username" https://yourdomain.com/api/v1
+</code></pre>
+
+<h2 id="jwt-token-sent-in-a-header">JWT Token (sent in a header)</h2>
+
+<pre><code>$ curl -H "X-Api-Token: JWT-AUTH-TOKEN"
+</code></pre>
+
+<h2 id="jwt-token-sent-as-parameter">JWT Token (sent as parameter)</h2>
+
+<pre><code>$ curl https://yourdomain.com/api/v1/storage/stat/eos:///docs/thesis.pdf?access_token=JWT-TOKEN
+</code></pre>
+
+<h1 id="cross-origin-resource-sharing">Cross Origin Resource Sharing</h1>
+
+<p>The API supports Cross Origin Resource Sharing (CORS) for AJAX requests from
+any origin.
+You can read the <a href="http://www.w3.org/TR/cors/">CORS W3C Recommendation</a>, or
+<a href="http://code.google.com/p/html5security/wiki/CrossOriginRequestSecurity">this intro</a> from the
+HTML 5 Security Guide.</p>
+
+<p>Here’s a sample request sent from a web browser application living on <code>http://example.com</code>:</p>
+
+<pre><code>$ curl -i https://`yourdomain.com -H "Origin: http://example.com"
+HTTP/1.1 302 Found
+Access-Control-Allow-Origin: *
+Access-Control-Expose-Headers: ETag
+Access-Control-Allow-Credentials: true
+</code></pre>
+
+<p>This is what the CORS preflight request looks like:</p>
+
+<pre><code>$ curl -i https://`yourdomain.com -H "Origin: http://example.com" -X OPTIONS
+HTTP/1.1 204 No Content
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Headers: Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since
+Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE
+Access-Control-Expose-Headers: ETag
+Access-Control-Max-Age: 86400
+Access-Control-Allow-Credentials: true
+</code></pre>
+
+    </div>
+  </div>
+</div>
+
+
+      <footer class="footer">
+        Copyright ClawIO 2015.<br>
+      </footer>
+    </div>
+
+    <script src="/js/anchor.min.js"></script>
+    <script>
+      var selector = '.markdown-body h2, .markdown-body h3';
+      anchors.options = {
+        placement: 'left',
+        class: 'anchor-link'
+      };
+      anchors.add(selector);
+    </script>
+  </body>
+</html>
