@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+
+    <title>
+      Auth &middot; ClawIO
+    </title>
+
+    <link rel="stylesheet" href="/docs.css">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon-precomposed" href="/img/icon.png">
+    <link rel="icon" href="/favicon.ico">
+  </head>
+  <body>
+
+    <header class="masthead">
+      <div class="container">
+        <a href="/" class="masthead-logo">
+          <!--<span class="mega-octicon octicon-package"></span>-->
+          <img src="/img/icon.png" height="33px" width="150px">
+        </a>
+
+        <nav class="masthead-nav">
+          <a  href="/api/v1/">API Docs</a>
+          <a href="/install">Install</a>
+          <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
+          <a  href="/about">About</a>
+        </nav>
+      </div>
+    </header>
+
+    
+
+    <div class="container">
+      <div class="columns docs-layout">
+  <div class="one-fourth column">
+    
+      <nav class="menu docs-menu">
+  <a class="menu-item " href="/api/v1/">
+    API
+  </a>
+  <a class="menu-item selected" href="/api/v1/auth/">
+    Auth
+  </a>
+  <a class="menu-item " href="/api/v1/storage/">
+    Storage
+  </a>
+  <a class="menu-item " href="/api/v1/link/">
+    Link
+  </a>
+  <!--
+  <a class="menu-item " href="/api/v1/share/">
+    Share
+  </a>
+  -->
+</nav>
+
+<nav class="menu docs-menu">
+  <a class="menu-item " href="/api/v1/webdav/">
+    WebDAV
+  </a>
+  <a class="menu-item " href="/api/v1/storagedav/">
+    StorageDAV
+  </a>
+  <a class="menu-item " href="/api/v1/linkdav/">
+    LinkDAV
+  </a>
+</nav>
+
+<!--
+<nav class="menu docs-menu">
+  <a class="menu-item " href="/api/v1/owncloud/">
+    OwnCloud
+  </a>
+  <a class="menu-item " href="/api/v1/ocshare/">
+    OC Share
+  </a>
+  <a class="menu-item " href="/api/v1/ocwebdav">
+    OC WebDAV
+  </a>
+</nav>
+-->
+
+    
+  </div>
+  <div class="three-fourths column markdown-body">
+    <h1 class="page-title">
+      Auth
+    </h1>
+    <div class="markdown-body">
+      <p>This describes the API for authenticating users.</p>
+
+<h1 id="contents">Contents</h1>
+
+<ul id="markdown-toc">
+  <li><a href="#contents" id="markdown-toc-contents">Contents</a></li>
+  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
+  <li><a href="#get-a-jwt-token" id="markdown-toc-get-a-jwt-token">Get a JWT Token</a>    <ul>
+      <li><a href="#body-parameters" id="markdown-toc-body-parameters">Body parameters</a></li>
+      <li><a href="#response" id="markdown-toc-response">Response</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>The Auth API authenticates users.</p>
+
+<p>A user belongs to an authentication provider.</p>
+
+<p>The authentication provider authenticates the user against its user database with the <code>username</code>, <code>password</code> and <code>extra</code> attributes passed in the request.</p>
+
+<p>The user database can vary from a simple JSON file to a complex LDAP server.</p>
+
+<p>Different authentication providers can be registered in the server to provide some QoS or to have more control about user privileges.</p>
+
+<p>In the future, Single Sign-On using Shibboleth will be supported.</p>
+
+<p>The fact of having multiple authentication providers registered allows the storage to be more efficient in managing resources.</p>
+
+<p>For example, imagine that the storage configured is an object store like Swift with multiple tenants (one in Sidney and the other in Berlin).
+Users coming from auth provider A will have their reosurces in a tenant in Sidney and users coming from auth provider B will have their resources in a tenant in Berlin.</p>
+
+<h1 id="get-a-jwt-token">Get a JWT Token</h1>
+
+<pre><code>POST /auth/login
+</code></pre>
+
+<h2 id="body-parameters">Body parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>id</code></td>
+      <td><code>string</code></td>
+      <td>The username</td>
+    </tr>
+    <tr>
+      <td><code>password</code></td>
+      <td><code>string</code></td>
+      <td>The password</td>
+    </tr>
+    <tr>
+      <td><code>authid</code></td>
+      <td><code>string</code></td>
+      <td>The authentication provider ID</td>
+    </tr>
+    <tr>
+      <td><code>extra</code></td>
+      <td><code>any</code></td>
+      <td>Extra information passed to the authentication provider.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="response">Response</h2>
+
+<pre><code>Status: 201 Created
+
+{
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+}
+</code></pre>
+
+
+    </div>
+  </div>
+</div>
+
+
+      <footer class="footer">
+        Copyright ClawIO 2015.<br>
+      </footer>
+    </div>
+
+    <script src="/js/anchor.min.js"></script>
+    <script>
+      var selector = '.markdown-body h2, .markdown-body h3';
+      anchors.options = {
+        placement: 'left',
+        class: 'anchor-link'
+      };
+      anchors.add(selector);
+    </script>
+  </body>
+</html>

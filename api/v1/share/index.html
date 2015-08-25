@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+
+    <title>
+      Share &middot; ClawIO
+    </title>
+
+    <link rel="stylesheet" href="/docs.css">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon-precomposed" href="/img/icon.png">
+    <link rel="icon" href="/favicon.ico">
+  </head>
+  <body>
+
+    <header class="masthead">
+      <div class="container">
+        <a href="/" class="masthead-logo">
+          <!--<span class="mega-octicon octicon-package"></span>-->
+          <img src="/img/icon.png" height="33px" width="150px">
+        </a>
+
+        <nav class="masthead-nav">
+          <a  href="/api/v1/">API Docs</a>
+          <a href="/install">Install</a>
+          <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
+          <a  href="/about">About</a>
+        </nav>
+      </div>
+    </header>
+
+    
+
+    <div class="container">
+      <div class="columns docs-layout">
+  <div class="one-fourth column">
+    
+      <nav class="menu docs-menu">
+  <a class="menu-item " href="/api/v1/">
+    API
+  </a>
+  <a class="menu-item " href="/api/v1/auth/">
+    Auth
+  </a>
+  <a class="menu-item " href="/api/v1/storage/">
+    Storage
+  </a>
+  <a class="menu-item " href="/api/v1/link/">
+    Link
+  </a>
+  <!--
+  <a class="menu-item selected" href="/api/v1/share/">
+    Share
+  </a>
+  -->
+</nav>
+
+<nav class="menu docs-menu">
+  <a class="menu-item " href="/api/v1/webdav/">
+    WebDAV
+  </a>
+  <a class="menu-item " href="/api/v1/storagedav/">
+    StorageDAV
+  </a>
+  <a class="menu-item " href="/api/v1/linkdav/">
+    LinkDAV
+  </a>
+</nav>
+
+<!--
+<nav class="menu docs-menu">
+  <a class="menu-item " href="/api/v1/owncloud/">
+    OwnCloud
+  </a>
+  <a class="menu-item " href="/api/v1/ocshare/">
+    OC Share
+  </a>
+  <a class="menu-item " href="/api/v1/ocwebdav">
+    OC WebDAV
+  </a>
+</nav>
+-->
+
+    
+  </div>
+  <div class="three-fourths column markdown-body">
+    <h1 class="page-title">
+      Share
+    </h1>
+    <div class="markdown-body">
+      <p>This describes the API endpoints for managing the internal shares.</p>
+
+<h1 id="contents">Contents</h1>
+
+<ul id="markdown-toc">
+  <li><a href="#contents" id="markdown-toc-contents">Contents</a></li>
+  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
+  <li><a href="#models" id="markdown-toc-models">Models</a>    <ul>
+      <li><a href="#capability" id="markdown-toc-capability">Capability</a></li>
+      <li><a href="#metadata" id="markdown-toc-metadata">Metadata</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>The Storage API manages storages and their resources.</p>
+
+<p>A resource can be:</p>
+
+<ul>
+  <li><code>Object</code>: it contains binary data. Depending on the storage it can be a file, a BLOB object or anything that is not a Container.</li>
+  <li><code>Container</code>: it contains other resources. Depending on the storage it can be a folder, a bucket or anything that is not an Object.</li>
+</ul>
+
+<p>A Resource URI is powerful addressing scheme to identify diferent storages.
+It is usually referenced by the  <code>:resourceuri</code> placeholder.</p>
+
+<p>The Resource URI can take two forms:</p>
+
+<ol>
+  <li>
+    <p><strong>Path format</strong>: When referencing a resource by a path:</p>
+
+    <pre><code> storage-scheme://[[authinfo@]host]]/path[?query][#fragment]
+</code></pre>
+
+    <p>Examples:</p>
+
+    <pre><code> local:///docs/thesis.pdf
+ swift://bucket1.tenant1.com/docs/thesis.pdf
+ s3://user:password@bucket2.tenant2.example.com/docs/thesis.pdf
+</code></pre>
+
+    <p>The use of <code>authinfo@host</code> can be used in distributed storage systems. This is useful when you want talk to the closest geographically server, for example.</p>
+  </li>
+  <li>
+    <p><strong>ID format</strong>: When referencing a resource by ID</p>
+
+    <pre><code> storage-scheme:opaque[?query][#fragment]
+</code></pre>
+
+    <p>The <code>opaque</code> part can be anything and it is defined by each storage.
+ Some storages may use a number, other may use a hash and others maybe a path.</p>
+
+    <p>Examples:</p>
+
+    <pre><code> local:docs/thesis.pdf
+ eos:139128318809
+ s3:de305d54-75b4-431b-adb2-eb6b9e546014 
+</code></pre>
+  </li>
+</ol>
+
+<h1 id="models">Models</h1>
+
+<h2 id="capability">Capability</h2>
+<p>The features that the storage can offer are specified in the <strong>Capability</strong> model:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>stat</code></td>
+      <td><code>boolean</code></td>
+      <td>Stat a reosource.</td>
+    </tr>
+    <tr>
+      <td><code>add</code></td>
+      <td><code>boolean</code></td>
+      <td>Add resources to a container.</td>
+    </tr>
+    <tr>
+      <td><code>remove</code></td>
+      <td><code>boolean</code></td>
+      <td>Remove resources from a container.</td>
+    </tr>
+    <tr>
+      <td><code>copy</code></td>
+      <td><code>boolean</code></td>
+      <td>Copy a resource.</td>
+    </tr>
+    <tr>
+      <td><code>rename</code></td>
+      <td><code>boolean</code></td>
+      <td>Rename a resource.</td>
+    </tr>
+    <tr>
+      <td><code>3rdcopy</code></td>
+      <td><code>boolean</code></td>
+      <td>Thrird party copy of a resource.</td>
+    </tr>
+    <tr>
+      <td><code>3rdrename</code></td>
+      <td><code>boolean</code></td>
+      <td>Third party rename of a resource.</td>
+    </tr>
+    <tr>
+      <td><code>putobject</code></td>
+      <td><code>boolean</code></td>
+      <td>Upload the full object.</td>
+    </tr>
+    <tr>
+      <td><code>putobjectinchunks</code></td>
+      <td><code>boolean</code></td>
+      <td>Upload the object in chunks.</td>
+    </tr>
+    <tr>
+      <td><code>getobject</code></td>
+      <td><code>boolean</code></td>
+      <td>Download the full object.</td>
+    </tr>
+    <tr>
+      <td><code>getobjectbybyterange</code></td>
+      <td><code>boolean</code></td>
+      <td>Download some bytes of the object.</td>
+    </tr>
+    <tr>
+      <td><code>createcont</code></td>
+      <td><code>boolean</code></td>
+      <td>Create a container.</td>
+    </tr>
+    <tr>
+      <td><code>verifyclientchecksum</code></td>
+      <td><code>boolean</code></td>
+      <td>Verify client checksums.</td>
+    </tr>
+    <tr>
+      <td><code>sendserverchecksum</code></td>
+      <td><code>boolean</code></td>
+      <td>Send server-computed checksum.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Version features</em></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code>listversions</code></td>
+      <td><code>boolean</code></td>
+      <td>List versions of a resource.</td>
+    </tr>
+    <tr>
+      <td><code>getversion</code></td>
+      <td><code>boolean</code></td>
+      <td>Download a version.</td>
+    </tr>
+    <tr>
+      <td><code>createversion</code></td>
+      <td><code>boolean</code></td>
+      <td>Create a version.</td>
+    </tr>
+    <tr>
+      <td><code>deleteversion</code></td>
+      <td><code>boolean</code></td>
+      <td>Delete a version.</td>
+    </tr>
+    <tr>
+      <td><code>rollbackversion</code></td>
+      <td><code>boolean</code></td>
+      <td>Rollback to a previous version.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Trashbin features</em></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code>listjunk</code></td>
+      <td><code>boolean</code></td>
+      <td>List junk files (deleted files).</td>
+    </tr>
+    <tr>
+      <td><code>restorejunk</code></td>
+      <td><code>boolean</code></td>
+      <td>Restore a junk a file.</td>
+    </tr>
+    <tr>
+      <td><code>purgejunk</code></td>
+      <td><code>boolean</code></td>
+      <td>Purge a junk file.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="metadata">Metadata</h2>
+<p>All resources have metadata attached. This information is kept in the <strong>Metadata</strong> model:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>checksum</code></td>
+      <td><code>string</code></td>
+      <td>The checksum of the resource.</td>
+    </tr>
+    <tr>
+      <td><code>checksumtype</code></td>
+      <td><code>string</code></td>
+      <td>The type of checksum used for the checksum.</td>
+    </tr>
+    <tr>
+      <td><code>children</code></td>
+      <td><code>array(Metadata)</code></td>
+      <td>An array containing metadata about the resources inside a folder.</td>
+    </tr>
+    <tr>
+      <td><code>etag</code></td>
+      <td><code>string</code></td>
+      <td>The ETag of the resource</td>
+    </tr>
+    <tr>
+      <td><code>extra</code></td>
+      <td><code>any</code></td>
+      <td>Custom information returned by the storage. It can be any JSON type.</td>
+    </tr>
+    <tr>
+      <td><code>id</code></td>
+      <td><code>string</code></td>
+      <td>The Resource URI in ID format.</td>
+    </tr>
+    <tr>
+      <td><code>iscol</code></td>
+      <td><code>boolean</code></td>
+      <td>Indicates if the resource is a folder.</td>
+    </tr>
+    <tr>
+      <td><code>mimetype</code></td>
+      <td><code>string</code></td>
+      <td>The mimetype of the resource. Containers MUST return <code>inode/directory</code>.</td>
+    </tr>
+    <tr>
+      <td><code>modified</code></td>
+      <td><code>number</code></td>
+      <td>The modification time of the resource in UTC Unix time.</td>
+    </tr>
+    <tr>
+      <td><code>path</code></td>
+      <td><code>string</code></td>
+      <td>The Resource URI in Path format.</td>
+    </tr>
+    <tr>
+      <td><code>permissions</code></td>
+      <td><code>object(Permission)</code></td>
+      <td>The permissions for the resource.</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>number</code></td>
+      <td>The size of the resource. Folders MAY return the aggregated children´s size.</td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+  </div>
+</div>
+
+
+      <footer class="footer">
+        Copyright ClawIO 2015.<br>
+      </footer>
+    </div>
+
+    <script src="/js/anchor.min.js"></script>
+    <script>
+      var selector = '.markdown-body h2, .markdown-body h3';
+      anchors.options = {
+        placement: 'left',
+        class: 'anchor-link'
+      };
+      anchors.add(selector);
+    </script>
+  </body>
+</html>
