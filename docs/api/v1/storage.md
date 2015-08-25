@@ -3,7 +3,7 @@ layout: page
 title: Storage
 ---
 
-This describes the API endpoints for managing the storage.
+This describes the API for managing the storage.
 
 # Contents
 

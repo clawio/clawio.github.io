@@ -3,7 +3,7 @@ layout: page
 title: Link
 ---
 
-This describes the API endpoints for managing the links.
+This describes the API for managing the links.
 
 # Contents
 

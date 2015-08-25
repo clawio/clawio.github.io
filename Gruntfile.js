@@ -87,8 +87,8 @@ module.exports = function(grunt) {
       },
       pages: {
         options: {
-          remote: 'git@github.com:primer/primer.git',
-          branch: 'gh-pages'
+          remote: 'git@github.com:clawio/clawio.github.io.git',
+          branch: 'master'
         }
       }
     }
