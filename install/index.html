@@ -29,10 +29,10 @@
         </a>
 
         <nav class="masthead-nav">
-          <a  href="/api/v1/">API Docs</a>
+          <a  href="/manifesto">Manifesto</a>
+          <a  href="/api/v1/">API Spec</a>
           <a href="/install">Install</a>
           <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
-          <a  href="/about">About</a>
         </nav>
       </div>
     </header>
@@ -48,30 +48,117 @@
     <div class="markdown-body">
       <p>Learn how to install ClawIO.</p>
 
-<h1 id="clawio-daemon">ClawIO Daemon</h1>
+<h1 id="contents">Contents</h1>
 
-<p>The Daemon is the core component of the ClawIO Project. It provides a HTTP/HTTPS server with a <a href="/api/v1">REST API</a>.</p>
-
-<p>The fastest way to download the <code>clawiod</code> binary is through <a href="https://github.com/clawio/clawiod/releases">GitHub Release Pages</a>.</p>
-
-<p>The releases are provided in the following formats:</p>
-
-<ul>
-  <li>DEB package</li>
-  <li>Binary for Mac OSX 64 bits</li>
-  <li>Binary for Linux 64 bits</li>
-  <li>Source code</li>
+<ul id="markdown-toc">
+  <li><a href="#contents" id="markdown-toc-contents">Contents</a></li>
+  <li><a href="#centos--rhel-6" id="markdown-toc-centos--rhel-6">CentOS / RHEL 6</a></li>
+  <li><a href="#centos--rhel-7" id="markdown-toc-centos--rhel-7">CentOS / RHEL 7</a></li>
+  <li><a href="#debian-7" id="markdown-toc-debian-7">Debian 7</a></li>
+  <li><a href="#debian-8" id="markdown-toc-debian-8">Debian 8</a></li>
+  <li><a href="#fedora-20" id="markdown-toc-fedora-20">Fedora 20</a></li>
+  <li><a href="#sles-12" id="markdown-toc-sles-12">SLES 12</a></li>
+  <li><a href="#ubuntu-1204" id="markdown-toc-ubuntu-1204">Ubuntu 12.04</a></li>
+  <li><a href="#ubuntu-1404" id="markdown-toc-ubuntu-1404">Ubuntu 14.04</a></li>
 </ul>
 
-<p>In order to compile the source code you need <a href="https://golang.org/doc/install">Go</a> installed.</p>
+<h1 id="centos--rhel-6">CentOS / RHEL 6</h1>
+<p>Here is how to install the package on a CentOS / RHEL 6 64 bits server:</p>
+
+<p><code>sudo rpm --import https://rpm.packager.io/key</code></p>
+
+<p><code>echo "[clawiod]
+name=Repository for clawio/clawiod application.
+baseurl=https://rpm.packager.io/gh/clawio/clawiod/centos6/master
+enabled=1" | sudo tee /etc/yum.repos.d/clawiod.repo</code></p>
+
+<p><code>sudo yum install clawiod</code></p>
+
+<h1 id="centos--rhel-7">CentOS / RHEL 7</h1>
+<p>Here is how to install the package on a CentOS / RHEL 6 64 bits server:</p>
+
+<p><code>sudo rpm --import https://rpm.packager.io/key</code></p>
+
+<p><code>echo "[clawiod]
+name=Repository for clawio/clawiod application.
+baseurl=https://rpm.packager.io/gh/clawio/clawiod/centos7/master
+enabled=1" | sudo tee /etc/yum.repos.d/clawiod.repo</code></p>
+
+<p><code>sudo yum install clawiod</code></p>
+
+<h1 id="debian-7">Debian 7</h1>
+<p>Here is how to install the package on a Debian 7 Wheezy 64 bits server:</p>
+
+<p><code>wget -qO - https://deb.packager.io/key | sudo apt-key add -</code></p>
+
+<p><code>echo "deb https://deb.packager.io/gh/clawio/clawiod wheezy master" | sudo tee /etc/apt/sources.list.d/clawiod.list</code></p>
+
+<p><code>sudo apt-get update</code></p>
+
+<p><code>sudo apt-get install clawiod</code></p>
+
+<h1 id="debian-8">Debian 8</h1>
+<p>Here is how to install the package on a Debian 7 Wheezy 64 bits server:</p>
+
+<p><code>wget -qO - https://deb.packager.io/key | sudo apt-key add -</code></p>
+
+<p><code>echo "deb https://deb.packager.io/gh/clawio/clawiod jessie master" | sudo tee /etc/apt/sources.list.d/clawiod.list</code></p>
+
+<p><code>sudo apt-get update</code></p>
+
+<p><code>sudo apt-get install clawiod</code></p>
+
+<h1 id="fedora-20">Fedora 20</h1>
+<p>Here is how to install the package on a Fedora 20 64 bits server:</p>
+
+<p><code>sudo rpm --import https://rpm.packager.io/key</code></p>
+
+<p><code>echo "[clawiod]
+name=Repository for clawio/clawiod application.
+baseurl=https://rpm.packager.io/gh/clawio/clawiod/fedora20/master
+enabled=1" | sudo tee /etc/yum.repos.d/clawiod.repo</code></p>
+
+<p><code>sudo yum install clawiod</code></p>
+
+<h1 id="sles-12">SLES 12</h1>
+<p>Here is how to install the package on a SUSE Linux Enterprise Server 12 64 bits server:</p>
+
+<p><code>sudo rpm --import https://rpm.packager.io/key</code></p>
+
+<p><code>sudo zypper addrepo "https://rpm.packager.io/gh/clawio/clawiod/sles12/master" "clawiod"</code></p>
+
+<p><code>sudo zypper install clawiod</code></p>
+
+<h1 id="ubuntu-1204">Ubuntu 12.04</h1>
+<p>Here is how to install the package on a Ubuntu 12.04 Precise 64 bits server:</p>
+
+<p><code>wget -qO - https://deb.packager.io/key | sudo apt-key add -</code></p>
+
+<p><code>echo "deb https://deb.packager.io/gh/clawio/clawiod precise master" | sudo tee /etc/apt/sources.list.d/clawiod.list</code></p>
+
+<p><code>sudo apt-get update</code></p>
+
+<p><code>sudo apt-get install clawiod</code></p>
+
+<h1 id="ubuntu-1404">Ubuntu 14.04</h1>
+<p>Here is how to install the package on a Ubuntu 14.04 Trusty 64 bits server:</p>
+
+<p><code>wget -qO - https://deb.packager.io/key | sudo apt-key add -</code></p>
+
+<p><code>echo "deb https://deb.packager.io/gh/clawio/clawiod trusty master" | sudo tee /etc/apt/sources.list.d/clawiod.list</code></p>
+
+<p><code>sudo apt-get update</code></p>
+
+<p><code>sudo apt-get install clawiod</code></p>
+
 
     </div>
   </div>
 </div>
 
 
-      <footer class="footer">
-        Copyright ClawIO 2015.<br>
+      <footer class="footer centered">
+        <b>Copyright ClawIO 2015</b>
       </footer>
     </div>
 
