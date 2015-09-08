@@ -29,10 +29,10 @@
         </a>
 
         <nav class="masthead-nav">
-          <a {% if page.title == "API" %}class="active"{% endif %} href="{{ site.baseurl }}/api/v1/">API Docs</a>
+          <a {% if page.title == "Manifesto" %}class="active"{% endif %} href="{{ site.baseurl }}/manifesto">Manifesto</a>
+          <a {% if page.title == "API" %}class="active"{% endif %} href="{{ site.baseurl }}/api/v1/">API Spec</a>
           <a href="{{ site.baseurl }}/install">Install</a>
           <a href="{{ site.github.repo }}" target="_blank">GitHub</a>
-          <a {% if page.title == "About" %}class="active"{% endif %} href="{{ site.baseurl }}/about">About</a>
         </nav>
       </div>
     </header>
@@ -40,28 +40,38 @@
     {% if page.title == "Home" %}
       <div class="jumbotron">
         <div class="container">
-          <h1>ClawIO</h1>
-          <p>The Scalable Sync and Share Server</p>
-          <p style="color:yellow">In R&D phase</p>
-          <a href="{{ site.baseurl }}/api/v1" class="btn btn-reverse">
-            Read the docs
-          </a>
-        </div>
-      </div>
+          <div class="columns">
+            <div class="one-half left">
+              <p>The Scalable Sync and Share Server</p>
+              <p style="color:yellow">In R&D phase</p>
+              <a href="{{ site.baseurl }}/manifesto" class="btn btn-reverse">
+                Read the manifesto
+              </a>
+            </div>
+            <div class="one-half right">
+              <p class="lead" style="color:yellow">“We don't believe in companies, we believe in protocols. Companies appear and disappear but protocols always remain”</p>
+            </div>
+          </div>
+       </div>
+     </div>
 
       <div class="container about-that">
         <div class="columns">
-          <div class="one-third column">
-            <h2>Based on CERNBox principles</h2>
-            <p>CERNBox project at CERN settled the bases for scalable sync and share servers. ClawIO has been built from scratch based on its solid principles</p>
+          <div class="one-fourth column">
+            <h2>Based on CERNBox</h2>
+            <p>CERNBox project at CERN settled the design bases for scalable sync and share servers. ClawIO has been built from scratch based on its solid principles.</p>
           </div>
-          <div class="one-third column">
+            <div class="one-fourth column">
+            <h2>Trust in open protocols</h2>
+            <p>ClawIO is not just a set of specifications. It will be reference implementation of open standards like <a href="https://owncloud.com/lp/opencloudmesh/">OpenCloudMesh</a> and a future Open Sync Protocol.</p>
+          </div>
+          <div class="one-fourth column">
+            <h2>Implemented in Go!</h2>
+            <p>PHP does not offer advanced features related to concurrency and paralelism. ClawIO is being developed with Go to achieve incredible performance.</p>
+          </div>
+          <div class="one-fourth column">
             <h2>Open source</h2>
-            <p>Available for use under the AGPLv3 license and built with open source tools</p>
-          </div>
-          <div class="one-third column">
-            <h2>Go!</h2>
-            <p>PHP ? No please. Developed with Golang! One binary, easy deployment, awesome performance</p>
+            <p>Available for use under the AGPLv3 license and built with open source tools.</p>
           </div>
         </div>
       </div>
@@ -70,8 +80,8 @@
     <div class="container">
       {{ content }}
 
-      <footer class="footer">
-        Copyright ClawIO {{ site.time | date: '%Y' }}.<br>
+      <footer class="footer centered">
+        <b>Copyright ClawIO {{ site.time | date: '%Y' }}</b>
       </footer>
     </div>
 
