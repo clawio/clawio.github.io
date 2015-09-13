@@ -17,6 +17,6 @@ enabled=1"</span> | <span class="hljs-built_in">sudo</span> tee /etc/yum.repos.d
 
 # Start clawiod
 
-`service clawiod start`
+`systemctl start clawiod`
 
 See [Getting started](/documentation/getting_started)
