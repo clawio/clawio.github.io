@@ -48,7 +48,7 @@ There are two types of links:
 **Besides the link permissions, the last word is dictated by the storage permissions. For example, if you set `add` permission to a container in the link permission model but the storage permission model forbids this permission, then you cannot `add`**.
 
 ## Link Metadata
-The **Link Metadata** model is an extension of the [Storage Metadata](/api/v1/storage/#metadata):
+The **Link Metadata** model is an extension of the [Storage Metadata](/documentation/api/v1/storage/#metadata):
 
 Name | Type | Description
 -----|------|--------------
@@ -62,7 +62,7 @@ Name | Type | Description
 `mimetype`|`string` | The mimetype of the resource. Containers MUST return `inode/directory`.
 `modified`|`number` | The modification time of the resource in UTC Unix time.
 `path`|`string` | The Resource URI in Path format.
-`permissions`|`object` | The [permissions](/api/v1/storage/#permission) for the resource.
+`permissions`|`object` | The [permissions](/documentation/api/v1/storage/#permission) for the resource.
 `size`|`number` | The size of the resource.
 `opaque_path`|`string` | An opaque path to access sub-resources.
 

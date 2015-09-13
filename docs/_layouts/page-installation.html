@@ -3,7 +3,12 @@ layout: default
 ---
 
 <div class="columns docs-layout">
-  <div class="four-fifths column markdown-body">
+  <div class="one-fourth column">
+    {% unless page.title == "About" %}
+      {% include sidenav-installation.html %}
+    {% endunless %}
+  </div>
+  <div class="three-fourths column markdown-body">
     <h1 class="page-title">
       {{ page.title }}
     </h1>

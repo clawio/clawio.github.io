@@ -17,7 +17,7 @@ The current version of the API is **v1**.
 All API access should be done over HTTPS, and accessed from **https:/yourdomain.com/api/v1/**. All data is sent and received as JSON otherwise specified.
 
 
-	curl -i https://yourdomain.com/api/v1/storage/stat/eos:///photos
+	curl -i https://yourdomain.com/api/v1/storage/stat/local
 
 	HTTP/1.1 200 OK
 

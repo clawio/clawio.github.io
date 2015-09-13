@@ -101,7 +101,7 @@ Name | Type | Description
 `mimetype`|`string` | The mimetype of the resource. Containers MUST return `inode/directory`.
 `modified`|`number` | The modification time of the resource in UTC Unix time.
 `path`|`string` | The Resource URI in Path format.
-`permissions`|`object` | The [permissions](/api/v1/permission) for the resource.
+`permissions`|`object` | The [permissions](/documentation/api/v1/permission) for the resource.
 `size`|`number` | The size of the resource. Folders MAY return the aggregated children´s size.
 
 ## Permission
