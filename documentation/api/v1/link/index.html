@@ -30,8 +30,7 @@
 
         <nav class="masthead-nav">
           <a  href="/manifesto">Manifesto</a>
-          <a  href="/api/v1/">API Spec</a>
-          <a href="/install">Install</a>
+          <a  href="/documentation/">Documentation</a>
           <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
         </nav>
       </div>
@@ -44,20 +43,19 @@
   <div class="one-fourth column">
     
       <nav class="menu docs-menu">
-  <a class="menu-item " href="/api/v1/">
+  <a class="menu-item " href="/documentation/api/v1/">
     API
   </a>
-  <a class="menu-item " href="/api/v1/auth/">
+  <a class="menu-item " href="/documentation/api/v1/auth/">
     Auth
   </a>
-  <a class="menu-item " href="/api/v1/storage/">
+  <a class="menu-item " href="/documentation/api/v1/storage/">
     Storage
   </a>
-  <a class="menu-item selected" href="/api/v1/link/">
+  <!--<a class="menu-item selected" href="/documentation/api/v1/link/">
     Link
   </a>
-  <!--
-  <a class="menu-item " href="/api/v1/share/">
+  <a class="menu-item " href="/documentation/api/v1/share/">
     Share
   </a>
   -->
@@ -65,26 +63,28 @@
 
 
 <nav class="menu docs-menu">
-  <a class="menu-item " href="/api/v1/webdav/">
+  <a class="menu-item " href="/documentation/api/v1/webdav/">
     WebDAV
   </a>
-  <a class="menu-item " href="/api/v1/storagedav/">
+  <a class="menu-item " href="/documentation/api/v1/storagedav/">
     StorageDAV
   </a>
-  <a class="menu-item " href="/api/v1/linkdav/">
+  <!--
+  <a class="menu-item " href="/documentation/api/v1/linkdav/">
     LinkDAV
   </a>
+  -->
 </nav>
 
 <!--
 <nav class="menu docs-menu">
-  <a class="menu-item " href="/api/v1/owncloud/">
+  <a class="menu-item " href="/documentation/api/v1/owncloud/">
     OwnCloud
   </a>
-  <a class="menu-item " href="/api/v1/ocshare/">
+  <a class="menu-item " href="/documentation/api/v1/ocshare/">
     OC Share
   </a>
-  <a class="menu-item " href="/api/v1/ocwebdav">
+  <a class="menu-item " href="/documentation/api/v1/ocwebdav">
     OC WebDAV
   </a>
 </nav>
@@ -255,7 +255,7 @@
 <p><strong>Besides the link permissions, the last word is dictated by the storage permissions. For example, if you set <code>add</code> permission to a container in the link permission model but the storage permission model forbids this permission, then you cannot <code>add</code></strong>.</p>
 
 <h2 id="link-metadata">Link Metadata</h2>
-<p>The <strong>Link Metadata</strong> model is an extension of the <a href="/api/v1/storage/#metadata">Storage Metadata</a>:</p>
+<p>The <strong>Link Metadata</strong> model is an extension of the <a href="/documentation/api/v1/storage/#metadata">Storage Metadata</a>:</p>
 
 <table>
   <thead>
@@ -319,7 +319,7 @@
     <tr>
       <td><code>permissions</code></td>
       <td><code>object</code></td>
-      <td>The <a href="/api/v1/storage/#permission">permissions</a> for the resource.</td>
+      <td>The <a href="/documentation/api/v1/storage/#permission">permissions</a> for the resource.</td>
     </tr>
     <tr>
       <td><code>size</code></td>

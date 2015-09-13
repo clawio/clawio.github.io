@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title>
-      Colors &middot; ClawIO
+      StorageDAV &middot; ClawIO
     </title>
 
     <link rel="stylesheet" href="/docs.css">
@@ -66,7 +66,7 @@
   <a class="menu-item " href="/documentation/api/v1/webdav/">
     WebDAV
   </a>
-  <a class="menu-item " href="/documentation/api/v1/storagedav/">
+  <a class="menu-item selected" href="/documentation/api/v1/storagedav/">
     StorageDAV
   </a>
   <!--
@@ -94,24 +94,35 @@
   </div>
   <div class="three-fourths column markdown-body">
     <h1 class="page-title">
-      Colors
+      StorageDAV
     </h1>
     <div class="markdown-body">
-      <p>The look and feel of our company and product relies on using a handful of specific colors that help convey meaning and purpose.</p>
+      <p>This describes the API for accesing the storage using WebDAV.</p>
 
-<h3 id="branding">Branding</h3>
+<h1 id="contents">Contents</h1>
 
-<div class="swatch swatch-blue"></div>
-<div class="swatch swatch-green"></div>
-<div class="swatch swatch-red"></div>
-<div class="swatch swatch-orange"></div>
-<div class="swatch swatch-purple"></div>
+<ul id="markdown-toc">
+  <li><a href="#contents" id="markdown-toc-contents">Contents</a></li>
+  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
+  <li><a href="#connection" id="markdown-toc-connection">Connection</a></li>
+</ul>
 
-<h3 id="grayscale">Grayscale</h3>
+<h1 id="introduction">Introduction</h1>
 
-<div class="swatch swatch-gray-light"></div>
-<div class="swatch swatch-gray"></div>
-<div class="swatch swatch-gray-dark"></div>
+<p>The Storage API manages storages and their resources.
+It provides the most powerful way to interact with the storage.</p>
+
+<p>The StorageDAV is an API that provides filesystem-alike operations through WebDAV on top of the Storage API.</p>
+
+<p>The authentication method is Basic Auth. Token based authentication is not enabled because most of the WebDAV clients don’t know how to deal with it as it isn’t part of the WebDAV specification.</p>
+
+<h1 id="connection">Connection</h1>
+
+<p>To connect to the StorageDAV API the client must connect to the following URL:</p>
+
+<p><code>https://yourdomain.com/api/v1/storagedav/:resourceuri</code></p>
+
+<p>Once you have submitted you authentication credentials you can start submitting your WebDAV requests.</p>
 
     </div>
   </div>

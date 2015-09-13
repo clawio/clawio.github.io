@@ -30,8 +30,7 @@
 
         <nav class="masthead-nav">
           <a  href="/manifesto">Manifesto</a>
-          <a class="active" href="/api/v1/">API Spec</a>
-          <a href="/install">Install</a>
+          <a  href="/documentation/">Documentation</a>
           <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
         </nav>
       </div>
@@ -44,20 +43,19 @@
   <div class="one-fourth column">
     
       <nav class="menu docs-menu">
-  <a class="menu-item selected" href="/api/v1/">
+  <a class="menu-item selected" href="/documentation/api/v1/">
     API
   </a>
-  <a class="menu-item " href="/api/v1/auth/">
+  <a class="menu-item " href="/documentation/api/v1/auth/">
     Auth
   </a>
-  <a class="menu-item " href="/api/v1/storage/">
+  <a class="menu-item " href="/documentation/api/v1/storage/">
     Storage
   </a>
-  <a class="menu-item " href="/api/v1/link/">
+  <!--<a class="menu-item " href="/documentation/api/v1/link/">
     Link
   </a>
-  <!--
-  <a class="menu-item " href="/api/v1/share/">
+  <a class="menu-item " href="/documentation/api/v1/share/">
     Share
   </a>
   -->
@@ -65,26 +63,28 @@
 
 
 <nav class="menu docs-menu">
-  <a class="menu-item " href="/api/v1/webdav/">
+  <a class="menu-item " href="/documentation/api/v1/webdav/">
     WebDAV
   </a>
-  <a class="menu-item " href="/api/v1/storagedav/">
+  <a class="menu-item " href="/documentation/api/v1/storagedav/">
     StorageDAV
   </a>
-  <a class="menu-item " href="/api/v1/linkdav/">
+  <!--
+  <a class="menu-item " href="/documentation/api/v1/linkdav/">
     LinkDAV
   </a>
+  -->
 </nav>
 
 <!--
 <nav class="menu docs-menu">
-  <a class="menu-item " href="/api/v1/owncloud/">
+  <a class="menu-item " href="/documentation/api/v1/owncloud/">
     OwnCloud
   </a>
-  <a class="menu-item " href="/api/v1/ocshare/">
+  <a class="menu-item " href="/documentation/api/v1/ocshare/">
     OC Share
   </a>
-  <a class="menu-item " href="/api/v1/ocwebdav">
+  <a class="menu-item " href="/documentation/api/v1/ocwebdav">
     OC WebDAV
   </a>
 </nav>
@@ -128,7 +128,7 @@
 <h1 id="scheme">Scheme</h1>
 <p>All API access should be done over HTTPS, and accessed from <strong>https:/yourdomain.com/api/v1/</strong>. All data is sent and received as JSON otherwise specified.</p>
 
-<pre><code>curl -i https://yourdomain.com/api/v1/storage/stat/eos:///photos
+<pre><code>curl -i https://yourdomain.com/api/v1/storage/stat/local
 
 HTTP/1.1 200 OK
 

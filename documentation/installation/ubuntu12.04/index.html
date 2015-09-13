@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title>
-      Colors &middot; ClawIO
+      Ubuntu 12.04 &middot; ClawIO
     </title>
 
     <link rel="stylesheet" href="/docs.css">
@@ -43,75 +43,56 @@
   <div class="one-fourth column">
     
       <nav class="menu docs-menu">
-  <a class="menu-item " href="/documentation/api/v1/">
-    API
+  <a class="menu-item " href="/documentation/installation">
+    Installation
   </a>
-  <a class="menu-item " href="/documentation/api/v1/auth/">
-    Auth
+  <a class="menu-item selected" href="/documentation/installation/ubuntu12.04">
+    Ubuntu 12.04
   </a>
-  <a class="menu-item " href="/documentation/api/v1/storage/">
-    Storage
+  <a class="menu-item " href="/documentation/installation/ubuntu14.04">
+    Ubuntu 14.04
   </a>
-  <!--<a class="menu-item " href="/documentation/api/v1/link/">
-    Link
+  <a class="menu-item " href="/documentation/installation/debian7">
+    Debian 7
   </a>
-  <a class="menu-item " href="/documentation/api/v1/share/">
-    Share
+  <a class="menu-item " href="/documentation/installation/debian8">
+    Debian 8
   </a>
-  -->
-</nav>
-
-
-<nav class="menu docs-menu">
-  <a class="menu-item " href="/documentation/api/v1/webdav/">
-    WebDAV
+  <a class="menu-item " href="/documentation/installation/fedora20">
+    Fedora 20
   </a>
-  <a class="menu-item " href="/documentation/api/v1/storagedav/">
-    StorageDAV
+  <a class="menu-item " href="/documentation/installation/sles12">
+    SLES 12
   </a>
-  <!--
-  <a class="menu-item " href="/documentation/api/v1/linkdav/">
-    LinkDAV
+  <a class="menu-item " href="/documentation/installation/centos6">
+    CentOS / RHEL 6
   </a>
-  -->
-</nav>
-
-<!--
-<nav class="menu docs-menu">
-  <a class="menu-item " href="/documentation/api/v1/owncloud/">
-    OwnCloud
-  </a>
-  <a class="menu-item " href="/documentation/api/v1/ocshare/">
-    OC Share
-  </a>
-  <a class="menu-item " href="/documentation/api/v1/ocwebdav">
-    OC WebDAV
+  <a class="menu-item " href="/documentation/installation/centos7">
+    CentOS / RHEL 7
   </a>
 </nav>
--->
-
     
   </div>
   <div class="three-fourths column markdown-body">
     <h1 class="page-title">
-      Colors
+      Ubuntu 12.04
     </h1>
     <div class="markdown-body">
-      <p>The look and feel of our company and product relies on using a handful of specific colors that help convey meaning and purpose.</p>
+      <p>Here is how to install the package on a Ubuntu 12.04 Precise 64 bits server:</p>
 
-<h3 id="branding">Branding</h3>
+<h1 id="install">Install</h1>
 
-<div class="swatch swatch-blue"></div>
-<div class="swatch swatch-green"></div>
-<div class="swatch swatch-red"></div>
-<div class="swatch swatch-orange"></div>
-<div class="swatch swatch-purple"></div>
+<div class=""><pre><code>wget <span class="hljs-attribute">-qO</span> <span class="hljs-subst">-</span> https:<span class="hljs-comment">//deb.packager.io/key | sudo apt-key add -</span>
+echo <span class="hljs-string">"deb https://deb.packager.io/gh/clawio/clawiod precise master"</span> <span class="hljs-subst">|</span> sudo tee /etc/apt/sources<span class="hljs-built_in">.</span><span class="hljs-built_in">list</span><span class="hljs-built_in">.</span>d/clawiod<span class="hljs-built_in">.</span><span class="hljs-built_in">list</span>
+sudo apt<span class="hljs-attribute">-get</span> update
+sudo apt<span class="hljs-attribute">-get</span> install clawiod
+</code></pre></div>
 
-<h3 id="grayscale">Grayscale</h3>
+<h1 id="start-clawiod">Start clawiod</h1>
 
-<div class="swatch swatch-gray-light"></div>
-<div class="swatch swatch-gray"></div>
-<div class="swatch swatch-gray-dark"></div>
+<p><code>service clawiod start</code></p>
+
+<p>See <a href="/documentation/getting_started">Getting started</a></p>
 
     </div>
   </div>

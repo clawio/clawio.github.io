@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title>
-      StorageDAV &middot; ClawIO
+      Fedora 20 &middot; ClawIO
     </title>
 
     <link rel="stylesheet" href="/docs.css">
@@ -30,8 +30,7 @@
 
         <nav class="masthead-nav">
           <a  href="/manifesto">Manifesto</a>
-          <a  href="/api/v1/">API Spec</a>
-          <a href="/install">Install</a>
+          <a  href="/documentation/">Documentation</a>
           <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
         </nav>
       </div>
@@ -44,85 +43,58 @@
   <div class="one-fourth column">
     
       <nav class="menu docs-menu">
-  <a class="menu-item " href="/api/v1/">
-    API
+  <a class="menu-item " href="/documentation/installation">
+    Installation
   </a>
-  <a class="menu-item " href="/api/v1/auth/">
-    Auth
+  <a class="menu-item " href="/documentation/installation/ubuntu12.04">
+    Ubuntu 12.04
   </a>
-  <a class="menu-item " href="/api/v1/storage/">
-    Storage
+  <a class="menu-item " href="/documentation/installation/ubuntu14.04">
+    Ubuntu 14.04
   </a>
-  <a class="menu-item " href="/api/v1/link/">
-    Link
+  <a class="menu-item " href="/documentation/installation/debian7">
+    Debian 7
   </a>
-  <!--
-  <a class="menu-item " href="/api/v1/share/">
-    Share
+  <a class="menu-item " href="/documentation/installation/debian8">
+    Debian 8
   </a>
-  -->
-</nav>
-
-
-<nav class="menu docs-menu">
-  <a class="menu-item " href="/api/v1/webdav/">
-    WebDAV
+  <a class="menu-item selected" href="/documentation/installation/fedora20">
+    Fedora 20
   </a>
-  <a class="menu-item selected" href="/api/v1/storagedav/">
-    StorageDAV
+  <a class="menu-item " href="/documentation/installation/sles12">
+    SLES 12
   </a>
-  <a class="menu-item " href="/api/v1/linkdav/">
-    LinkDAV
+  <a class="menu-item " href="/documentation/installation/centos6">
+    CentOS / RHEL 6
+  </a>
+  <a class="menu-item " href="/documentation/installation/centos7">
+    CentOS / RHEL 7
   </a>
 </nav>
-
-<!--
-<nav class="menu docs-menu">
-  <a class="menu-item " href="/api/v1/owncloud/">
-    OwnCloud
-  </a>
-  <a class="menu-item " href="/api/v1/ocshare/">
-    OC Share
-  </a>
-  <a class="menu-item " href="/api/v1/ocwebdav">
-    OC WebDAV
-  </a>
-</nav>
--->
-
     
   </div>
   <div class="three-fourths column markdown-body">
     <h1 class="page-title">
-      StorageDAV
+      Fedora 20
     </h1>
     <div class="markdown-body">
-      <p>This describes the API for accesing the storage using WebDAV.</p>
+      <p>Here is how to install the package on a Fedora 20 64 bits server:</p>
 
-<h1 id="contents">Contents</h1>
+<h1 id="install">Install</h1>
 
-<ul id="markdown-toc">
-  <li><a href="#contents" id="markdown-toc-contents">Contents</a></li>
-  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
-  <li><a href="#connection" id="markdown-toc-connection">Connection</a></li>
-</ul>
+<div class="marked"><pre><code><span class="hljs-built_in">sudo</span> rpm --import https://rpm.packager.io/key
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"[clawiod]
+name=Repository for clawio/clawiod application.
+baseurl=https://rpm.packager.io/gh/clawio/clawiod/fedora20/master
+enabled=1"</span> | <span class="hljs-built_in">sudo</span> tee /etc/yum.repos.d/clawiod.repo
+<span class="hljs-built_in">sudo</span> yum install clawiod
+</code></pre></div>
 
-<h1 id="introduction">Introduction</h1>
+<h1 id="start-clawiod">Start clawiod</h1>
 
-<p>The Storage API manages storages and their resources.
-It provides the most powerful way to interact with the storage.</p>
+<p><code>service clawiod start</code></p>
 
-<p>The StorageDAV is an API that provides filesystem-alike operations through WebDAV on top of the Storage API.</p>
-
-<p>The authentication method is Basic Auth. Token based authentication is not enabled because most of the WebDAV clients don’t know how to deal with it as it isn’t part of the WebDAV specification.</p>
-
-<h1 id="connection">Connection</h1>
-
-<p>To connect to the StorageDAV API the client must connect to the following URL:</p>
-
-<p><code>https://yourdomain.com/api/v1/storagedav/:resourceuri</code></p>
-
-<p>Once you have submitted you authentication credentials you can start submitting your WebDAV requests.</p>
+<p>See <a href="/documentation/getting_started">Getting started</a></p>
 
     </div>
   </div>
