@@ -17,23 +17,34 @@ The current version of the API is **v1**.
 All API access should be done over HTTPS, and accessed from **https:/yourdomain.com/api/v1/**. All data is sent and received as JSON otherwise specified.
 
 
-	curl -i https://yourdomain.com/api/v1/storage/stat/local
-
+	curl -i http://localhost:57008/api/v1/storage/stat/local -u demo:demo
 	HTTP/1.1 200 OK
+	Date: Sun, 13 Sep 2015 09:12:38 GMT
+	Content-Length: 322
+	Content-Type: application/json
 
 	{
 	    "checksum": "",
-	    "checksum_type": "",
+	    "checksumtype": "",
 	    "children": null,
-	    "etag": "1439495898",
+	    "etag": "1442135249",
 	    "extra": null,
-	    "id": "eos:///2993644435",
-	    "is_container": true,
-	    "mimetype": "inode/directory",
-	    "modified": 1439495898,
-	    "path": "eos:///photos",
-	    "permissions": 24,
-	    "size": 238
+	    "id": "local",
+	    "iscontainer": true,
+	    "mimetype": "inode/container",
+	    "modified": 1442135249,
+	    "path": "local",
+	    "permissions": {
+	        "add": true,
+	        "federatedshare": false,
+	        "get": true,
+	        "link": false,
+	        "list": true,
+	        "remove": true,
+	        "share": false,
+	        "stat": true
+	    },
+	    "size": 4096
 	}
 
 
@@ -62,15 +73,16 @@ All timestamps are returned in [UTC epoch seconds](http://en.wikipedia.org/wiki/
 Many API methods take optional parameters. For GET requests, any parameters not specified as a segment in the path can be passed as an HTTP query string parameter:
 
 
-	$ curl -i -u username "https://yourdomain.com/api/v1/files/stat/eos:///photos?children=true
+	curl http://localhost:57008/api/v1/storage/stat/local?children=true -u demo:demo
 
 
-In this example, the `eos:///photos` value is provided for the `:resourceuri` parameter in the path while `:children is passed in the query string.
+In this example, the `local` value is provided for the `storagepath` path parameter meanwhile `children` is passed in the query string.
 
-For POST, PATCH, PUT, and DELETE requests, parameters not included in the URL should be encoded as JSON with a Content-Type of ‘application/json’:
+For POST, PUT, and DELETE requests, parameters not included in the URL should be encoded as JSON with a Content-Type of `application/json`:
 
-	$ curl -i -u username -d '{"resourceuri":"eos:///photos", "expiration": 199234554}' https://yourdomain.com/api/v1/links/create
+	curl -X POST http://localhost:57008/api/v1/auth/gettoken --data '{"eppn":"demo", "password":"demo"}
 
+<!--
 # Root Endpoint
 
 You can issue a GET request to the root endpoint to get all the endpoint categories that the API supports:
@@ -82,12 +94,13 @@ You can issue a GET request to the root endpoint to get all the endpoint categor
 	  "storageurl": "https://yourdomain.com/api/v1/storage",
 	  "linkurl": "https://yourdomain.com/api/v1/link",
 	}
+-->
 
 # Clients Errors
 
 There are three possible types of client errors on API calls that receive request bodies:
 
-* Sending invalid JSON or the wrong type of JSON values will result in a `415 Unsuported Media Type` response.
+* Sending non-UTF8 strings, invalid JSON or the wrong type of JSON values will result in a `415 Unsuported Media Type` response.
 
 
 		HTTP/1.1 415 Unsupported Media Type
@@ -95,22 +108,17 @@ There are three possible types of client errors on API calls that receive reques
 * Sending invalid fields will result in a `422 Unprocessable Entity` response.
 
 		HTTP/1.1 422 Unprocessable Entity
-		Content-Length: 149
+		Content-Length: 72
 		
 		{
-		   "error":{
-		      "resource":"Link",
-		      "field":"resource_uri",
-		      "code":"empty_field",
-		   }
+	      "resource":"Auth",
+	      "field":"eppn",
+	      "code":"empty_field",
 		}
 
 
 
-All error objects from `422` responses have resource and field properties so that your client
-can tell what the problem is.  There's also an error code to let you
-know what is wrong with the field.  These are the possible validation error
-codes:
+All error objects from `422` responses have resource and field properties so that your client can tell what the problem is.  There's also an error code to let you know what is wrong with the field.  These are the possible validation error codes:
 
 
 Error Name | Description
@@ -143,34 +151,34 @@ action.
 
 Verb | Description
 -----|-----------
-`HEAD` | Can be issued against any resource to get just the HTTP header info.
+`HEAD` | Can be issued against some resources to get just the HTTP header info.
 `GET` | Used for retrieving resources.
 `POST` | Used for creating resources.
-`PATCH` | Used for updating resources with partial JSON data.  For instance, a Link resource has `expiration` and `password` attributes.  A PATCH request may accept one or more of the attributes to update the resource.  PATCH is a relatively new and uncommon HTTP verb, so resource endpoints also accept `POST` requests.
 `PUT` | Used for replacing resources or collections. For `PUT` requests with no `body` attribute, be sure to set the `Content-Length` header to zero.
 `DELETE` |Used for deleting resources.
 
 # Authentication
-There are three ways to authenticate through ClawIO API v1.  Requests that
+There are three ways to authenticate through ClawIO API.  Requests that
 require authentication will return `401 Not Authorized`. In some places `404 Not Found` will be returned instead, this is to prevent the accidental leakage
 of information like password protected Links to unauthorized users.
 
 ## Basic Authentication
 
-	$ curl -u "username" https://yourdomain.com/api/v1
+	curl http://localhost:57008/api/v1/storage/stat/local?children=true -u demo:demo
 
-## JWT Token (sent in a header)
+## JWT Token (via HTTP Header)
 
-	$ curl -H "X-Api-Token: JWT-AUTH-TOKEN"
+	curl http://localhost:57008/api/v1/storage/stat/local?children=true -H "X-Auth-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoaWQiOiJmaWxlYXV0aCIsImRpc3BsYXluYW1lIjoiRGVtbyBVc2VyIiwiZW1haWwiOiJkZW1vQGxvY2FsaG9zdCIsImVwcG4iOiJkZW1vIiwiZXhwIjoxNDQ0NzI4NDc0LCJpZHAiOiJsb2NhbGhvc3QiLCJpc3MiOiJsb2NhbGhvc3QifQ.lHxZ_20Qnz_l-GLI-ATZEnqOALOoTp-3zZGtHk9tPTc"
 
-## JWT Token (sent as parameter)
+## JWT Token (via HTTP Query Param)
 
-	$ curl https://yourdomain.com/api/v1/storage/stat/eos:///docs/thesis.pdf?access_token=JWT-TOKEN
+	curl 'http://localhost:57008/api/v1/storage/stat/local?x-auth-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoaWQiOiJmaWxlYXV0aCIsImRpc3BsYXluYW1lIjoiRGVtbyBVc2VyIiwiZW1haWwiOiJkZW1vQGxvY2FsaG9zdCIsImVwcG4iOiJkZW1vIiwiZXhwIjoxNDQ0NzI4NDc0LCJpZHAiOiJsb2NhbGhvc3QiLCJpc3MiOiJsb2NhbGhvc3QifQ.lHxZ_20Qnz_l-GLI-ATZEnqOALOoTp-3zZGtHk9tPTc'
 
+<!--
 # Cross Origin Resource Sharing
 
 The API supports Cross Origin Resource Sharing (CORS) for AJAX requests from
-any origin.
+any origin as default.
 You can read the [CORS W3C Recommendation](http://www.w3.org/TR/cors/), or
 [this intro](http://code.google.com/p/html5security/wiki/CrossOriginRequestSecurity) from the
 HTML 5 Security Guide.
@@ -193,3 +201,4 @@ This is what the CORS preflight request looks like:
 	Access-Control-Expose-Headers: ETag
 	Access-Control-Max-Age: 86400
 	Access-Control-Allow-Credentials: true
+	-->

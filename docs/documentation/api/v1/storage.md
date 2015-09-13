@@ -19,71 +19,41 @@ A resource can be:
 * `Object`: it contains binary data. Depending on the storage it can be a file, a BLOB object or anything that is not a Container.
 * `Container`: it contains other resources. Depending on the storage it can be a folder, a bucket or anything that is not an Object.
 
-A Resource URI is powerful addressing scheme to identify diferent storages.
-It is usually referenced by the  `:resourceuri` placeholder.
+Every resource live inside a storage. To improve performance ClawIO prefixes every resource with the prefix of the storage. In order to manage resources the `storagepath` format is used to have **Universal Content-Addresable** resources.
 
-The Resource URI can take two forms:
+The format of the `storagepath` is: `<storageprefix>/<pathtoresource>`
 
-1. **Path format**: When referencing a resource by a path:
-
-        storage-scheme://[[authinfo@]host]]/path[?query][#fragment]
-        
-    Examples:
-    
-        local:///docs/thesis.pdf
-        swift://bucket1.tenant1.com/docs/thesis.pdf
-        s3://user:password@bucket2.tenant2.example.com/docs/thesis.pdf
-        
-    The use of `authinfo@host` can be used in distributed storage systems. This is useful when you want talk to the closest geographically server, for example.
-    
-2. **ID format**: When referencing a resource by ID
-
-        storage-scheme:opaque[?query][#fragment]
-        
-    The `opaque` part can be anything and it is defined by each storage.
-    Some storages may use a number, other may use a hash and others maybe a path.
-        
-    Examples:
-        
-        local:docs/thesis.pdf
-        eos:139128318809
-        s3:de305d54-75b4-431b-adb2-eb6b9e546014 
+Imagine there is a directory `photos` inside a local storage that has the prefix `local`. The `resourcepath` for this resource will be `local/photos`.
 
 # Models
 
 ## Capability
-The features that the storage can offer are specified in the **Capability** model:
+The features/capabilities a storage can offer are specified in the **Capability** model:
 
 Name | Type | Description
 -----|------|--------------
-`stat`|`boolean` | Stat a reosource.
-`add`|`boolean` | Add resources to a container.
-`remove`|`boolean` | Remove resources from a container.
-`copy`|`boolean` | Copy a resource.
-`rename`|`boolean` | Rename a resource.
-`3rdcopy`|`boolean` | Thrird party copy of a resource.
-`3rdrename`|`boolean` | Third party rename of a resource.
-`putobject`|`boolean` | Upload the full object.
-`putobjectinchunks`|`boolean` | Upload the object in chunks.
-`getobject`|`boolean` | Download the full object.
-`getobjectbybyterange`|`boolean` | Download some bytes of the object.
-`createcont`|`boolean` | Create a container.
-`verifyclientchecksum`|`boolean` | Verify client checksums.
-`sendserverchecksum`|`boolean` | Send server-computed checksum.
-
-*Version features*
-
-`listversions`|`boolean` | List versions of a resource.
-`getversion`|`boolean` | Download a version.
-`createversion`|`boolean` | Create a version.
-`deleteversion`|`boolean` | Delete a version.
-`rollbackversion`|`boolean` | Rollback to a previous version.
-
-*Trashbin features*
-
-`listjunk`|`boolean` | List junk files (deleted files).
-`restorejunk`|`boolean` | Restore a junk a file.
-`purgejunk`|`boolean` | Purge a junk file.
+`stat`|`boolean` | Can get resource metadata.
+`remove`|`boolean` | Can remove resources.
+`copy`|`boolean` | Can copy a resource inside the same storage.
+`rename`|`boolean` | Can rename a resource inside the same storage.
+`thirdpartycopy`|`boolean` | Can thrird party copy of a resource.
+`thirdpartyrename`|`boolean` | Can third party rename of a resource.
+`putobject`|`boolean` | Can upload the full object.
+`putobjectinchunks`|`boolean` | Can upload the object in chunks.
+`getobject`|`boolean` | Can download the full object.
+`getobjectbybyterange`|`boolean` | Can download some bytes of the object.
+`createcontainer`|`boolean` | Can create a container.
+`listversions`|`boolean` | Can list versions of a resource.
+`getversion`|`boolean` | Can download a version.
+`createversion`|`boolean` | Can create versions.
+`rollbackversion`|`boolean` | Can rollback to a previous version.
+`listdeletedresources`|`boolean` | Can list deleted resources.
+`restoredeletedresource`|`boolean` | Can restore a resource from the junk.
+`purgeresource`|`boolean` | Can purge a resource.
+`verifyclientchecksum`|`boolean` | Can verify client checksums.
+`sendchecksum`|`boolean` | Can send checksums to clients.
+`supportedchecksum`|`string` |The checksum supported on the server.
+`createuserhomedirectoryonlogin` |`boolean` | Create user home directory on login
 
 
 ## Metadata
@@ -93,16 +63,16 @@ Name | Type | Description
 -----|------|--------------
 `checksum`|`string` | The checksum of the resource.
 `checksumtype`|`string` | The type of checksum used for the checksum.
-`children`|`array(Metadata)` | An array containing metadata about the resources inside a folder.
+`children`|`array(Metadata)` | An array containing [Metadata](/documentation/api/v1/storage/#metadata) about the resources inside a container.
 `etag` | `string` | The ETag of the resource
 `extra`|`any` | Custom information returned by the storage. It can be any JSON type.
-`id`|`string` | The Resource URI in ID format.
-`iscontainer`|`boolean` | Indicates if the resource is a folder.
-`mimetype`|`string` | The mimetype of the resource. Containers MUST return `inode/directory`.
+`id`|`string` | The ID of the resource.
+`iscontainer`|`boolean` | Indicates if the resource is a container.
+`mimetype`|`string` | The mimetype of the resource. Containers MUST return `inode/container`.
 `modified`|`number` | The modification time of the resource in UTC Unix time.
-`path`|`string` | The Resource URI in Path format.
-`permissions`|`object` | The [permissions](/documentation/api/v1/permission) for the resource.
-`size`|`number` | The size of the resource. Folders MAY return the aggregated children´s size.
+`path`|`string` | The path to the resource with the storage prefix.
+`permissions`|`object` | The [Permissions](/documentation/api/v1/storage/#permission) for the resource.
+`size`|`number` | The size of the resource. Containers MAY return the aggregated children´s size.
 
 ## Permission
 The operations that can be done on a resource are governed by the **Permission** model:
@@ -118,136 +88,377 @@ Name | Type | Description
 `share`|`boolean` | Grants internal sharing for the container.
 `fedshare`|`boolean` | Grants federated (external) sharing for the container.
 
+# Operations
 
-# Get the capabilities of a storage
+## `GET /api/v1/storage/getcapabilities`
 
-    GET /storage/capabilities/:storagescheme
+Get the capabilities of a storage
 
-## Path parameters
+    GET /api/v1/storage/capabilities/:storageprefix
+
+**Path Parameters**
 
 Name | Type | Description
 -----|------|--------------
-`storagescheme`|`string` | The `<storage-scheme>` element in a Resource URI.
+`storageprefix`|`string` | The prefix of the storage
 
-## Response
-    GET /storage/capabilities/eos
-    
-    Status: 200 OK
+**Response**
+
+    curl -i http://localhost:57008/api/v1/storage/getcapabilities/local -u demo:demo
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Date: Sun, 13 Sep 2015 11:44:52 GMT
+    Content-Length: 631
 
     {
-        "checksum": "",
-        "checksumtype": "",
-        "children": null,
-        "etag": "1439495898",
-        "extra": null,
-        "id": "local:docs",
-        "iscontainer": true,
-        "mimetype": "inode/directory",
-        "modified": 1439495898,
-        "path": "local:///docs"",
-        "permissions": {
-            "add": true,
-            "link": true,
-            "list": true,
-            "remove": true,
-            "share": true,
-            "stat": true
-        },
-        "size": 238
+        "putobject": false,
+        "putobjectinchunks": false,
+        "getobject": false,
+        "getobjectbybyterange": false,
+        "stat": false,
+        "remove": false,
+        "createcontainer": false,
+        "copy": false,
+        "rename": false,
+        "thirdpartycopy": false,
+        "thirdpartyrename": false,
+        "listversions": false,
+        "getversion": false,
+        "createversion": false,
+        "rollbackversion": false,
+        "listdeletedresources": false,
+        "restoredeletedresource": false,
+        "purgedeletedresource": false,
+        "verifycientchecksum": false,
+        "sendchecksum": false,
+        "supportedchecksum": "",
+        "createuserhomedirectory": true
     }
 
+**Possible HTTP Error Codes**
 
-# Get the metadata of a resource
+Code| Description
+-----|-----------|
+200 | Capabilities returned
 
-    GET /storage/stat/:resourceuri[?children]
+## `GET /api/v1/storage/get`
 
-## Path parameters
+Download an object
+
+    GET /api/v1/storage/get/:storagepath
+
+**Path Parameters**
+
+Name | Type | Description
+-----|------|--------------
+`storagepath`|`string` | The storage path.
+
+**Response**
+
+    curl -i http://localhost:57008/api/v1/storage/get/local/passwd -u demo:demo
+    HTTP/1.1 200 OK
+    Content-Disposition: attachment; filename=passwd
+    Content-Type: application/octet-stream
+    Date: Sun, 13 Sep 2015 13:22:22 GMT
+    Content-Length: 1046
+
+    ... binary data ...
+
+**Possible HTTP Error Codes**
+
+Code| Description
+-----|-----------|
+200 | Binary object returned.
+501 | Download of containers not supported.
+
+## `GET /api/v1/storage/stat`
+
+Get the metadata of a resource
+
+    GET /api/v1/storage/stat/:storagepath
+
+**Path Parameters**
+
+Name | Type | Description
+-----|------|--------------
+`storagepath`|`string` | The storage path.
+
+**Query Parameters**
+
+Name | Type | Description
+-----|------|--------------
+`children`|`boolean` | If the resource is a container, ask for the resources inside.
+
+**Response**
+
+    curl -i http://localhost:57008/api/v1/storage/stat/local?children=true -u demo:demo
+    HTTP/1.1 200 OK
+    Date: Sun, 13 Sep 2015 12:41:28 GMT
+    Content-Length: 1836
+    Content-Type: text/plain; charset=utf-8
+
+    {
+        "id": "local",
+        "path": "local",
+        "size": 4096,
+        "iscontainer": true,
+        "mimetype": "inode/container",
+        "checksum": "",
+        "checksumtype": "",
+        "modified": 1442148066,
+        "etag": "1442148066",
+        "permissions": {
+            "stat": true,
+            "list": true,
+            "add": true,
+            "get": true,
+            "remove": true,
+            "link": false,
+            "share": false,
+            "federatedshare": false
+        },
+        "children": [
+            {
+                "id": "local/photos",
+                "path": "local/photos",
+                "size": 4096,
+                "iscontainer": true,
+                "mimetype": "inode/container",
+                "checksum": "",
+                "checksumtype": "",
+                "modified": 1442148066,
+                "etag": "1442148066",
+                "permissions": {
+                    "stat": true,
+                    "list": true,
+                    "add": true,
+                    "get": true,
+                    "remove": true,
+                    "link": false,
+                    "share": false,
+                    "federatedshare": false
+                },
+                "children": null,
+                "extra": null
+            }
+        ],
+        "extra": null
+    }
+
+**Possible HTTP Error Codes**
+
+Code| Description
+-----|-----------|
+200 | Metadata returned
+
+## `PUT /api/v1/storage/put`
+
+    PUT /api/v1/storage/put/:storagepath
+
+**Path Parameters**
+
+Name | Type | Description
+-----|------|--------------
+`storagepath`|`string` | The storage path.
+
+**Query Parameters**
+
+Name | Type | Description | Example
+-----|------|-------------| -------
+`x-checksum`|`string` | The checksumtype and checksum in the format: `<checksumtype>:<checksum>` | `md5:138019839208309`
+
+**Headers**
+
+Name | Type | Description | Example
+-----|------|-------------| -------
+`X-Checksum`|`string` | The checksumtype and checksum in the format: `<checksumtype>:<checksum>` | `md5:138019839208309`
+
+**Body Parameters**
+
+The body is the **binary data** of the object.
+
+**Response**
+
+    curl -i -X PUT http://localhost:57008/api/v1/storage/put/local/passwd --data-binary @/etc/passwd -u demo:demo
+    HTTP/1.1 201 Created
+    Date: Sun, 13 Sep 2015 13:08:02 GMT
+    Content-Length: 502
+    Content-Type: application/json
+
+    {
+        "id": "local/passwd",
+        "path": "local/passwd",
+        "size": 1046,
+        "iscontainer": false,
+        "mimetype": "application/octet-stream",
+        "checksum": "",
+        "checksumtype": "",
+        "modified": 1442149682,
+        "etag": "1442149682",
+        "permissions": {
+            "stat": true,
+            "list": false,
+            "add": false,
+            "get": true,
+            "remove": true,
+            "link": false,
+            "share": false,
+            "federatedshare": false
+        },
+        "children": null,
+        "extra": null
+    }
+
+    Status: 201 Created
+
+**Possible HTTP Error Codes**
+
+Code| Description
+-----|-----------|
+201 | Object created and Metadata returned.
+412 | The checksum provided does not match the server checksum.
+
+
+## `POST /api/v1/storage/createcontainer`
+
+    POST /api/v1/storage/createcontainer/:storagepath
+
+**Path Parameters**
+
+Name | Type | Description
+-----|------|--------------
+`storagepath`|`string` | The storage path.
+
+**Response**
+
+    curl -i -X POST http://localhost:57008/api/v1/storage/createcontainer/local/photos -u demo:demo
+    HTTP/1.1 201 Created
+    Content-Type: application/json
+    Date: Sun, 13 Sep 2015 13:28:16 GMT
+    Content-Length: 490
+
+    {
+        "id": "local/photos",
+        "path": "local/photos",
+        "size": 4096,
+        "iscontainer": true,
+        "mimetype": "inode/container",
+        "checksum": "",
+        "checksumtype": "",
+        "modified": 1442150896,
+        "etag": "1442150896",
+        "permissions": {
+            "stat": true,
+            "list": true,
+            "add": true,
+            "get": true,
+            "remove": true,
+            "link": false,
+            "share": false,
+            "federatedshare": false
+        },
+        "children": null,
+        "extra": null
+    }
+
+**Possible HTTP Error Codes**
+
+Code| Description
+-----|-----------|
+201 | Container created and Metadata returned.
+405 | The container already exists.
+
+
+## `DELETE /api/v1/storage/rm`
+
+Remove a resource
+    
+    DELETE /api/v1/storage/rm/:storagepath
+
+**Path Parameters**
+
+Name | Type | Description
+-----|------|--------------
+`storagepath`|`string` | The storage path.
+
+**Response**
+
+    curl -i -X DELETE http://localhost:57008/api/v1/storage/rm/local/photos -u demo:demo
+    HTTP/1.1 204 No Content
+    Date: Sun, 13 Sep 2015 14:08:11 GMT
+
+**Possible HTTP Error Codes**
+
+Code| Description
+-----|-----------|
+204 | Resource deleted.
+
+## `POST /api/v1/storage/mv`
+
+Moves a resource
+    
+    POST /api/v1/storage/mv
+
+**Query Parameters**
+
+Name | Type | Description 
+-----|------|-------------
+`from`|`string` | The source storage path.
+`to`|`string` | The target storage path .
+
+**Response**
+
+    curl -i -X POST 'http://localhost:57008/api/v1/storage/mv?from=local/photos&to=local/photos.bak' -u demo:demo
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Date: Sun, 13 Sep 2015 14:20:34 GMT
+    Content-Length: 498
+
+    {
+        "id": "local/photos.bak",
+        "path": "local/photos.bak",
+        "size": 4096,
+        "iscontainer": true,
+        "mimetype": "inode/container",
+        "checksum": "",
+        "checksumtype": "",
+        "modified": 1442154030,
+        "etag": "1442154030",
+        "permissions": {
+            "stat": true,
+            "list": true,
+            "add": true,
+            "get": true,
+            "remove": true,
+            "link": false,
+            "share": false,
+            "federatedshare": false
+        },
+        "children": null,
+        "extra": null
+    }
+
+**Possible HTTP Error Codes**
+
+Code| Description
+-----|-----------|
+200 | Resource moved and Metadata returned.
+412 | Canntot overwrite an object with a container and viceversa.
+
+
+
+<!--
+# Upload an object in chunks
+
+    PUT /storage/putchunk/:resourceuri[?uploadid=string&offset=number]
+
+## Path Parameters
 
 Name | Type | Description
 -----|------|--------------
 `resourceuri`|`string` | A Resource URI
 
 ## Query Parameters
-
-Name | Type | Description
------|------|--------------
-`children`|`boolean` | If the resource is a container, ask for the resources inside.
-
-## Response
-
-
-    Status: 200 OK
-
-    {
-        "checksum": "",
-        "checksumtype": "",
-        "children": null,
-        "etag": "1439495898",
-        "extra": null,
-        "id": "local:docs",
-        "iscol": true,
-        "mimetype": "inode/directory",
-        "modified": 1439495898,
-        "path": "local:///docs"",
-        "permissions": {
-            "add": true,
-            "link": true,
-            "list": true,
-            "remove": true,
-            "share": true,
-            "stat": true
-        },
-        "size": 238
-    }
-
-# Remove a resource
-
-    DELETE /storage/rm/:resourceuri[?children]
-
-## Response
-
-    Status: 204 No Content
-
-# Upload an object
-
-    PUT /storage/put/:resourceuri[?checksuminfo]
-
-## Path parameters
-
-Name | Type | Description
------|------|--------------
-`resourceuri`|`string` | A Resource URI
-
-## Query parameters
-
-Name | Type | Description | Example
------|------|-------------| -------
-`cheksum`|`string` | The checksumtype and checksum in the format: `<checksumtype>:<checksum>` | md5:138019839208309
-
-## Headers
-
-Name | Type | Description | Example
------|------|-------------| -------
-`X-Claw-Checksum`|`string` | The checksumtype and checksum in the format: `<checksumtype>:<checksum>` | md5:138019839208309
-
-## Body parameters
-The body is the **binary data** of the object.
-
-## Response
-
-    Status: 201 Created
-
-# Upload an object in chunks
-
-    PUT /storage/putchunk/:resourceuri[?uploadid=string&offset=number]
-
-## Path parameters
-
-Name | Type | Description
------|------|--------------
-`resourceuri`|`string` | A Resource URI
-
-## Query parameters
 
 Name | Type | Description 
 -----|------|-------------
@@ -267,7 +478,7 @@ With the `offset` parameter and the `Content-Length` header is easy to figure ou
 **The implementation of this spec MUST handle parallel chunk uploads.   **
 
 
-## Body parameters
+## Body Parameters
 The body is the **binary data** of the object.
 
 ## Response
@@ -292,7 +503,7 @@ After the last chunk, POST to /commit_chunked_upload to complete the upload.
 
     GET /storage/get/:resourceuri
 
-## Path parameters
+## Path Parameters
 
 Name | Type | Description
 -----|------|--------------
@@ -310,7 +521,7 @@ Name | Type | Description
 
     POST /storage/createcontainer/:resourceuri
 
-## Path parameters
+## Path Parameters
 
 Name | Type | Description
 -----|------|--------------
@@ -319,3 +530,5 @@ Name | Type | Description
 ## Response
 
     Status: 201 Created
+
+-->
