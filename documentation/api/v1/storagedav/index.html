@@ -120,9 +120,68 @@ It provides the most powerful way to interact with the storage.</p>
 
 <p>To connect to the StorageDAV API the client must connect to the following URL:</p>
 
-<p><code>https://yourdomain.com/api/v1/storagedav/:resourceuri</code></p>
+<p><code>https://yourdomain.com/api/v1/webdav/:storagepath</code></p>
 
 <p>Once you have submitted you authentication credentials you can start submitting your WebDAV requests.</p>
+
+<p>The majority of OS has built-in support for WebDAV:</p>
+
+<ul>
+  <li>Mac OSX: use the Finder</li>
+  <li>Windows: use Network Drives</li>
+  <li>Linux: use a fuse mount with <a href="http://savannah.nongnu.org/projects/davfs2">davfs2</a> or other clients</li>
+  <li>Third-party apps like <a href="https://cyberduck.io/">Cyberduck</a></li>
+</ul>
+
+<p>Example using curl:</p>
+
+<pre><code>curl -X PROPFIND http://localhost:57008/api/v1/webdav/local -H "Depth: 1" -u demo:demo
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;d:multistatus xmlns:d="DAV:"&gt;
+    &lt;d:response&gt;
+        &lt;d:href&gt;/api/v1/webdav/local&lt;/d:href&gt;
+        &lt;d:propstat&gt;
+            &lt;d:prop&gt;
+                &lt;d:resourcetype&gt;
+                    &lt;d:collection /&gt;
+                &lt;/d:resourcetype&gt;
+                &lt;d:getcontentlength&gt;4096&lt;/d:getcontentlength&gt;
+                &lt;d:getlastmodified&gt;Sun, 13 Sep 2015 14:41:08 UTC&lt;/d:getlastmodified&gt;
+                &lt;d:getetag&gt;"1442155268"&lt;/d:getetag&gt;
+                &lt;d:getcontenttype&gt;inode/container&lt;/d:getcontenttype&gt;
+            &lt;/d:prop&gt;
+            &lt;d:status&gt;HTTP/1.1 200 OK&lt;/d:status&gt;
+        &lt;/d:propstat&gt;
+    &lt;/d:response&gt;
+    &lt;d:response&gt;
+        &lt;d:href&gt;/api/v1/webdav/local/passwd2&lt;/d:href&gt;
+        &lt;d:propstat&gt;
+            &lt;d:prop&gt;
+                &lt;d:resourcetype&gt;
+                    &lt;d:collection /&gt;
+                &lt;/d:resourcetype&gt;
+                &lt;d:getcontentlength&gt;4096&lt;/d:getcontentlength&gt;
+                &lt;d:getlastmodified&gt;Sun, 13 Sep 2015 14:20:30 UTC&lt;/d:getlastmodified&gt;
+                &lt;d:getetag&gt;"1442154030"&lt;/d:getetag&gt;
+                &lt;d:getcontenttype&gt;inode/container&lt;/d:getcontenttype&gt;
+            &lt;/d:prop&gt;
+            &lt;d:status&gt;HTTP/1.1 200 OK&lt;/d:status&gt;
+        &lt;/d:propstat&gt;
+    &lt;/d:response&gt;
+    &lt;d:response&gt;
+        &lt;d:href&gt;/api/v1/webdav/local/passw2&lt;/d:href&gt;
+        &lt;d:propstat&gt;
+            &lt;d:prop&gt;
+                &lt;d:getcontentlength&gt;1046&lt;/d:getcontentlength&gt;
+                &lt;d:getlastmodified&gt;Sun, 13 Sep 2015 13:08:02 UTC&lt;/d:getlastmodified&gt;
+                &lt;d:getetag&gt;"1442149682"&lt;/d:getetag&gt;
+                &lt;d:getcontenttype&gt;application/octet-stream&lt;/d:getcontenttype&gt;
+            &lt;/d:prop&gt;
+            &lt;d:status&gt;HTTP/1.1 200 OK&lt;/d:status&gt;
+        &lt;/d:propstat&gt;
+    &lt;/d:response&gt;
+&lt;/d:multistatus&gt;
+</code></pre>
 
     </div>
   </div>

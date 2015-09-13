@@ -104,9 +104,8 @@
 <ul id="markdown-toc">
   <li><a href="#contents" id="markdown-toc-contents">Contents</a></li>
   <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
-  <li><a href="#get-a-jwt-token" id="markdown-toc-get-a-jwt-token">Get a JWT Token</a>    <ul>
-      <li><a href="#body-parameters" id="markdown-toc-body-parameters">Body parameters</a></li>
-      <li><a href="#response" id="markdown-toc-response">Response</a></li>
+  <li><a href="#operations" id="markdown-toc-operations">Operations</a>    <ul>
+      <li><a href="#post-apiv1authgettoken" id="markdown-toc-post-apiv1authgettoken"><code>POST /api/v1/auth/gettoken</code></a></li>
     </ul>
   </li>
 </ul>
@@ -115,27 +114,7 @@
 
 <p>The Auth API authenticates users.</p>
 
-<p>A user belongs to an authentication provider.</p>
-
-<p>The authentication provider authenticates the user against its user database with the <code>username</code>, <code>password</code> and <code>extra</code> attributes passed in the request.</p>
-
-<p>The user database can vary from a simple JSON file to a complex LDAP server.</p>
-
-<p>Different authentication providers can be registered in the server to provide some QoS or to have more control about user privileges.</p>
-
-<p>In the future, Single Sign-On using Shibboleth will be supported.</p>
-
-<p>The fact of having multiple authentication providers registered allows the storage to be more efficient in managing resources.</p>
-
-<p>For example, imagine that the storage configured is an object store like Swift with multiple tenants (one in Sidney and the other in Berlin).
-Users coming from auth provider A will have their reosurces in a tenant in Sidney and users coming from auth provider B will have their resources in a tenant in Berlin.</p>
-
-<h1 id="get-a-jwt-token">Get a JWT Token</h1>
-
-<pre><code>POST /auth/login
-</code></pre>
-
-<h2 id="body-parameters">Body parameters</h2>
+<p>A user is identified by three fields:</p>
 
 <table>
   <thead>
@@ -147,19 +126,64 @@ Users coming from auth provider A will have their reosurces in a tenant in Sidne
   </thead>
   <tbody>
     <tr>
-      <td><code>id</code></td>
+      <td><code>eppn</code></td>
       <td><code>string</code></td>
-      <td>The username</td>
+      <td>The <a href="http://www.internet2.edu/media/medialibrary/2013/09/04/internet2-mace-dir-eduperson-201203.html#eduPersonPrincipalName">eduPersonPrincipalName</a>. Usually it is like an username.</td>
     </tr>
     <tr>
-      <td><code>password</code></td>
+      <td><code>idp</code></td>
       <td><code>string</code></td>
-      <td>The password</td>
+      <td>The Identity Provider. It is usually a domain name that identifies the organization that authenticates the user.</td>
     </tr>
     <tr>
       <td><code>authid</code></td>
       <td><code>string</code></td>
-      <td>The authentication provider ID</td>
+      <td>The authentication startegy used by the Identity Provider to authenticate the user.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In a default installation, the user with the eppn <code>demo</code> belongs to the organization identified by the idp <code>localhost</code> that uses <code>fileauth</code> as an authentication mechanism.</p>
+
+<h1 id="operations">Operations</h1>
+
+<h2 id="post-apiv1authgettoken"><code>POST /api/v1/auth/gettoken</code></h2>
+
+<p>Get a JWT Token</p>
+
+<pre><code>POST /api/v1/auth/gettoken
+</code></pre>
+
+<p><strong>Body parameters</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>eppn</code></td>
+      <td><code>string</code></td>
+      <td>The <a href="http://www.internet2.edu/media/medialibrary/2013/09/04/internet2-mace-dir-eduperson-201203.html#eduPersonPrincipalName">eduPersonPrincipalName</a>. Usually it is like an username.</td>
+    </tr>
+    <tr>
+      <td><code>idp</code></td>
+      <td><code>string</code></td>
+      <td>The Identity Provider. It is usually a domain name that identifies the organization that authenticates the user.</td>
+    </tr>
+    <tr>
+      <td><code>authid</code></td>
+      <td><code>string</code></td>
+      <td>The authentication startegy used by the Identity Provider to authenticate the user.</td>
+    </tr>
+    <tr>
+      <td><code>password</code></td>
+      <td><code>string</code></td>
+      <td>The password used by some authentication providers like LDAP or files.</td>
     </tr>
     <tr>
       <td><code>extra</code></td>
@@ -169,15 +193,39 @@ Users coming from auth provider A will have their reosurces in a tenant in Sidne
   </tbody>
 </table>
 
-<h2 id="response">Response</h2>
+<p><strong>Response</strong></p>
 
-<pre><code>Status: 201 Created
+<pre><code>curl -iX POST http://localhost:57008/api/v1/auth/gettoken --data '{"eppn":"demo", "password":"demo", "authid":"fileauth"}'
+HTTP/1.1 201 Created
+Date: Sun, 13 Sep 2015 09:56:18 GMT
+Content-Length: 284
+Content-Type: text/plain; charset=utf-8
 
 {
-	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+    "authtoken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoaWQiOiJmaWxlYXV0aCIsImRpc3BsYXluYW1lIjoiRGVtbyBVc2VyIiwiZW1haWwiOiJkZW1vQGxvY2FsaG9zdCIsImVwcG4iOiJkZW1vIiwiZXhwIjoxNDQ0NzMwMTc4LCJpZHAiOiJsb2NhbGhvc3QiLCJpc3MiOiJsb2NhbGhvc3QifQ.AUr1432j5m7YGvhjgLzL0FxfUCeM_DlQS4Y_c_Mxm4M"
 }
 </code></pre>
 
+<p><strong>Possible HTTP Error Codes</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>201</td>
+      <td>Token created</td>
+    </tr>
+    <tr>
+      <td>400</td>
+      <td>The username or password don’t match.</td>
+    </tr>
+  </tbody>
+</table>
 
     </div>
   </div>

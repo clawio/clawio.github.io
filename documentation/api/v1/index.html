@@ -109,17 +109,15 @@
   <li><a href="#utf-8-encoding" id="markdown-toc-utf-8-encoding">UTF-8 encoding</a></li>
   <li><a href="#timestamps" id="markdown-toc-timestamps">Timestamps</a></li>
   <li><a href="#parameters" id="markdown-toc-parameters">Parameters</a></li>
-  <li><a href="#root-endpoint" id="markdown-toc-root-endpoint">Root Endpoint</a></li>
   <li><a href="#clients-errors" id="markdown-toc-clients-errors">Clients Errors</a></li>
   <li><a href="#http-redirects" id="markdown-toc-http-redirects">HTTP Redirects</a></li>
   <li><a href="#http-verbs" id="markdown-toc-http-verbs">HTTP Verbs</a></li>
   <li><a href="#authentication" id="markdown-toc-authentication">Authentication</a>    <ul>
       <li><a href="#basic-authentication" id="markdown-toc-basic-authentication">Basic Authentication</a></li>
-      <li><a href="#jwt-token-sent-in-a-header" id="markdown-toc-jwt-token-sent-in-a-header">JWT Token (sent in a header)</a></li>
-      <li><a href="#jwt-token-sent-as-parameter" id="markdown-toc-jwt-token-sent-as-parameter">JWT Token (sent as parameter)</a></li>
+      <li><a href="#jwt-token-via-http-header" id="markdown-toc-jwt-token-via-http-header">JWT Token (via HTTP Header)</a></li>
+      <li><a href="#jwt-token-via-http-query-param" id="markdown-toc-jwt-token-via-http-query-param">JWT Token (via HTTP Query Param)</a></li>
     </ul>
   </li>
-  <li><a href="#cross-origin-resource-sharing" id="markdown-toc-cross-origin-resource-sharing">Cross Origin Resource Sharing</a></li>
 </ul>
 
 <h1 id="current-version">Current Version</h1>
@@ -128,23 +126,34 @@
 <h1 id="scheme">Scheme</h1>
 <p>All API access should be done over HTTPS, and accessed from <strong>https:/yourdomain.com/api/v1/</strong>. All data is sent and received as JSON otherwise specified.</p>
 
-<pre><code>curl -i https://yourdomain.com/api/v1/storage/stat/local
-
+<pre><code>curl -i http://localhost:57008/api/v1/storage/stat/local -u demo:demo
 HTTP/1.1 200 OK
+Date: Sun, 13 Sep 2015 09:12:38 GMT
+Content-Length: 322
+Content-Type: application/json
 
 {
     "checksum": "",
-    "checksum_type": "",
+    "checksumtype": "",
     "children": null,
-    "etag": "1439495898",
+    "etag": "1442135249",
     "extra": null,
-    "id": "eos:///2993644435",
-    "is_container": true,
-    "mimetype": "inode/directory",
-    "modified": 1439495898,
-    "path": "eos:///photos",
-    "permissions": 24,
-    "size": 238
+    "id": "local",
+    "iscontainer": true,
+    "mimetype": "inode/container",
+    "modified": 1442135249,
+    "path": "local",
+    "permissions": {
+        "add": true,
+        "federatedshare": false,
+        "get": true,
+        "link": false,
+        "list": true,
+        "remove": true,
+        "share": false,
+        "stat": true
+    },
+    "size": 4096
 }
 </code></pre>
 
@@ -194,27 +203,29 @@ HTTP/1.1 200 OK
 <h1 id="parameters">Parameters</h1>
 <p>Many API methods take optional parameters. For GET requests, any parameters not specified as a segment in the path can be passed as an HTTP query string parameter:</p>
 
-<pre><code>$ curl -i -u username "https://yourdomain.com/api/v1/files/stat/eos:///photos?children=true
+<pre><code>curl http://localhost:57008/api/v1/storage/stat/local?children=true -u demo:demo
 </code></pre>
 
-<p>In this example, the <code>eos:///photos</code> value is provided for the <code>:resourceuri</code> parameter in the path while `:children is passed in the query string.</p>
+<p>In this example, the <code>local</code> value is provided for the <code>storagepath</code> path parameter meanwhile <code>children</code> is passed in the query string.</p>
 
-<p>For POST, PATCH, PUT, and DELETE requests, parameters not included in the URL should be encoded as JSON with a Content-Type of ‘application/json’:</p>
+<p>For POST, PUT, and DELETE requests, parameters not included in the URL should be encoded as JSON with a Content-Type of <code>application/json</code>:</p>
 
-<pre><code>$ curl -i -u username -d '{"resourceuri":"eos:///photos", "expiration": 199234554}' https://yourdomain.com/api/v1/links/create
+<pre><code>curl -X POST http://localhost:57008/api/v1/auth/gettoken --data '{"eppn":"demo", "password":"demo"}
 </code></pre>
 
-<h1 id="root-endpoint">Root Endpoint</h1>
+<!--
+# Root Endpoint
 
-<p>You can issue a GET request to the root endpoint to get all the endpoint categories that the API supports:</p>
+You can issue a GET request to the root endpoint to get all the endpoint categories that the API supports:
 
-<pre><code>$ curl https://yourdomain.com/api/v1 -u username:password
 
-{
-  "storageurl": "https://yourdomain.com/api/v1/storage",
-  "linkurl": "https://yourdomain.com/api/v1/link",
-}
-</code></pre>
+	$ curl https://yourdomain.com/api/v1 -u username:password
+
+	{
+	  "storageurl": "https://yourdomain.com/api/v1/storage",
+	  "linkurl": "https://yourdomain.com/api/v1/link",
+	}
+-->
 
 <h1 id="clients-errors">Clients Errors</h1>
 
@@ -222,7 +233,7 @@ HTTP/1.1 200 OK
 
 <ul>
   <li>
-    <p>Sending invalid JSON or the wrong type of JSON values will result in a <code>415 Unsuported Media Type</code> response.</p>
+    <p>Sending non-UTF8 strings, invalid JSON or the wrong type of JSON values will result in a <code>415 Unsuported Media Type</code> response.</p>
 
     <pre><code>  HTTP/1.1 415 Unsupported Media Type
 </code></pre>
@@ -231,23 +242,18 @@ HTTP/1.1 200 OK
     <p>Sending invalid fields will result in a <code>422 Unprocessable Entity</code> response.</p>
 
     <pre><code>  HTTP/1.1 422 Unprocessable Entity
-  Content-Length: 149
+  Content-Length: 72
 	
   {
-     "error":{
-        "resource":"Link",
-        "field":"resource_uri",
-        "code":"empty_field",
-     }
+    "resource":"Auth",
+    "field":"eppn",
+    "code":"empty_field",
   }
 </code></pre>
   </li>
 </ul>
 
-<p>All error objects from <code>422</code> responses have resource and field properties so that your client
-can tell what the problem is.  There’s also an error code to let you
-know what is wrong with the field.  These are the possible validation error
-codes:</p>
+<p>All error objects from <code>422</code> responses have resource and field properties so that your client can tell what the problem is.  There’s also an error code to let you know what is wrong with the field.  These are the possible validation error codes:</p>
 
 <table>
   <thead>
@@ -314,7 +320,7 @@ action.</p>
   <tbody>
     <tr>
       <td><code>HEAD</code></td>
-      <td>Can be issued against any resource to get just the HTTP header info.</td>
+      <td>Can be issued against some resources to get just the HTTP header info.</td>
     </tr>
     <tr>
       <td><code>GET</code></td>
@@ -323,10 +329,6 @@ action.</p>
     <tr>
       <td><code>POST</code></td>
       <td>Used for creating resources.</td>
-    </tr>
-    <tr>
-      <td><code>PATCH</code></td>
-      <td>Used for updating resources with partial JSON data.  For instance, a Link resource has <code>expiration</code> and <code>password</code> attributes.  A PATCH request may accept one or more of the attributes to update the resource.  PATCH is a relatively new and uncommon HTTP verb, so resource endpoints also accept <code>POST</code> requests.</td>
     </tr>
     <tr>
       <td><code>PUT</code></td>
@@ -340,53 +342,53 @@ action.</p>
 </table>
 
 <h1 id="authentication">Authentication</h1>
-<p>There are three ways to authenticate through ClawIO API v1.  Requests that
+<p>There are three ways to authenticate through ClawIO API.  Requests that
 require authentication will return <code>401 Not Authorized</code>. In some places <code>404 Not Found</code> will be returned instead, this is to prevent the accidental leakage
 of information like password protected Links to unauthorized users.</p>
 
 <h2 id="basic-authentication">Basic Authentication</h2>
 
-<pre><code>$ curl -u "username" https://yourdomain.com/api/v1
+<pre><code>curl http://localhost:57008/api/v1/storage/stat/local?children=true -u demo:demo
 </code></pre>
 
-<h2 id="jwt-token-sent-in-a-header">JWT Token (sent in a header)</h2>
+<h2 id="jwt-token-via-http-header">JWT Token (via HTTP Header)</h2>
 
-<pre><code>$ curl -H "X-Api-Token: JWT-AUTH-TOKEN"
+<pre><code>curl http://localhost:57008/api/v1/storage/stat/local?children=true -H "X-Auth-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoaWQiOiJmaWxlYXV0aCIsImRpc3BsYXluYW1lIjoiRGVtbyBVc2VyIiwiZW1haWwiOiJkZW1vQGxvY2FsaG9zdCIsImVwcG4iOiJkZW1vIiwiZXhwIjoxNDQ0NzI4NDc0LCJpZHAiOiJsb2NhbGhvc3QiLCJpc3MiOiJsb2NhbGhvc3QifQ.lHxZ_20Qnz_l-GLI-ATZEnqOALOoTp-3zZGtHk9tPTc"
 </code></pre>
 
-<h2 id="jwt-token-sent-as-parameter">JWT Token (sent as parameter)</h2>
+<h2 id="jwt-token-via-http-query-param">JWT Token (via HTTP Query Param)</h2>
 
-<pre><code>$ curl https://yourdomain.com/api/v1/storage/stat/eos:///docs/thesis.pdf?access_token=JWT-TOKEN
+<pre><code>curl 'http://localhost:57008/api/v1/storage/stat/local?x-auth-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoaWQiOiJmaWxlYXV0aCIsImRpc3BsYXluYW1lIjoiRGVtbyBVc2VyIiwiZW1haWwiOiJkZW1vQGxvY2FsaG9zdCIsImVwcG4iOiJkZW1vIiwiZXhwIjoxNDQ0NzI4NDc0LCJpZHAiOiJsb2NhbGhvc3QiLCJpc3MiOiJsb2NhbGhvc3QifQ.lHxZ_20Qnz_l-GLI-ATZEnqOALOoTp-3zZGtHk9tPTc'
 </code></pre>
 
-<h1 id="cross-origin-resource-sharing">Cross Origin Resource Sharing</h1>
+<!--
+# Cross Origin Resource Sharing
 
-<p>The API supports Cross Origin Resource Sharing (CORS) for AJAX requests from
-any origin.
-You can read the <a href="http://www.w3.org/TR/cors/">CORS W3C Recommendation</a>, or
-<a href="http://code.google.com/p/html5security/wiki/CrossOriginRequestSecurity">this intro</a> from the
-HTML 5 Security Guide.</p>
+The API supports Cross Origin Resource Sharing (CORS) for AJAX requests from
+any origin as default.
+You can read the [CORS W3C Recommendation](http://www.w3.org/TR/cors/), or
+[this intro](http://code.google.com/p/html5security/wiki/CrossOriginRequestSecurity) from the
+HTML 5 Security Guide.
 
-<p>Here’s a sample request sent from a web browser application living on <code>http://example.com</code>:</p>
+Here's a sample request sent from a web browser application living on `http://example.com`:
 
-<pre><code>$ curl -i https://`yourdomain.com -H "Origin: http://example.com"
-HTTP/1.1 302 Found
-Access-Control-Allow-Origin: *
-Access-Control-Expose-Headers: ETag
-Access-Control-Allow-Credentials: true
-</code></pre>
+	$ curl -i https://`yourdomain.com -H "Origin: http://example.com"
+	HTTP/1.1 302 Found
+	Access-Control-Allow-Origin: *
+	Access-Control-Expose-Headers: ETag
+	Access-Control-Allow-Credentials: true
 
-<p>This is what the CORS preflight request looks like:</p>
+This is what the CORS preflight request looks like:
 
-<pre><code>$ curl -i https://`yourdomain.com -H "Origin: http://example.com" -X OPTIONS
-HTTP/1.1 204 No Content
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Headers: Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since
-Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE
-Access-Control-Expose-Headers: ETag
-Access-Control-Max-Age: 86400
-Access-Control-Allow-Credentials: true
-</code></pre>
+	$ curl -i https://`yourdomain.com -H "Origin: http://example.com" -X OPTIONS
+	HTTP/1.1 204 No Content
+	Access-Control-Allow-Origin: *
+	Access-Control-Allow-Headers: Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since
+	Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE
+	Access-Control-Expose-Headers: ETag
+	Access-Control-Max-Age: 86400
+	Access-Control-Allow-Credentials: true
+	-->
 
     </div>
   </div>
