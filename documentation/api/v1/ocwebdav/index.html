@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title>
-      Colors &middot; ClawIO
+      OCWebDAV &middot; ClawIO
     </title>
 
     <link rel="stylesheet" href="/docs.css">
@@ -66,7 +66,7 @@
   <a class="menu-item " href="/documentation/api/v1/webdav/">
     WebDAV
   </a>
-  <a class="menu-item " href="/documentation/api/v1/ocwebdav/">
+  <a class="menu-item selected" href="/documentation/api/v1/ocwebdav/">
     OCWebDAV
   </a>
   <!--
@@ -94,24 +94,72 @@
   </div>
   <div class="three-fourths column markdown-body">
     <h1 class="page-title">
-      Colors
+      OCWebDAV
     </h1>
     <div class="markdown-body">
-      <p>The look and feel of our company and product relies on using a handful of specific colors that help convey meaning and purpose.</p>
+      <p>This describes the API for accesing the storage using OwnCloud Sync Clients.</p>
 
-<h3 id="branding">Branding</h3>
+<h1 id="contents">Contents</h1>
 
-<div class="swatch swatch-blue"></div>
-<div class="swatch swatch-green"></div>
-<div class="swatch swatch-red"></div>
-<div class="swatch swatch-orange"></div>
-<div class="swatch swatch-purple"></div>
+<ul id="markdown-toc">
+  <li><a href="#contents" id="markdown-toc-contents">Contents</a></li>
+  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
+  <li><a href="#connection" id="markdown-toc-connection">Connection</a></li>
+  <li><a href="#disclaimer" id="markdown-toc-disclaimer">Disclaimer.</a></li>
+  <li><a href="#faq" id="markdown-toc-faq">FAQ</a>    <ul>
+      <li><a href="#csync-failed-to-access-" id="markdown-toc-csync-failed-to-access-">CSync failed to access …</a></li>
+    </ul>
+  </li>
+</ul>
 
-<h3 id="grayscale">Grayscale</h3>
+<h1 id="introduction">Introduction</h1>
+<p>The OCWebDAV is an API that allows the use of <a href="https://owncloud.org/install/#install-clients">OwnCloud Sync Clients</a> to manage the storage.</p>
 
-<div class="swatch swatch-gray-light"></div>
-<div class="swatch swatch-gray"></div>
-<div class="swatch swatch-gray-dark"></div>
+<p>The authentication method is <a href="https://en.wikipedia.org/wiki/Basic_access_authentication">Basic Auth</a>.</p>
+
+<h1 id="connection">Connection</h1>
+
+<p>To connect to the OCWebDAV API the client must connect to the following URL:</p>
+
+<p><code>http://yourdomain.com/api/v1/ocwebdav/</code></p>
+
+<p>Steps to connect to ClawIO server:</p>
+
+<ol>
+  <li>Open the OwnCloud Sync Client</li>
+  <li>Enter the localtion of ClawIO server. Example: <code>https://yourdomain.com/api/v1/ocwebdav/</code></li>
+  <li>Submit authentication credentials</li>
+  <li>Click <em>Skip folder configurations</em></li>
+  <li>Click <em>Add folder to synchronize</em></li>
+  <li>Select a local folder</li>
+  <li>Select a remote folder. Example: <code>local</code></li>
+  <li>Click <em>Add folder</em></li>
+</ol>
+
+<p>The sync client should start syncing.</p>
+
+<h1 id="disclaimer">Disclaimer.</h1>
+
+<p><strong>The status of the OCWebDAV API is experimental, use it at your own risk</strong>.</p>
+
+<p>The API doesn’t support yet:</p>
+
+<ul>
+  <li>Chunk upload</li>
+  <li>Sharing</li>
+  <li>Versions</li>
+  <li>Trash bin</li>
+  <li>Cookie-based authentication</li>
+</ul>
+
+<p>The step 4: Click <em>Skip folder configurations</em> is necessary due to OwnCloud lack of flexibility to configure a remote path on the initial wizard. This constraint is imposed due to OwnCloud global namespace design.</p>
+
+<h1 id="faq">FAQ</h1>
+
+<h2 id="csync-failed-to-access-">CSync failed to access …</h2>
+<p>When this error appears in the sync client is because of the user home directory has not been created for the user.</p>
+
+<p>To solve the problem, authenticate the user using the <a href="/documentation/api/v1/auth/#post-apiv1authgettoken">Auth API</a></p>
 
     </div>
   </div>

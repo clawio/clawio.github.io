@@ -66,8 +66,8 @@
   <a class="menu-item " href="/documentation/api/v1/webdav/">
     WebDAV
   </a>
-  <a class="menu-item " href="/documentation/api/v1/storagedav/">
-    StorageDAV
+  <a class="menu-item " href="/documentation/api/v1/ocwebdav/">
+    OCWebDAV
   </a>
   <!--
   <a class="menu-item " href="/documentation/api/v1/linkdav/">
@@ -145,11 +145,15 @@
 
 <p>In a default installation, the user with the eppn <code>demo</code> belongs to the organization identified by the idp <code>localhost</code> that uses <code>fileauth</code> as an authentication mechanism.</p>
 
+<p>This API is used also to create user home directories.</p>
+
+<p>When the <a href="/documentation/api/v1/auth/#post-apiv1authgettoken">gettoken</a> operation is successfull, the user home directory is created in all the storages registered. It is more efficient to a have single endpoint to control the user home directory creation than checking its existence at every operation.</p>
+
 <h1 id="operations">Operations</h1>
 
 <h2 id="post-apiv1authgettoken"><code>POST /api/v1/auth/gettoken</code></h2>
 
-<p>Get a JWT Token</p>
+<p>Get a JWT Token and creates user home directories.</p>
 
 <pre><code>POST /api/v1/auth/gettoken
 </code></pre>

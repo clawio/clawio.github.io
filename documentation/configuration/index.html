@@ -85,6 +85,11 @@ You can specify the configuration file passing the <code>--config</code> flag (<
   <li><a href="#staticapienabled" id="markdown-toc-staticapienabled">static_api_enabled</a></li>
   <li><a href="#staticapiid" id="markdown-toc-staticapiid">static_api_id</a></li>
   <li><a href="#staticapiwithauthentication" id="markdown-toc-staticapiwithauthentication">static_api_with_authentication</a></li>
+  <li><a href="#ocwebdavapienabled" id="markdown-toc-ocwebdavapienabled">ocwebdav_api_enabled</a></li>
+  <li><a href="#ocwebdavapiid" id="markdown-toc-ocwebdavapiid">ocwebdav_api_id</a></li>
+  <li><a href="#owncloudversionmajor" id="markdown-toc-owncloudversionmajor">owncloud_version_major</a></li>
+  <li><a href="#owncloudversionminor" id="markdown-toc-owncloudversionminor">owncloud_version_minor</a></li>
+  <li><a href="#owncloudversionmicro" id="markdown-toc-owncloudversionmicro">owncloud_version_micro</a></li>
 </ul>
 
 <h1 id="port">port</h1>
@@ -399,6 +404,46 @@ You can specify the configuration file passing the <code>--config</code> flag (<
   <li>Type: boolean</li>
   <li>Description: If enabled the request must be authenticated.</li>
   <li>Default: <code>false</code></li>
+</ul>
+
+<h1 id="ocwebdavapienabled">ocwebdav_api_enabled</h1>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Description: Enables or disables the <a href="/documentation/api/v1/ocwebdav">OCWebDAV API</a>.</li>
+  <li>Default: <code>true</code></li>
+</ul>
+
+<h1 id="ocwebdavapiid">ocwebdav_api_id</h1>
+
+<ul>
+  <li>Type: string</li>
+  <li>Description: The ID for the <a href="/documentation/api/v1/ocwebdav">OCWebDAV API</a>.</li>
+  <li>Default: <code>ocwebdav</code></li>
+</ul>
+
+<h1 id="owncloudversionmajor">owncloud_version_major</h1>
+
+<ul>
+  <li>Type: string</li>
+  <li>Description: The major version of OwnCloud to return in the capabilities call.</li>
+  <li>Default: <code>8</code></li>
+</ul>
+
+<h1 id="owncloudversionminor">owncloud_version_minor</h1>
+
+<ul>
+  <li>Type: string</li>
+  <li>Description: The minor version of OwnCloud to return in the capabilities call.</li>
+  <li>Default: <code>1</code></li>
+</ul>
+
+<h1 id="owncloudversionmicro">owncloud_version_micro</h1>
+
+<ul>
+  <li>Type: string</li>
+  <li>Description: The micro version of OwnCloud to return in the capabilities call.</li>
+  <li>Default: <code>1</code></li>
 </ul>
 
     </div>
