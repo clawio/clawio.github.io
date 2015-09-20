@@ -24,11 +24,15 @@ Name | Type | Description
 
 In a default installation, the user with the eppn `demo` belongs to the organization identified by the idp `localhost` that uses `fileauth` as an authentication mechanism.
 
+This API is used also to create user home directories.
+
+When the [gettoken](/documentation/api/v1/auth/#post-apiv1authgettoken) operation is successfull, the user home directory is created in all the storages registered. It is more efficient to a have single endpoint to control the user home directory creation than checking its existence at every operation.
+
 # Operations
 
 ## `POST /api/v1/auth/gettoken`
 
-Get a JWT Token
+Get a JWT Token and creates user home directories.
 
     POST /api/v1/auth/gettoken
 

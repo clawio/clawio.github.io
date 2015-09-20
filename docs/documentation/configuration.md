@@ -235,3 +235,33 @@ The value of the query param has the layout: `<checksumtype>:<checksum>`. Exampl
 * Type: boolean
 * Description: If enabled the request must be authenticated.
 * Default: `false`
+
+# ocwebdav_api_enabled
+
+* Type: boolean
+* Description: Enables or disables the [OCWebDAV API](/documentation/api/v1/ocwebdav).
+* Default: `true`
+
+# ocwebdav_api_id
+
+* Type: string
+* Description: The ID for the [OCWebDAV API](/documentation/api/v1/ocwebdav).
+* Default: `ocwebdav`
+
+# owncloud_version_major
+
+* Type: string
+* Description: The major version of OwnCloud to return in the capabilities call.
+* Default: `8`
+
+# owncloud_version_minor
+
+* Type: string
+* Description: The minor version of OwnCloud to return in the capabilities call.
+* Default: `1`
+
+# owncloud_version_micro
+
+* Type: string
+* Description: The micro version of OwnCloud to return in the capabilities call.
+* Default: `1`
