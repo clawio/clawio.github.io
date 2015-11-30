@@ -29,9 +29,9 @@
         </a>
 
         <nav class="masthead-nav">
-          <a  href="/manifesto">Manifesto</a>
-          <a  href="/documentation/">Documentation</a>
-          <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
+            <!--a  href="/manifesto">Manifesto</a>-->
+          <a  href="https://www.gitbook.com/book/clawio/clawio/details">Documentation</a>
+          <a href="https://github.com/clawio" target="_blank">GitHub</a>
         </nav>
       </div>
     </header>
@@ -126,7 +126,7 @@
 <h1 id="scheme">Scheme</h1>
 <p>All API access should be done over HTTPS, and accessed from <strong>https:/yourdomain.com/api/v1/</strong>. All data is sent and received as JSON otherwise specified.</p>
 
-<pre><code>curl -i http://localhost:57008/api/v1/storage/stat/local -u demo:demo
+<div class="highlighter-rouge"><pre class="highlight"><code>curl -i http://localhost:57008/api/v1/storage/stat/local -u demo:demo
 HTTP/1.1 200 OK
 Date: Sun, 13 Sep 2015 09:12:38 GMT
 Content-Length: 322
@@ -156,6 +156,7 @@ Content-Type: application/json
     "size": 4096
 }
 </code></pre>
+</div>
 
 <h1 id="blank-fields">Blank fields</h1>
 <p>Blank fields default to these values:</p>
@@ -169,24 +170,24 @@ Content-Type: application/json
   </thead>
   <tbody>
     <tr>
-      <td><code>string</code></td>
-      <td><code>""</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
+      <td><code class="highlighter-rouge">""</code></td>
     </tr>
     <tr>
-      <td><code>number</code></td>
-      <td><code>0</code></td>
+      <td><code class="highlighter-rouge">number</code></td>
+      <td><code class="highlighter-rouge">0</code></td>
     </tr>
     <tr>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
+      <td><code class="highlighter-rouge">false</code></td>
     </tr>
     <tr>
-      <td><code>object</code></td>
-      <td><code>null</code>, instead of <code>{}</code></td>
+      <td><code class="highlighter-rouge">object</code></td>
+      <td><code class="highlighter-rouge">null</code>, instead of <code class="highlighter-rouge"><span class="p">{}</span></code></td>
     </tr>
     <tr>
-      <td><code>array</code></td>
-      <td><code>null</code>, instead of <code>[]</code></td>
+      <td><code class="highlighter-rouge">array</code></td>
+      <td><code class="highlighter-rouge">null</code>, instead of <code class="highlighter-rouge">[]</code></td>
     </tr>
   </tbody>
 </table>
@@ -198,20 +199,22 @@ Content-Type: application/json
 <h1 id="timestamps">Timestamps</h1>
 <p>All timestamps are returned in <a href="http://en.wikipedia.org/wiki/Unix_time">UTC epoch seconds</a> like:</p>
 
-<p><code>1439684357</code></p>
+<p><code class="highlighter-rouge">1439684357</code></p>
 
 <h1 id="parameters">Parameters</h1>
 <p>Many API methods take optional parameters. For GET requests, any parameters not specified as a segment in the path can be passed as an HTTP query string parameter:</p>
 
-<pre><code>curl http://localhost:57008/api/v1/storage/stat/local?children=true -u demo:demo
+<div class="highlighter-rouge"><pre class="highlight"><code>curl http://localhost:57008/api/v1/storage/stat/local?children=true -u demo:demo
 </code></pre>
+</div>
 
-<p>In this example, the <code>local</code> value is provided for the <code>storagepath</code> path parameter meanwhile <code>children</code> is passed in the query string.</p>
+<p>In this example, the <code class="highlighter-rouge">local</code> value is provided for the <code class="highlighter-rouge">storagepath</code> path parameter meanwhile <code class="highlighter-rouge">children</code> is passed in the query string.</p>
 
-<p>For POST, PUT, and DELETE requests, parameters not included in the URL should be encoded as JSON with a Content-Type of <code>application/json</code>:</p>
+<p>For POST, PUT, and DELETE requests, parameters not included in the URL should be encoded as JSON with a Content-Type of <code class="highlighter-rouge">application/json</code>:</p>
 
-<pre><code>curl -X POST http://localhost:57008/api/v1/auth/gettoken --data '{"eppn":"demo", "password":"demo"}
+<div class="highlighter-rouge"><pre class="highlight"><code>curl -X POST http://localhost:57008/api/v1/auth/gettoken --data '{"eppn":"demo", "password":"demo"}
 </code></pre>
+</div>
 
 <!--
 # Root Endpoint
@@ -233,15 +236,16 @@ You can issue a GET request to the root endpoint to get all the endpoint categor
 
 <ul>
   <li>
-    <p>Sending non-UTF8 strings, invalid JSON or the wrong type of JSON values will result in a <code>415 Unsuported Media Type</code> response.</p>
+    <p>Sending non-UTF8 strings, invalid JSON or the wrong type of JSON values will result in a <code class="highlighter-rouge">415 Unsuported Media Type</code> response.</p>
 
-    <pre><code>  HTTP/1.1 415 Unsupported Media Type
+    <div class="highlighter-rouge"><pre class="highlight"><code>  HTTP/1.1 415 Unsupported Media Type
 </code></pre>
+    </div>
   </li>
   <li>
-    <p>Sending invalid fields will result in a <code>422 Unprocessable Entity</code> response.</p>
+    <p>Sending invalid fields will result in a <code class="highlighter-rouge">422 Unprocessable Entity</code> response.</p>
 
-    <pre><code>  HTTP/1.1 422 Unprocessable Entity
+    <div class="highlighter-rouge"><pre class="highlight"><code>  HTTP/1.1 422 Unprocessable Entity
   Content-Length: 72
 	
   {
@@ -250,10 +254,11 @@ You can issue a GET request to the root endpoint to get all the endpoint categor
     "code":"empty_field",
   }
 </code></pre>
+    </div>
   </li>
 </ul>
 
-<p>All error objects from <code>422</code> responses have resource and field properties so that your client can tell what the problem is.  There’s also an error code to let you know what is wrong with the field.  These are the possible validation error codes:</p>
+<p>All error objects from <code class="highlighter-rouge">422</code> responses have resource and field properties so that your client can tell what the problem is.  There’s also an error code to let you know what is wrong with the field.  These are the possible validation error codes:</p>
 
 <table>
   <thead>
@@ -264,24 +269,24 @@ You can issue a GET request to the root endpoint to get all the endpoint categor
   </thead>
   <tbody>
     <tr>
-      <td><code>empty_field</code></td>
+      <td><code class="highlighter-rouge">empty_field</code></td>
       <td>This means a required field on a resource has not been set or has a blank value.</td>
     </tr>
     <tr>
-      <td><code>invalid</code></td>
+      <td><code class="highlighter-rouge">invalid</code></td>
       <td>This means the formatting of a field is invalid.  The documentation for that resource should be able to give you more specific information.</td>
     </tr>
   </tbody>
 </table>
 
-<p>Resources may also send custom validation errors (where <code>code</code> is <code>custom</code>). Custom errors will always have a <code>message</code> field describing the error, as well as a <code>documentation_url</code> field pointing to some content that might help you resolve the error.</p>
+<p>Resources may also send custom validation errors (where <code class="highlighter-rouge">code</code> is <code class="highlighter-rouge">custom</code>). Custom errors will always have a <code class="highlighter-rouge">message</code> field describing the error, as well as a <code class="highlighter-rouge">documentation_url</code> field pointing to some content that might help you resolve the error.</p>
 
 <h1 id="http-redirects">HTTP Redirects</h1>
 
 <p>API v1 uses HTTP redirection where appropriate. Clients should assume that any
 request may result in a redirection. Receiving an HTTP redirection is <em>not</em> an
 error and clients should follow that redirect. Redirect responses will have a
-<code>Location</code> header field which contains the URI of the resource to which the
+<code class="highlighter-rouge">Location</code> header field which contains the URI of the resource to which the
 client should repeat the requests.</p>
 
 <table>
@@ -293,12 +298,12 @@ client should repeat the requests.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code>301</code></td>
-      <td>Permanent redirection. The URI you used to make the request has been superseded by the one specified in the <code>Location</code> header field. This and all future requests to this resource should be directed to the new URI.</td>
+      <td><code class="highlighter-rouge">301</code></td>
+      <td>Permanent redirection. The URI you used to make the request has been superseded by the one specified in the <code class="highlighter-rouge">Location</code> header field. This and all future requests to this resource should be directed to the new URI.</td>
     </tr>
     <tr>
-      <td><code>302</code>, <code>307</code></td>
-      <td>Temporary redirection. The request should be repeated verbatim to the URI specified in the <code>Location</code> header field but clients should continue to use the original URI for future requests.</td>
+      <td><code class="highlighter-rouge">302</code>, <code class="highlighter-rouge">307</code></td>
+      <td>Temporary redirection. The request should be repeated verbatim to the URI specified in the <code class="highlighter-rouge">Location</code> header field but clients should continue to use the original URI for future requests.</td>
     </tr>
   </tbody>
 </table>
@@ -319,23 +324,23 @@ action.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code>HEAD</code></td>
+      <td><code class="highlighter-rouge">HEAD</code></td>
       <td>Can be issued against some resources to get just the HTTP header info.</td>
     </tr>
     <tr>
-      <td><code>GET</code></td>
+      <td><code class="highlighter-rouge">GET</code></td>
       <td>Used for retrieving resources.</td>
     </tr>
     <tr>
-      <td><code>POST</code></td>
+      <td><code class="highlighter-rouge">POST</code></td>
       <td>Used for creating resources.</td>
     </tr>
     <tr>
-      <td><code>PUT</code></td>
-      <td>Used for replacing resources or collections. For <code>PUT</code> requests with no <code>body</code> attribute, be sure to set the <code>Content-Length</code> header to zero.</td>
+      <td><code class="highlighter-rouge">PUT</code></td>
+      <td>Used for replacing resources or collections. For <code class="highlighter-rouge">PUT</code> requests with no <code class="highlighter-rouge">body</code> attribute, be sure to set the <code class="highlighter-rouge">Content-Length</code> header to zero.</td>
     </tr>
     <tr>
-      <td><code>DELETE</code></td>
+      <td><code class="highlighter-rouge">DELETE</code></td>
       <td>Used for deleting resources.</td>
     </tr>
   </tbody>
@@ -343,23 +348,26 @@ action.</p>
 
 <h1 id="authentication">Authentication</h1>
 <p>There are three ways to authenticate through ClawIO API.  Requests that
-require authentication will return <code>401 Not Authorized</code>. In some places <code>404 Not Found</code> will be returned instead, this is to prevent the accidental leakage
+require authentication will return <code class="highlighter-rouge">401 Not Authorized</code>. In some places <code class="highlighter-rouge">404 Not Found</code> will be returned instead, this is to prevent the accidental leakage
 of information like password protected Links to unauthorized users.</p>
 
 <h2 id="basic-authentication">Basic Authentication</h2>
 
-<pre><code>curl http://localhost:57008/api/v1/storage/stat/local?children=true -u demo:demo
+<div class="highlighter-rouge"><pre class="highlight"><code>curl http://localhost:57008/api/v1/storage/stat/local?children=true -u demo:demo
 </code></pre>
+</div>
 
 <h2 id="jwt-token-via-http-header">JWT Token (via HTTP Header)</h2>
 
-<pre><code>curl http://localhost:57008/api/v1/storage/stat/local?children=true -H "X-Auth-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoaWQiOiJmaWxlYXV0aCIsImRpc3BsYXluYW1lIjoiRGVtbyBVc2VyIiwiZW1haWwiOiJkZW1vQGxvY2FsaG9zdCIsImVwcG4iOiJkZW1vIiwiZXhwIjoxNDQ0NzI4NDc0LCJpZHAiOiJsb2NhbGhvc3QiLCJpc3MiOiJsb2NhbGhvc3QifQ.lHxZ_20Qnz_l-GLI-ATZEnqOALOoTp-3zZGtHk9tPTc"
+<div class="highlighter-rouge"><pre class="highlight"><code>curl http://localhost:57008/api/v1/storage/stat/local?children=true -H "X-Auth-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoaWQiOiJmaWxlYXV0aCIsImRpc3BsYXluYW1lIjoiRGVtbyBVc2VyIiwiZW1haWwiOiJkZW1vQGxvY2FsaG9zdCIsImVwcG4iOiJkZW1vIiwiZXhwIjoxNDQ0NzI4NDc0LCJpZHAiOiJsb2NhbGhvc3QiLCJpc3MiOiJsb2NhbGhvc3QifQ.lHxZ_20Qnz_l-GLI-ATZEnqOALOoTp-3zZGtHk9tPTc"
 </code></pre>
+</div>
 
 <h2 id="jwt-token-via-http-query-param">JWT Token (via HTTP Query Param)</h2>
 
-<pre><code>curl 'http://localhost:57008/api/v1/storage/stat/local?x-auth-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoaWQiOiJmaWxlYXV0aCIsImRpc3BsYXluYW1lIjoiRGVtbyBVc2VyIiwiZW1haWwiOiJkZW1vQGxvY2FsaG9zdCIsImVwcG4iOiJkZW1vIiwiZXhwIjoxNDQ0NzI4NDc0LCJpZHAiOiJsb2NhbGhvc3QiLCJpc3MiOiJsb2NhbGhvc3QifQ.lHxZ_20Qnz_l-GLI-ATZEnqOALOoTp-3zZGtHk9tPTc'
+<div class="highlighter-rouge"><pre class="highlight"><code>curl 'http://localhost:57008/api/v1/storage/stat/local?x-auth-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoaWQiOiJmaWxlYXV0aCIsImRpc3BsYXluYW1lIjoiRGVtbyBVc2VyIiwiZW1haWwiOiJkZW1vQGxvY2FsaG9zdCIsImVwcG4iOiJkZW1vIiwiZXhwIjoxNDQ0NzI4NDc0LCJpZHAiOiJsb2NhbGhvc3QiLCJpc3MiOiJsb2NhbGhvc3QifQ.lHxZ_20Qnz_l-GLI-ATZEnqOALOoTp-3zZGtHk9tPTc'
 </code></pre>
+</div>
 
 <!--
 # Cross Origin Resource Sharing

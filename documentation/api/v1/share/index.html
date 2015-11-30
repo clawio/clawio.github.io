@@ -29,9 +29,9 @@
         </a>
 
         <nav class="masthead-nav">
-          <a  href="/manifesto">Manifesto</a>
-          <a  href="/documentation/">Documentation</a>
-          <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
+            <!--a  href="/manifesto">Manifesto</a>-->
+          <a  href="https://www.gitbook.com/book/clawio/clawio/details">Documentation</a>
+          <a href="https://github.com/clawio" target="_blank">GitHub</a>
         </nav>
       </div>
     </header>
@@ -118,12 +118,12 @@
 <p>A resource can be:</p>
 
 <ul>
-  <li><code>Object</code>: it contains binary data. Depending on the storage it can be a file, a BLOB object or anything that is not a Container.</li>
-  <li><code>Container</code>: it contains other resources. Depending on the storage it can be a folder, a bucket or anything that is not an Object.</li>
+  <li><code class="highlighter-rouge">Object</code>: it contains binary data. Depending on the storage it can be a file, a BLOB object or anything that is not a Container.</li>
+  <li><code class="highlighter-rouge">Container</code>: it contains other resources. Depending on the storage it can be a folder, a bucket or anything that is not an Object.</li>
 </ul>
 
 <p>A Resource URI is powerful addressing scheme to identify diferent storages.
-It is usually referenced by the  <code>:resourceuri</code> placeholder.</p>
+It is usually referenced by the  <code class="highlighter-rouge">:resourceuri</code> placeholder.</p>
 
 <p>The Resource URI can take two forms:</p>
 
@@ -131,33 +131,37 @@ It is usually referenced by the  <code>:resourceuri</code> placeholder.</p>
   <li>
     <p><strong>Path format</strong>: When referencing a resource by a path:</p>
 
-    <pre><code> storage-scheme://[[authinfo@]host]]/path[?query][#fragment]
+    <div class="highlighter-rouge"><pre class="highlight"><code> storage-scheme://[[authinfo@]host]]/path[?query][#fragment]
 </code></pre>
+    </div>
 
     <p>Examples:</p>
 
-    <pre><code> local:///docs/thesis.pdf
+    <div class="highlighter-rouge"><pre class="highlight"><code> local:///docs/thesis.pdf
  swift://bucket1.tenant1.com/docs/thesis.pdf
  s3://user:password@bucket2.tenant2.example.com/docs/thesis.pdf
 </code></pre>
+    </div>
 
-    <p>The use of <code>authinfo@host</code> can be used in distributed storage systems. This is useful when you want talk to the closest geographically server, for example.</p>
+    <p>The use of <code class="highlighter-rouge">authinfo@host</code> can be used in distributed storage systems. This is useful when you want talk to the closest geographically server, for example.</p>
   </li>
   <li>
     <p><strong>ID format</strong>: When referencing a resource by ID</p>
 
-    <pre><code> storage-scheme:opaque[?query][#fragment]
+    <div class="highlighter-rouge"><pre class="highlight"><code> storage-scheme:opaque[?query][#fragment]
 </code></pre>
+    </div>
 
-    <p>The <code>opaque</code> part can be anything and it is defined by each storage.
+    <p>The <code class="highlighter-rouge">opaque</code> part can be anything and it is defined by each storage.
  Some storages may use a number, other may use a hash and others maybe a path.</p>
 
     <p>Examples:</p>
 
-    <pre><code> local:docs/thesis.pdf
+    <div class="highlighter-rouge"><pre class="highlight"><code> local:docs/thesis.pdf
  eos:139128318809
  s3:de305d54-75b4-431b-adb2-eb6b9e546014 
 </code></pre>
+    </div>
   </li>
 </ol>
 
@@ -176,73 +180,73 @@ It is usually referenced by the  <code>:resourceuri</code> placeholder.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code>stat</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">stat</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Stat a reosource.</td>
     </tr>
     <tr>
-      <td><code>add</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">add</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Add resources to a container.</td>
     </tr>
     <tr>
-      <td><code>remove</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">remove</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Remove resources from a container.</td>
     </tr>
     <tr>
-      <td><code>copy</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">copy</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Copy a resource.</td>
     </tr>
     <tr>
-      <td><code>rename</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">rename</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Rename a resource.</td>
     </tr>
     <tr>
-      <td><code>3rdcopy</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">3rdcopy</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Thrird party copy of a resource.</td>
     </tr>
     <tr>
-      <td><code>3rdrename</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">3rdrename</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Third party rename of a resource.</td>
     </tr>
     <tr>
-      <td><code>putobject</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">putobject</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Upload the full object.</td>
     </tr>
     <tr>
-      <td><code>putobjectinchunks</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">putobjectinchunks</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Upload the object in chunks.</td>
     </tr>
     <tr>
-      <td><code>getobject</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">getobject</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Download the full object.</td>
     </tr>
     <tr>
-      <td><code>getobjectbybyterange</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">getobjectbybyterange</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Download some bytes of the object.</td>
     </tr>
     <tr>
-      <td><code>createcont</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">createcont</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Create a container.</td>
     </tr>
     <tr>
-      <td><code>verifyclientchecksum</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">verifyclientchecksum</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Verify client checksums.</td>
     </tr>
     <tr>
-      <td><code>sendserverchecksum</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">sendserverchecksum</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Send server-computed checksum.</td>
     </tr>
   </tbody>
@@ -253,28 +257,28 @@ It is usually referenced by the  <code>:resourceuri</code> placeholder.</p>
 <table>
   <tbody>
     <tr>
-      <td><code>listversions</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">listversions</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>List versions of a resource.</td>
     </tr>
     <tr>
-      <td><code>getversion</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">getversion</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Download a version.</td>
     </tr>
     <tr>
-      <td><code>createversion</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">createversion</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Create a version.</td>
     </tr>
     <tr>
-      <td><code>deleteversion</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">deleteversion</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Delete a version.</td>
     </tr>
     <tr>
-      <td><code>rollbackversion</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">rollbackversion</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Rollback to a previous version.</td>
     </tr>
   </tbody>
@@ -285,18 +289,18 @@ It is usually referenced by the  <code>:resourceuri</code> placeholder.</p>
 <table>
   <tbody>
     <tr>
-      <td><code>listjunk</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">listjunk</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>List junk files (deleted files).</td>
     </tr>
     <tr>
-      <td><code>restorejunk</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">restorejunk</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Restore a junk a file.</td>
     </tr>
     <tr>
-      <td><code>purgejunk</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">purgejunk</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Purge a junk file.</td>
     </tr>
   </tbody>
@@ -315,63 +319,63 @@ It is usually referenced by the  <code>:resourceuri</code> placeholder.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code>checksum</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">checksum</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The checksum of the resource.</td>
     </tr>
     <tr>
-      <td><code>checksumtype</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">checksumtype</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The type of checksum used for the checksum.</td>
     </tr>
     <tr>
-      <td><code>children</code></td>
-      <td><code>array(Metadata)</code></td>
+      <td><code class="highlighter-rouge">children</code></td>
+      <td><code class="highlighter-rouge">array(Metadata)</code></td>
       <td>An array containing metadata about the resources inside a folder.</td>
     </tr>
     <tr>
-      <td><code>etag</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">etag</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The ETag of the resource</td>
     </tr>
     <tr>
-      <td><code>extra</code></td>
-      <td><code>any</code></td>
+      <td><code class="highlighter-rouge">extra</code></td>
+      <td><code class="highlighter-rouge">any</code></td>
       <td>Custom information returned by the storage. It can be any JSON type.</td>
     </tr>
     <tr>
-      <td><code>id</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">id</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The Resource URI in ID format.</td>
     </tr>
     <tr>
-      <td><code>iscol</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">iscol</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Indicates if the resource is a folder.</td>
     </tr>
     <tr>
-      <td><code>mimetype</code></td>
-      <td><code>string</code></td>
-      <td>The mimetype of the resource. Containers MUST return <code>inode/directory</code>.</td>
+      <td><code class="highlighter-rouge">mimetype</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
+      <td>The mimetype of the resource. Containers MUST return <code class="highlighter-rouge">inode/directory</code>.</td>
     </tr>
     <tr>
-      <td><code>modified</code></td>
-      <td><code>number</code></td>
+      <td><code class="highlighter-rouge">modified</code></td>
+      <td><code class="highlighter-rouge">number</code></td>
       <td>The modification time of the resource in UTC Unix time.</td>
     </tr>
     <tr>
-      <td><code>path</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">path</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The Resource URI in Path format.</td>
     </tr>
     <tr>
-      <td><code>permissions</code></td>
-      <td><code>object(Permission)</code></td>
+      <td><code class="highlighter-rouge">permissions</code></td>
+      <td><code class="highlighter-rouge">object(Permission)</code></td>
       <td>The permissions for the resource.</td>
     </tr>
     <tr>
-      <td><code>size</code></td>
-      <td><code>number</code></td>
+      <td><code class="highlighter-rouge">size</code></td>
+      <td><code class="highlighter-rouge">number</code></td>
       <td>The size of the resource. Folders MAY return the aggregated children´s size.</td>
     </tr>
   </tbody>

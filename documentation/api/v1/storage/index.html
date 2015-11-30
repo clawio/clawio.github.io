@@ -29,9 +29,9 @@
         </a>
 
         <nav class="masthead-nav">
-          <a  href="/manifesto">Manifesto</a>
-          <a  href="/documentation/">Documentation</a>
-          <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
+            <!--a  href="/manifesto">Manifesto</a>-->
+          <a  href="https://www.gitbook.com/book/clawio/clawio/details">Documentation</a>
+          <a href="https://github.com/clawio" target="_blank">GitHub</a>
         </nav>
       </div>
     </header>
@@ -111,13 +111,13 @@
     </ul>
   </li>
   <li><a href="#operations" id="markdown-toc-operations">Operations</a>    <ul>
-      <li><a href="#get-apiv1storagegetcapabilities" id="markdown-toc-get-apiv1storagegetcapabilities"><code>GET /api/v1/storage/getcapabilities</code></a></li>
-      <li><a href="#get-apiv1storageget" id="markdown-toc-get-apiv1storageget"><code>GET /api/v1/storage/get</code></a></li>
-      <li><a href="#get-apiv1storagestat" id="markdown-toc-get-apiv1storagestat"><code>GET /api/v1/storage/stat</code></a></li>
-      <li><a href="#put-apiv1storageput" id="markdown-toc-put-apiv1storageput"><code>PUT /api/v1/storage/put</code></a></li>
-      <li><a href="#post-apiv1storagecreatecontainer" id="markdown-toc-post-apiv1storagecreatecontainer"><code>POST /api/v1/storage/createcontainer</code></a></li>
-      <li><a href="#delete-apiv1storagerm" id="markdown-toc-delete-apiv1storagerm"><code>DELETE /api/v1/storage/rm</code></a></li>
-      <li><a href="#post-apiv1storagemv" id="markdown-toc-post-apiv1storagemv"><code>POST /api/v1/storage/mv</code></a></li>
+      <li><a href="#get-apiv1storagegetcapabilities" id="markdown-toc-get-apiv1storagegetcapabilities"><code class="highlighter-rouge">GET /api/v1/storage/getcapabilities</code></a></li>
+      <li><a href="#get-apiv1storageget" id="markdown-toc-get-apiv1storageget"><code class="highlighter-rouge">GET /api/v1/storage/get</code></a></li>
+      <li><a href="#get-apiv1storagestat" id="markdown-toc-get-apiv1storagestat"><code class="highlighter-rouge">GET /api/v1/storage/stat</code></a></li>
+      <li><a href="#put-apiv1storageput" id="markdown-toc-put-apiv1storageput"><code class="highlighter-rouge">PUT /api/v1/storage/put</code></a></li>
+      <li><a href="#post-apiv1storagecreatecontainer" id="markdown-toc-post-apiv1storagecreatecontainer"><code class="highlighter-rouge">POST /api/v1/storage/createcontainer</code></a></li>
+      <li><a href="#delete-apiv1storagerm" id="markdown-toc-delete-apiv1storagerm"><code class="highlighter-rouge">DELETE /api/v1/storage/rm</code></a></li>
+      <li><a href="#post-apiv1storagemv" id="markdown-toc-post-apiv1storagemv"><code class="highlighter-rouge">POST /api/v1/storage/mv</code></a></li>
     </ul>
   </li>
 </ul>
@@ -129,15 +129,15 @@
 <p>A resource can be:</p>
 
 <ul>
-  <li><code>Object</code>: it contains binary data. Depending on the storage it can be a file, a BLOB object or anything that is not a Container.</li>
-  <li><code>Container</code>: it contains other resources. Depending on the storage it can be a folder, a bucket or anything that is not an Object.</li>
+  <li><code class="highlighter-rouge">Object</code>: it contains binary data. Depending on the storage it can be a file, a BLOB object or anything that is not a Container.</li>
+  <li><code class="highlighter-rouge">Container</code>: it contains other resources. Depending on the storage it can be a folder, a bucket or anything that is not an Object.</li>
 </ul>
 
-<p>Every resource live inside a storage. To improve performance ClawIO prefixes every resource with the prefix of the storage. In order to manage resources the <code>storagepath</code> format is used to have <strong>Universal Content-Addresable</strong> resources.</p>
+<p>Every resource live inside a storage. To improve performance ClawIO prefixes every resource with the prefix of the storage. In order to manage resources the <code class="highlighter-rouge">storagepath</code> format is used to have <strong>Universal Content-Addresable</strong> resources.</p>
 
-<p>The format of the <code>storagepath</code> is: <code>&lt;storageprefix&gt;/&lt;pathtoresource&gt;</code></p>
+<p>The format of the <code class="highlighter-rouge">storagepath</code> is: <code class="highlighter-rouge">&lt;storageprefix&gt;/&lt;pathtoresource&gt;</code></p>
 
-<p>Imagine there is a directory <code>photos</code> inside a local storage that has the prefix <code>local</code>. The <code>resourcepath</code> for this resource will be <code>local/photos</code>.</p>
+<p>Imagine there is a directory <code class="highlighter-rouge">photos</code> inside a local storage that has the prefix <code class="highlighter-rouge">local</code>. The <code class="highlighter-rouge">resourcepath</code> for this resource will be <code class="highlighter-rouge">local/photos</code>.</p>
 
 <h1 id="models">Models</h1>
 
@@ -154,113 +154,113 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>stat</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">stat</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can get resource metadata.</td>
     </tr>
     <tr>
-      <td><code>remove</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">remove</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can remove resources.</td>
     </tr>
     <tr>
-      <td><code>copy</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">copy</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can copy a resource inside the same storage.</td>
     </tr>
     <tr>
-      <td><code>rename</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">rename</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can rename a resource inside the same storage.</td>
     </tr>
     <tr>
-      <td><code>thirdpartycopy</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">thirdpartycopy</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can thrird party copy of a resource.</td>
     </tr>
     <tr>
-      <td><code>thirdpartyrename</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">thirdpartyrename</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can third party rename of a resource.</td>
     </tr>
     <tr>
-      <td><code>putobject</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">putobject</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can upload the full object.</td>
     </tr>
     <tr>
-      <td><code>putobjectinchunks</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">putobjectinchunks</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can upload the object in chunks.</td>
     </tr>
     <tr>
-      <td><code>getobject</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">getobject</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can download the full object.</td>
     </tr>
     <tr>
-      <td><code>getobjectbybyterange</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">getobjectbybyterange</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can download some bytes of the object.</td>
     </tr>
     <tr>
-      <td><code>createcontainer</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">createcontainer</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can create a container.</td>
     </tr>
     <tr>
-      <td><code>listversions</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">listversions</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can list versions of a resource.</td>
     </tr>
     <tr>
-      <td><code>getversion</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">getversion</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can download a version.</td>
     </tr>
     <tr>
-      <td><code>createversion</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">createversion</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can create versions.</td>
     </tr>
     <tr>
-      <td><code>rollbackversion</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">rollbackversion</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can rollback to a previous version.</td>
     </tr>
     <tr>
-      <td><code>listdeletedresources</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">listdeletedresources</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can list deleted resources.</td>
     </tr>
     <tr>
-      <td><code>restoredeletedresource</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">restoredeletedresource</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can restore a resource from the junk.</td>
     </tr>
     <tr>
-      <td><code>purgeresource</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">purgeresource</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can purge a resource.</td>
     </tr>
     <tr>
-      <td><code>verifyclientchecksum</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">verifyclientchecksum</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can verify client checksums.</td>
     </tr>
     <tr>
-      <td><code>sendchecksum</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">sendchecksum</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Can send checksums to clients.</td>
     </tr>
     <tr>
-      <td><code>supportedchecksum</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">supportedchecksum</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The checksum supported on the server.</td>
     </tr>
     <tr>
-      <td><code>createuserhomedirectoryonlogin</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">createuserhomedirectoryonlogin</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Create user home directory on login</td>
     </tr>
   </tbody>
@@ -279,63 +279,63 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>checksum</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">checksum</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The checksum of the resource.</td>
     </tr>
     <tr>
-      <td><code>checksumtype</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">checksumtype</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The type of checksum used for the checksum.</td>
     </tr>
     <tr>
-      <td><code>children</code></td>
-      <td><code>array(Metadata)</code></td>
+      <td><code class="highlighter-rouge">children</code></td>
+      <td><code class="highlighter-rouge">array(Metadata)</code></td>
       <td>An array containing <a href="/documentation/api/v1/storage/#metadata">Metadata</a> about the resources inside a container.</td>
     </tr>
     <tr>
-      <td><code>etag</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">etag</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The ETag of the resource</td>
     </tr>
     <tr>
-      <td><code>extra</code></td>
-      <td><code>any</code></td>
+      <td><code class="highlighter-rouge">extra</code></td>
+      <td><code class="highlighter-rouge">any</code></td>
       <td>Custom information returned by the storage. It can be any JSON type.</td>
     </tr>
     <tr>
-      <td><code>id</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">id</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The ID of the resource.</td>
     </tr>
     <tr>
-      <td><code>iscontainer</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">iscontainer</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Indicates if the resource is a container.</td>
     </tr>
     <tr>
-      <td><code>mimetype</code></td>
-      <td><code>string</code></td>
-      <td>The mimetype of the resource. Containers MUST return <code>inode/container</code>.</td>
+      <td><code class="highlighter-rouge">mimetype</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
+      <td>The mimetype of the resource. Containers MUST return <code class="highlighter-rouge">inode/container</code>.</td>
     </tr>
     <tr>
-      <td><code>modified</code></td>
-      <td><code>number</code></td>
+      <td><code class="highlighter-rouge">modified</code></td>
+      <td><code class="highlighter-rouge">number</code></td>
       <td>The modification time of the resource in UTC Unix time.</td>
     </tr>
     <tr>
-      <td><code>path</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">path</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The path to the resource with the storage prefix.</td>
     </tr>
     <tr>
-      <td><code>permissions</code></td>
-      <td><code>object</code></td>
+      <td><code class="highlighter-rouge">permissions</code></td>
+      <td><code class="highlighter-rouge">object</code></td>
       <td>The <a href="/documentation/api/v1/storage/#permission">Permissions</a> for the resource.</td>
     </tr>
     <tr>
-      <td><code>size</code></td>
-      <td><code>number</code></td>
+      <td><code class="highlighter-rouge">size</code></td>
+      <td><code class="highlighter-rouge">number</code></td>
       <td>The size of the resource. Containers MAY return the aggregated children´s size.</td>
     </tr>
   </tbody>
@@ -354,43 +354,43 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>stat</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">stat</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grants getting metadata from a resource.</td>
     </tr>
     <tr>
-      <td><code>list</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">list</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grant listing of resources inside a container.</td>
     </tr>
     <tr>
-      <td><code>add</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">add</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grants adding resources to the container.</td>
     </tr>
     <tr>
-      <td><code>get</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">get</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grants downloading an object.</td>
     </tr>
     <tr>
-      <td><code>remove</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">remove</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grants removing resources from the container.</td>
     </tr>
     <tr>
-      <td><code>link</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">link</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grants creating links for the resource.</td>
     </tr>
     <tr>
-      <td><code>share</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">share</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grants internal sharing for the container.</td>
     </tr>
     <tr>
-      <td><code>fedshare</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">fedshare</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grants federated (external) sharing for the container.</td>
     </tr>
   </tbody>
@@ -398,12 +398,13 @@
 
 <h1 id="operations">Operations</h1>
 
-<h2 id="get-apiv1storagegetcapabilities"><code>GET /api/v1/storage/getcapabilities</code></h2>
+<h2 id="get-apiv1storagegetcapabilities"><code class="highlighter-rouge">GET /api/v1/storage/getcapabilities</code></h2>
 
 <p>Get the capabilities of a storage</p>
 
-<pre><code>GET /api/v1/storage/capabilities/:storageprefix
+<div class="highlighter-rouge"><pre class="highlight"><code>GET /api/v1/storage/capabilities/:storageprefix
 </code></pre>
+</div>
 
 <p><strong>Path Parameters</strong></p>
 
@@ -417,8 +418,8 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>storageprefix</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">storageprefix</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The prefix of the storage</td>
     </tr>
   </tbody>
@@ -426,7 +427,7 @@
 
 <p><strong>Response</strong></p>
 
-<pre><code>curl -i http://localhost:57008/api/v1/storage/getcapabilities/local -u demo:demo
+<div class="highlighter-rouge"><pre class="highlight"><code>curl -i http://localhost:57008/api/v1/storage/getcapabilities/local -u demo:demo
 HTTP/1.1 200 OK
 Content-Type: application/json
 Date: Sun, 13 Sep 2015 11:44:52 GMT
@@ -457,6 +458,7 @@ Content-Length: 631
     "createuserhomedirectory": true
 }
 </code></pre>
+</div>
 
 <p><strong>Possible HTTP Error Codes</strong></p>
 
@@ -475,12 +477,13 @@ Content-Length: 631
   </tbody>
 </table>
 
-<h2 id="get-apiv1storageget"><code>GET /api/v1/storage/get</code></h2>
+<h2 id="get-apiv1storageget"><code class="highlighter-rouge">GET /api/v1/storage/get</code></h2>
 
 <p>Download an object</p>
 
-<pre><code>GET /api/v1/storage/get/:storagepath
+<div class="highlighter-rouge"><pre class="highlight"><code>GET /api/v1/storage/get/:storagepath
 </code></pre>
+</div>
 
 <p><strong>Path Parameters</strong></p>
 
@@ -494,8 +497,8 @@ Content-Length: 631
   </thead>
   <tbody>
     <tr>
-      <td><code>storagepath</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">storagepath</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The storage path.</td>
     </tr>
   </tbody>
@@ -503,7 +506,7 @@ Content-Length: 631
 
 <p><strong>Response</strong></p>
 
-<pre><code>curl -i http://localhost:57008/api/v1/storage/get/local/passwd -u demo:demo
+<div class="highlighter-rouge"><pre class="highlight"><code>curl -i http://localhost:57008/api/v1/storage/get/local/passwd -u demo:demo
 HTTP/1.1 200 OK
 Content-Disposition: attachment; filename=passwd
 Content-Type: application/octet-stream
@@ -512,6 +515,7 @@ Content-Length: 1046
 
 ... binary data ...
 </code></pre>
+</div>
 
 <p><strong>Possible HTTP Error Codes</strong></p>
 
@@ -534,12 +538,13 @@ Content-Length: 1046
   </tbody>
 </table>
 
-<h2 id="get-apiv1storagestat"><code>GET /api/v1/storage/stat</code></h2>
+<h2 id="get-apiv1storagestat"><code class="highlighter-rouge">GET /api/v1/storage/stat</code></h2>
 
 <p>Get the metadata of a resource</p>
 
-<pre><code>GET /api/v1/storage/stat/:storagepath
+<div class="highlighter-rouge"><pre class="highlight"><code>GET /api/v1/storage/stat/:storagepath
 </code></pre>
+</div>
 
 <p><strong>Path Parameters</strong></p>
 
@@ -553,8 +558,8 @@ Content-Length: 1046
   </thead>
   <tbody>
     <tr>
-      <td><code>storagepath</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">storagepath</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The storage path.</td>
     </tr>
   </tbody>
@@ -572,8 +577,8 @@ Content-Length: 1046
   </thead>
   <tbody>
     <tr>
-      <td><code>children</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">children</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>If the resource is a container, ask for the resources inside.</td>
     </tr>
   </tbody>
@@ -581,7 +586,7 @@ Content-Length: 1046
 
 <p><strong>Response</strong></p>
 
-<pre><code>curl -i http://localhost:57008/api/v1/storage/stat/local?children=true -u demo:demo
+<div class="highlighter-rouge"><pre class="highlight"><code>curl -i http://localhost:57008/api/v1/storage/stat/local?children=true -u demo:demo
 HTTP/1.1 200 OK
 Date: Sun, 13 Sep 2015 12:41:28 GMT
 Content-Length: 1836
@@ -635,6 +640,7 @@ Content-Type: text/plain; charset=utf-8
     "extra": null
 }
 </code></pre>
+</div>
 
 <p><strong>Possible HTTP Error Codes</strong></p>
 
@@ -653,10 +659,11 @@ Content-Type: text/plain; charset=utf-8
   </tbody>
 </table>
 
-<h2 id="put-apiv1storageput"><code>PUT /api/v1/storage/put</code></h2>
+<h2 id="put-apiv1storageput"><code class="highlighter-rouge">PUT /api/v1/storage/put</code></h2>
 
-<pre><code>PUT /api/v1/storage/put/:storagepath
+<div class="highlighter-rouge"><pre class="highlight"><code>PUT /api/v1/storage/put/:storagepath
 </code></pre>
+</div>
 
 <p><strong>Path Parameters</strong></p>
 
@@ -670,8 +677,8 @@ Content-Type: text/plain; charset=utf-8
   </thead>
   <tbody>
     <tr>
-      <td><code>storagepath</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">storagepath</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The storage path.</td>
     </tr>
   </tbody>
@@ -690,10 +697,10 @@ Content-Type: text/plain; charset=utf-8
   </thead>
   <tbody>
     <tr>
-      <td><code>x-checksum</code></td>
-      <td><code>string</code></td>
-      <td>The checksumtype and checksum in the format: <code>&lt;checksumtype&gt;:&lt;checksum&gt;</code></td>
-      <td><code>md5:138019839208309</code></td>
+      <td><code class="highlighter-rouge">x-checksum</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
+      <td>The checksumtype and checksum in the format: <code class="highlighter-rouge">&lt;checksumtype&gt;:&lt;checksum&gt;</code></td>
+      <td><code class="highlighter-rouge">md5:138019839208309</code></td>
     </tr>
   </tbody>
 </table>
@@ -711,10 +718,10 @@ Content-Type: text/plain; charset=utf-8
   </thead>
   <tbody>
     <tr>
-      <td><code>X-Checksum</code></td>
-      <td><code>string</code></td>
-      <td>The checksumtype and checksum in the format: <code>&lt;checksumtype&gt;:&lt;checksum&gt;</code></td>
-      <td><code>md5:138019839208309</code></td>
+      <td><code class="highlighter-rouge">X-Checksum</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
+      <td>The checksumtype and checksum in the format: <code class="highlighter-rouge">&lt;checksumtype&gt;:&lt;checksum&gt;</code></td>
+      <td><code class="highlighter-rouge">md5:138019839208309</code></td>
     </tr>
   </tbody>
 </table>
@@ -725,7 +732,7 @@ Content-Type: text/plain; charset=utf-8
 
 <p><strong>Response</strong></p>
 
-<pre><code>curl -i -X PUT http://localhost:57008/api/v1/storage/put/local/passwd --data-binary @/etc/passwd -u demo:demo
+<div class="highlighter-rouge"><pre class="highlight"><code>curl -i -X PUT http://localhost:57008/api/v1/storage/put/local/passwd --data-binary @/etc/passwd -u demo:demo
 HTTP/1.1 201 Created
 Date: Sun, 13 Sep 2015 13:08:02 GMT
 Content-Length: 502
@@ -757,6 +764,7 @@ Content-Type: application/json
 
 Status: 201 Created
 </code></pre>
+</div>
 
 <p><strong>Possible HTTP Error Codes</strong></p>
 
@@ -779,10 +787,11 @@ Status: 201 Created
   </tbody>
 </table>
 
-<h2 id="post-apiv1storagecreatecontainer"><code>POST /api/v1/storage/createcontainer</code></h2>
+<h2 id="post-apiv1storagecreatecontainer"><code class="highlighter-rouge">POST /api/v1/storage/createcontainer</code></h2>
 
-<pre><code>POST /api/v1/storage/createcontainer/:storagepath
+<div class="highlighter-rouge"><pre class="highlight"><code>POST /api/v1/storage/createcontainer/:storagepath
 </code></pre>
+</div>
 
 <p><strong>Path Parameters</strong></p>
 
@@ -796,8 +805,8 @@ Status: 201 Created
   </thead>
   <tbody>
     <tr>
-      <td><code>storagepath</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">storagepath</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The storage path.</td>
     </tr>
   </tbody>
@@ -805,7 +814,7 @@ Status: 201 Created
 
 <p><strong>Response</strong></p>
 
-<pre><code>curl -i -X POST http://localhost:57008/api/v1/storage/createcontainer/local/photos -u demo:demo
+<div class="highlighter-rouge"><pre class="highlight"><code>curl -i -X POST http://localhost:57008/api/v1/storage/createcontainer/local/photos -u demo:demo
 HTTP/1.1 201 Created
 Content-Type: application/json
 Date: Sun, 13 Sep 2015 13:28:16 GMT
@@ -835,6 +844,7 @@ Content-Length: 490
     "extra": null
 }
 </code></pre>
+</div>
 
 <p><strong>Possible HTTP Error Codes</strong></p>
 
@@ -857,12 +867,13 @@ Content-Length: 490
   </tbody>
 </table>
 
-<h2 id="delete-apiv1storagerm"><code>DELETE /api/v1/storage/rm</code></h2>
+<h2 id="delete-apiv1storagerm"><code class="highlighter-rouge">DELETE /api/v1/storage/rm</code></h2>
 
 <p>Remove a resource</p>
 
-<pre><code>DELETE /api/v1/storage/rm/:storagepath
+<div class="highlighter-rouge"><pre class="highlight"><code>DELETE /api/v1/storage/rm/:storagepath
 </code></pre>
+</div>
 
 <p><strong>Path Parameters</strong></p>
 
@@ -876,8 +887,8 @@ Content-Length: 490
   </thead>
   <tbody>
     <tr>
-      <td><code>storagepath</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">storagepath</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The storage path.</td>
     </tr>
   </tbody>
@@ -885,10 +896,11 @@ Content-Length: 490
 
 <p><strong>Response</strong></p>
 
-<pre><code>curl -i -X DELETE http://localhost:57008/api/v1/storage/rm/local/photos -u demo:demo
+<div class="highlighter-rouge"><pre class="highlight"><code>curl -i -X DELETE http://localhost:57008/api/v1/storage/rm/local/photos -u demo:demo
 HTTP/1.1 204 No Content
 Date: Sun, 13 Sep 2015 14:08:11 GMT
 </code></pre>
+</div>
 
 <p><strong>Possible HTTP Error Codes</strong></p>
 
@@ -907,12 +919,13 @@ Date: Sun, 13 Sep 2015 14:08:11 GMT
   </tbody>
 </table>
 
-<h2 id="post-apiv1storagemv"><code>POST /api/v1/storage/mv</code></h2>
+<h2 id="post-apiv1storagemv"><code class="highlighter-rouge">POST /api/v1/storage/mv</code></h2>
 
 <p>Moves a resource</p>
 
-<pre><code>POST /api/v1/storage/mv
+<div class="highlighter-rouge"><pre class="highlight"><code>POST /api/v1/storage/mv
 </code></pre>
+</div>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -926,13 +939,13 @@ Date: Sun, 13 Sep 2015 14:08:11 GMT
   </thead>
   <tbody>
     <tr>
-      <td><code>from</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">from</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The source storage path.</td>
     </tr>
     <tr>
-      <td><code>to</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">to</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The target storage path .</td>
     </tr>
   </tbody>
@@ -940,7 +953,7 @@ Date: Sun, 13 Sep 2015 14:08:11 GMT
 
 <p><strong>Response</strong></p>
 
-<pre><code>curl -i -X POST 'http://localhost:57008/api/v1/storage/mv?from=local/photos&amp;to=local/photos.bak' -u demo:demo
+<div class="highlighter-rouge"><pre class="highlight"><code>curl -i -X POST 'http://localhost:57008/api/v1/storage/mv?from=local/photos&amp;to=local/photos.bak' -u demo:demo
 HTTP/1.1 200 OK
 Content-Type: application/json
 Date: Sun, 13 Sep 2015 14:20:34 GMT
@@ -970,6 +983,7 @@ Content-Length: 498
     "extra": null
 }
 </code></pre>
+</div>
 
 <p><strong>Possible HTTP Error Codes</strong></p>
 

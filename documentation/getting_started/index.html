@@ -29,9 +29,9 @@
         </a>
 
         <nav class="masthead-nav">
-          <a  href="/manifesto">Manifesto</a>
-          <a  href="/documentation/">Documentation</a>
-          <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
+            <!--a  href="/manifesto">Manifesto</a>-->
+          <a  href="https://www.gitbook.com/book/clawio/clawio/details">Documentation</a>
+          <a href="https://github.com/clawio" target="_blank">GitHub</a>
         </nav>
       </div>
     </header>
@@ -61,38 +61,40 @@
 
 <h1 id="understanding-the-default-installation">Understanding the default installation</h1>
 
-<p>The core component of ClawIO is <code>clawiod</code>, the API server that you have installed in the previous step.</p>
+<p>The core component of ClawIO is <code class="highlighter-rouge">clawiod</code>, the API server that you have installed in the previous step.</p>
 
-<p>By default, the server use a JSON file to authenticate users (<code>/etc/clawiod/conf.d/fileauth.conf</code>).</p>
+<p>By default, the server use a JSON file to authenticate users (<code class="highlighter-rouge">/etc/clawiod/conf.d/fileauth.conf</code>).</p>
 
-<p>See the contents of the file: <code>cat /etc/clawiod/conf.d/fileauth.conf</code></p>
+<p>See the contents of the file: <code class="highlighter-rouge">cat /etc/clawiod/conf.d/fileauth.conf</code></p>
 
-<pre><code>[
+<div class="highlighter-rouge"><pre class="highlight"><code>[
     {"eppn":"demo", "password": "demo", "idp": "localhost", "displayname": "Demo User", "email": "demo@localhost"}
 ]
 </code></pre>
+</div>
 
 <p>The fields are the following:</p>
 
 <ul>
-  <li><code>eppn</code>: The <a href="http://www.internet2.edu/media/medialibrary/2013/09/04/internet2-mace-dir-eduperson-201203.html#eduPersonPrincipalName">eduPersonPrincipalName</a>. It is the unique identifier for the user, like a username.</li>
-  <li><code>password</code>: The password. This is only used when the authentication method is not federated login, like ldap or JSON-based authentication. In this case we are authenticating the user against a JSON file so we need it.</li>
-  <li><code>idp</code>: The Identity Provider is responsible for authenticating the user.</li>
-  <li><code>displayname</code>: A user-friendly name instead. Usually the full name of the person.</li>
-  <li><code>email</code>: The email to reach the user identified by the <code>eppn</code>.</li>
+  <li><code class="highlighter-rouge">eppn</code>: The <a href="http://www.internet2.edu/media/medialibrary/2013/09/04/internet2-mace-dir-eduperson-201203.html#eduPersonPrincipalName">eduPersonPrincipalName</a>. It is the unique identifier for the user, like a username.</li>
+  <li><code class="highlighter-rouge">password</code>: The password. This is only used when the authentication method is not federated login, like ldap or JSON-based authentication. In this case we are authenticating the user against a JSON file so we need it.</li>
+  <li><code class="highlighter-rouge">idp</code>: The Identity Provider is responsible for authenticating the user.</li>
+  <li><code class="highlighter-rouge">displayname</code>: A user-friendly name instead. Usually the full name of the person.</li>
+  <li><code class="highlighter-rouge">email</code>: The email to reach the user identified by the <code class="highlighter-rouge">eppn</code>.</li>
 </ul>
 
-<p>The default server has registered one local storage that saves data at <code>/home/clawiod/data/notmp</code>.</p>
+<p>The default server has registered one local storage that saves data at <code class="highlighter-rouge">/home/clawiod/data/notmp</code>.</p>
 
 <p>The contents of this directory are the following:</p>
 
-<pre><code>root@8d6f87faba55:/# ls -l /home/clawiod/data/notmp/
+<div class="highlighter-rouge"><pre class="highlight"><code>root@8d6f87faba55:/# ls -l /home/clawiod/data/notmp/
 total 0
 </code></pre>
+</div>
 
 <p>To create the user home directory we have to log in (get authentication token).</p>
 
-<pre><code>root@522d58cc3217:/# curl -i -X POST localhost:57008/api/v1/auth/gettoken --data '{"eppn":"demo", "password":"demo"}'
+<div class="highlighter-rouge"><pre class="highlight"><code>root@522d58cc3217:/# curl -i -X POST localhost:57008/api/v1/auth/gettoken --data '{"eppn":"demo", "password":"demo"}'
 HTTP/1.1 201 Created
 Date: Sat, 12 Sep 2015 10:46:31 GMT
 Content-Length: 280
@@ -100,24 +102,27 @@ Content-Type: text/plain; charset=utf-8
 
 {"auth_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoaWQiOiJmaWxlYXV0aCIsImRpc3BsYXluYW1lIjoiRGVtbyBVc2VyIiwiZW1haWwiOiJkZW1vQGxvY2FsaG9zdCIsImVwcG4iOiJkZW1vIiwiZXhwIjoxNDQyMDgzNTkxLCJpZHAiOiJsb2NhbGhvc3QiLCJpc3MiOiJDbGF3SU8ifQ.DsCFtO0sJYNx9j8561I_ygqMm3infLxJJjMtX0TZlF8"}
 </code></pre>
+</div>
 
-<p>If you are curious about what is the content of the token, copy and paste it at <a href="http://jwt.io/">jwt.io</a>. You will see that the signature is invalid but if you use your secret (kept in the directive <code>token_secret</code>) it will be valid.</p>
+<p>If you are curious about what is the content of the token, copy and paste it at <a href="http://jwt.io/">jwt.io</a>. You will see that the signature is invalid but if you use your secret (kept in the directive <code class="highlighter-rouge">token_secret</code>) it will be valid.</p>
 
 <p>If we see the contents of the data folder again:</p>
 
-<pre><code>root@522d58cc3217:/# ls -l /home/clawiod/data/notmp/
+<div class="highlighter-rouge"><pre class="highlight"><code>root@522d58cc3217:/# ls -l /home/clawiod/data/notmp/
 total 4
 drwxrwxr-x 3 clawiod clawiod 4096 Sep 12 10:46 fileauth
 </code></pre>
+</div>
 
-<p>What is the fileauth directory ? The local storage implementation partition the users based on the authentication strategy used, so as user demo is using JSON-based authentication with the ID <code>fileauth</code> we have this new directory.</p>
+<p>What is the fileauth directory ? The local storage implementation partition the users based on the authentication strategy used, so as user demo is using JSON-based authentication with the ID <code class="highlighter-rouge">fileauth</code> we have this new directory.</p>
 
 <p>Let’s see what is inside:</p>
 
-<pre><code>root@522d58cc3217:/# ls -l /home/clawiod/data/notmp/fileauth/
+<div class="highlighter-rouge"><pre class="highlight"><code>root@522d58cc3217:/# ls -l /home/clawiod/data/notmp/fileauth/
 total 4
 drw-r--r-- 2 clawiod clawiod 4096 Sep 12 10:46 demo
 </code></pre>
+</div>
 
 <p>Cool! We have the user home directory created for the user demo.</p>
 
@@ -129,7 +134,7 @@ drw-r--r-- 2 clawiod clawiod 4096 Sep 12 10:46 demo
 
 <p>We are going to create two directories:</p>
 
-<pre><code>root@522d58cc3217:/# curl -iX POST localhost:57008/api/v1/storage/createcontainer/local/photos
+<div class="highlighter-rouge"><pre class="highlight"><code>root@522d58cc3217:/# curl -iX POST localhost:57008/api/v1/storage/createcontainer/local/photos
 HTTP/1.1 401 Unauthorized
 Content-Type: text/plain; charset=utf-8
 X-Content-Type-Options: nosniff
@@ -138,6 +143,7 @@ Content-Length: 13
 
 Unauthorized
 </code></pre>
+</div>
 
 <p>We are receiving a 401 Unauthorized response. This is okay because we didn’t provide any credentails.</p>
 
@@ -147,9 +153,10 @@ Unauthorized
   <li>
     <p>Basic Auth: we provided the credentails using the HTTP Basic Auth mechanism.</p>
 
-    <pre><code>  @7f8557a69682:/# curl -X POST localhost:57008/storage/createcontainer/local/photos -u demo:demo
+    <div class="highlighter-rouge"><pre class="highlight"><code>  @7f8557a69682:/# curl -X POST localhost:57008/storage/createcontainer/local/photos -u demo:demo
   {"id":"local/photos","path":"local/photos","size":4096,"iscontainer":true,"mimetype":"inode/container","checksum":"","checksumtype":"","modified":1442060591,"etag":"\"1442060591\"","permissions":{"stat":true,"list":true,"add":true,"get":true,"remove":true,"link":false,"share":false,"federatedshare":false},"children":null,"extra":null}
 </code></pre>
+    </div>
   </li>
   <li>
     <p>Auth Token is HTTP Header:</p>

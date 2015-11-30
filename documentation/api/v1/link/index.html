@@ -29,9 +29,9 @@
         </a>
 
         <nav class="masthead-nav">
-          <a  href="/manifesto">Manifesto</a>
-          <a  href="/documentation/">Documentation</a>
-          <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
+            <!--a  href="/manifesto">Manifesto</a>-->
+          <a  href="https://www.gitbook.com/book/clawio/clawio/details">Documentation</a>
+          <a href="https://github.com/clawio" target="_blank">GitHub</a>
         </nav>
       </div>
     </header>
@@ -184,28 +184,28 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>stat</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">stat</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grants getting metadata from a resource.</td>
     </tr>
     <tr>
-      <td><code>list</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">list</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grant listing resources inside a container.</td>
     </tr>
     <tr>
-      <td><code>add</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">add</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grants adding resources to the container.</td>
     </tr>
     <tr>
-      <td><code>get</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">get</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grants downloading an object.</td>
     </tr>
     <tr>
-      <td><code>remove</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">remove</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grants removing resources from the container.</td>
     </tr>
   </tbody>
@@ -215,7 +215,7 @@
 
 <ol>
   <li>
-    <p><strong>Object link</strong>: When the link points to an object the only link permissions that apply are : <code>stat</code>, <code>get</code> and <code>remove</code>.</p>
+    <p><strong>Object link</strong>: When the link points to an object the only link permissions that apply are : <code class="highlighter-rouge">stat</code>, <code class="highlighter-rouge">get</code> and <code class="highlighter-rouge">remove</code>.</p>
   </li>
   <li>
     <p><strong>Container link</strong>: When the link points to a container all the permissions applies, following these rules:</p>
@@ -225,34 +225,34 @@
 <table>
   <tbody>
     <tr>
-      <td><code>stat</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">stat</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grants getting metadata from the container and ALL resources inside.</td>
     </tr>
     <tr>
-      <td><code>list</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">list</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grant listing resources inside a container and ALL sub-containers.</td>
     </tr>
     <tr>
-      <td><code>add</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">add</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grants adding resources to the container and in ALL sub-containers.</td>
     </tr>
     <tr>
-      <td><code>get</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">get</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grants downloading objects inside the container and in ALL sub-containers.</td>
     </tr>
     <tr>
-      <td><code>remove</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">remove</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Grants removing resources from the container and in ALL sub-containers.</td>
     </tr>
   </tbody>
 </table>
 
-<p><strong>Besides the link permissions, the last word is dictated by the storage permissions. For example, if you set <code>add</code> permission to a container in the link permission model but the storage permission model forbids this permission, then you cannot <code>add</code></strong>.</p>
+<p><strong>Besides the link permissions, the last word is dictated by the storage permissions. For example, if you set <code class="highlighter-rouge">add</code> permission to a container in the link permission model but the storage permission model forbids this permission, then you cannot <code class="highlighter-rouge">add</code></strong>.</p>
 
 <h2 id="link-metadata">Link Metadata</h2>
 <p>The <strong>Link Metadata</strong> model is an extension of the <a href="/documentation/api/v1/storage/#metadata">Storage Metadata</a>:</p>
@@ -267,83 +267,84 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>checksum</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">checksum</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The checksum of the resource.</td>
     </tr>
     <tr>
-      <td><code>checksum_type</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">checksum_type</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The type of checksum used for the checksum.</td>
     </tr>
     <tr>
-      <td><code>children</code></td>
-      <td><code>array</code></td>
+      <td><code class="highlighter-rouge">children</code></td>
+      <td><code class="highlighter-rouge">array</code></td>
       <td>An array containing <a href="#link-metadata">link metadata</a> about the resources inside a container.</td>
     </tr>
     <tr>
-      <td><code>etag</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">etag</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The ETag of the resource</td>
     </tr>
     <tr>
-      <td><code>extra</code></td>
-      <td><code>any</code></td>
+      <td><code class="highlighter-rouge">extra</code></td>
+      <td><code class="highlighter-rouge">any</code></td>
       <td>Custom information returned by the storage. It can be any JSON type.</td>
     </tr>
     <tr>
-      <td><code>id</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">id</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The Resource URI in ID format.</td>
     </tr>
     <tr>
-      <td><code>is_container</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">is_container</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>Indicates if the resource is a container.</td>
     </tr>
     <tr>
-      <td><code>mimetype</code></td>
-      <td><code>string</code></td>
-      <td>The mimetype of the resource. Containers MUST return <code>inode/directory</code>.</td>
+      <td><code class="highlighter-rouge">mimetype</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
+      <td>The mimetype of the resource. Containers MUST return <code class="highlighter-rouge">inode/directory</code>.</td>
     </tr>
     <tr>
-      <td><code>modified</code></td>
-      <td><code>number</code></td>
+      <td><code class="highlighter-rouge">modified</code></td>
+      <td><code class="highlighter-rouge">number</code></td>
       <td>The modification time of the resource in UTC Unix time.</td>
     </tr>
     <tr>
-      <td><code>path</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">path</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The Resource URI in Path format.</td>
     </tr>
     <tr>
-      <td><code>permissions</code></td>
-      <td><code>object</code></td>
+      <td><code class="highlighter-rouge">permissions</code></td>
+      <td><code class="highlighter-rouge">object</code></td>
       <td>The <a href="/documentation/api/v1/storage/#permission">permissions</a> for the resource.</td>
     </tr>
     <tr>
-      <td><code>size</code></td>
-      <td><code>number</code></td>
+      <td><code class="highlighter-rouge">size</code></td>
+      <td><code class="highlighter-rouge">number</code></td>
       <td>The size of the resource.</td>
     </tr>
     <tr>
-      <td><code>opaque_path</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">opaque_path</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>An opaque path to access sub-resources.</td>
     </tr>
   </tbody>
 </table>
 
-<p>When getting link metadata, the <code>id</code> and <code>path</code> fields SHOULD be blanked to avoid disclosure of information.</p>
+<p>When getting link metadata, the <code class="highlighter-rouge">id</code> and <code class="highlighter-rouge">path</code> fields SHOULD be blanked to avoid disclosure of information.</p>
 
-<p>The <code>opaque_path</code> is the path that end users MUST use to do storage-alike operations. The <code>opquep_ath</code> structure is : <code>&lt;token&gt;/[path]</code>.</p>
+<p>The <code class="highlighter-rouge">opaque_path</code> is the path that end users MUST use to do storage-alike operations. The <code class="highlighter-rouge">opquep_ath</code> structure is : <code class="highlighter-rouge">&lt;token&gt;/[path]</code>.</p>
 
 <h1 id="create-a-link">Create a link</h1>
 
 <p>The token that identifies the link MUST be <strong>unique</strong> across all the links in the system. The link SHOULD change if it is regenerated (create-delete-create).</p>
 
-<pre><code>POST /link/create
+<div class="highlighter-rouge"><pre class="highlight"><code>POST /link/create
 </code></pre>
+</div>
 
 <h2 id="body-parameters">Body parameters</h2>
 
@@ -357,23 +358,23 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>resource_uri</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">resource_uri</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The Resource URI of the resource.</td>
     </tr>
     <tr>
-      <td><code>password</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">password</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>A password to protect the link.</td>
     </tr>
     <tr>
-      <td><code>expiration</code></td>
-      <td><code>number</code></td>
+      <td><code class="highlighter-rouge">expiration</code></td>
+      <td><code class="highlighter-rouge">number</code></td>
       <td>A expiration date in UTC Unix time for the resource.</td>
     </tr>
     <tr>
-      <td><code>permissions</code></td>
-      <td><code>object</code></td>
+      <td><code class="highlighter-rouge">permissions</code></td>
+      <td><code class="highlighter-rouge">object</code></td>
       <td>The <a href="#link-permission">permissions</a> for the link.</td>
     </tr>
   </tbody>
@@ -381,12 +382,13 @@
 
 <h2 id="response">Response</h2>
 
-<pre><code>Status: 201 Created
+<div class="highlighter-rouge"><pre class="highlight"><code>Status: 201 Created
 
 {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
 }
 </code></pre>
+</div>
 
 <h1 id="update-a-link">Update a link</h1>
 
@@ -394,8 +396,9 @@
 
 <p><strong>The link token after an update MUST remain the same</strong></p>
 
-<pre><code>PUT /link/update/:token
+<div class="highlighter-rouge"><pre class="highlight"><code>PUT /link/update/:token
 </code></pre>
+</div>
 
 <h2 id="path-parameters">Path parameters</h2>
 
@@ -409,8 +412,8 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>token</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">token</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The link token.</td>
     </tr>
   </tbody>
@@ -428,18 +431,18 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>password</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">password</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>A password to protect the link.</td>
     </tr>
     <tr>
-      <td><code>expiration</code></td>
-      <td><code>number</code></td>
+      <td><code class="highlighter-rouge">expiration</code></td>
+      <td><code class="highlighter-rouge">number</code></td>
       <td>A expiration date in UTC Unix time for the resource.</td>
     </tr>
     <tr>
-      <td><code>permissions</code></td>
-      <td><code>object(LinkPermission)</code></td>
+      <td><code class="highlighter-rouge">permissions</code></td>
+      <td><code class="highlighter-rouge">object(LinkPermission)</code></td>
       <td>The permissions for the link.</td>
     </tr>
   </tbody>
@@ -447,15 +450,17 @@
 
 <h2 id="response-1">Response</h2>
 
-<pre><code>Status: 200 OK
+<div class="highlighter-rouge"><pre class="highlight"><code>Status: 200 OK
 </code></pre>
+</div>
 
 <h1 id="delete-a-link">Delete a link</h1>
 
 <p>Just the owner of the link has the right to delete it.</p>
 
-<pre><code>DELETE /link/delete/:token
+<div class="highlighter-rouge"><pre class="highlight"><code>DELETE /link/delete/:token
 </code></pre>
+</div>
 
 <h2 id="path-parameters-1">Path parameters</h2>
 
@@ -469,8 +474,8 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>token</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">token</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The link token.</td>
     </tr>
   </tbody>
@@ -478,13 +483,15 @@
 
 <h2 id="response-2">Response</h2>
 
-<pre><code>Status: 204 No Content
+<div class="highlighter-rouge"><pre class="highlight"><code>Status: 204 No Content
 </code></pre>
+</div>
 
 <h1 id="get-the-metadata-of-a-resource-using-the-link">Get the metadata of a resource using the link</h1>
 
-<pre><code>GET /link/stat/:token/[:path][?children=boolean]
+<div class="highlighter-rouge"><pre class="highlight"><code>GET /link/stat/:token/[:path][?children=boolean]
 </code></pre>
+</div>
 
 <h2 id="path-parameters-2">Path parameters</h2>
 
@@ -498,13 +505,13 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>token</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">token</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The link token.</td>
     </tr>
     <tr>
-      <td><code>path</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">path</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The path for reaching sub-resources.</td>
     </tr>
   </tbody>
@@ -522,8 +529,8 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>children</code></td>
-      <td><code>boolean</code></td>
+      <td><code class="highlighter-rouge">children</code></td>
+      <td><code class="highlighter-rouge">boolean</code></td>
       <td>If the resource is a container, ask for the resources inside.</td>
     </tr>
   </tbody>
@@ -531,7 +538,7 @@
 
 <h2 id="response-3">Response</h2>
 
-<pre><code>GET /link/stat/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ/
+<div class="highlighter-rouge"><pre class="highlight"><code>GET /link/stat/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ/
 
 Status: 200 OK
 
@@ -558,10 +565,11 @@ Status: 200 OK
     "opaque_path": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ",
 }
 </code></pre>
+</div>
 
 <p><em>Stating a link pointing to a container</em></p>
 
-<pre><code>GET /link/stat/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ/photos
+<div class="highlighter-rouge"><pre class="highlight"><code>GET /link/stat/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ/photos
 Status: 200 OK
 
 {
@@ -587,11 +595,13 @@ Status: 200 OK
     "opaque_path": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ/photos",
 }
 </code></pre>
+</div>
 
 <h1 id="remove-a-resource-using-the-link">Remove a resource using the link</h1>
 
-<pre><code>DELETE /link/rm/:token/[:path]
+<div class="highlighter-rouge"><pre class="highlight"><code>DELETE /link/rm/:token/[:path]
 </code></pre>
+</div>
 
 <h2 id="path-parameters-3">Path parameters</h2>
 
@@ -605,13 +615,13 @@ Status: 200 OK
   </thead>
   <tbody>
     <tr>
-      <td><code>token</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">token</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The link token.</td>
     </tr>
     <tr>
-      <td><code>path</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">path</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The path for reaching sub-resources.</td>
     </tr>
   </tbody>
@@ -619,13 +629,15 @@ Status: 200 OK
 
 <h2 id="response-4">Response</h2>
 
-<pre><code>Status: 204 No Content
+<div class="highlighter-rouge"><pre class="highlight"><code>Status: 204 No Content
 </code></pre>
+</div>
 
 <h1 id="upload-an-object-using-the-link">Upload an object using the link</h1>
 
-<pre><code>PUT /link/put/:token/[:path][?checksuminfo]
+<div class="highlighter-rouge"><pre class="highlight"><code>PUT /link/put/:token/[:path][?checksuminfo]
 </code></pre>
+</div>
 
 <h2 id="path-parameters-4">Path parameters</h2>
 
@@ -639,13 +651,13 @@ Status: 200 OK
   </thead>
   <tbody>
     <tr>
-      <td><code>token</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">token</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The link token.</td>
     </tr>
     <tr>
-      <td><code>path</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">path</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The path for reaching sub-resources.</td>
     </tr>
   </tbody>
@@ -664,9 +676,9 @@ Status: 200 OK
   </thead>
   <tbody>
     <tr>
-      <td><code>cheksum</code></td>
-      <td><code>string</code></td>
-      <td>The checksum type and checksum in the format: <code>&lt;checksum_type&gt;:&lt;checksum&gt;</code></td>
+      <td><code class="highlighter-rouge">cheksum</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
+      <td>The checksum type and checksum in the format: <code class="highlighter-rouge">&lt;checksum_type&gt;:&lt;checksum&gt;</code></td>
       <td>md5:138019839208309</td>
     </tr>
   </tbody>
@@ -685,9 +697,9 @@ Status: 200 OK
   </thead>
   <tbody>
     <tr>
-      <td><code>X-Claw-Checksum</code></td>
-      <td><code>string</code></td>
-      <td>The checksum type and checksum in the format: <code>&lt;checksum_type&gt;:&lt;checksum&gt;</code></td>
+      <td><code class="highlighter-rouge">X-Claw-Checksum</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
+      <td>The checksum type and checksum in the format: <code class="highlighter-rouge">&lt;checksum_type&gt;:&lt;checksum&gt;</code></td>
       <td>md5:138019839208309</td>
     </tr>
   </tbody>
@@ -698,17 +710,20 @@ Status: 200 OK
 
 <h2 id="response-5">Response</h2>
 
-<pre><code>Status: 201 Created
+<div class="highlighter-rouge"><pre class="highlight"><code>Status: 201 Created
 </code></pre>
+</div>
 
 <h2 id="example">Example</h2>
-<pre><code>curl https://yourdomain.com/api/v1/link/put/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ/photos/bunny.png?checksum=md5:d6df47d400edf3f738b3015378f6ea53 --data-binary @/etc/passwd
+<div class="highlighter-rouge"><pre class="highlight"><code>curl https://yourdomain.com/api/v1/link/put/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ/photos/bunny.png?checksum=md5:d6df47d400edf3f738b3015378f6ea53 --data-binary @/etc/passwd
 </code></pre>
+</div>
 
 <h1 id="download-an-object-using-the-link">Download an object using the link</h1>
 
-<pre><code>GET /link/get/:token/[:path]
+<div class="highlighter-rouge"><pre class="highlight"><code>GET /link/get/:token/[:path]
 </code></pre>
+</div>
 
 <h2 id="path-parameters-5">Path parameters</h2>
 
@@ -722,13 +737,13 @@ Status: 200 OK
   </thead>
   <tbody>
     <tr>
-      <td><code>token</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">token</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The link token.</td>
     </tr>
     <tr>
-      <td><code>path</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">path</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The path for reaching sub-resources.</td>
     </tr>
   </tbody>
@@ -736,16 +751,18 @@ Status: 200 OK
 
 <h2 id="response-6">Response</h2>
 
-<pre><code>Status: 200 OK
+<div class="highlighter-rouge"><pre class="highlight"><code>Status: 200 OK
 X-Claw-Checksum: md5:138019839208309
 
 Binary data ...
 </code></pre>
+</div>
 
 <h1 id="create-a-container-using-the-link">Create a container using the link</h1>
 
-<pre><code>POST /link/createcontainer/:token/[:path]
+<div class="highlighter-rouge"><pre class="highlight"><code>POST /link/createcontainer/:token/[:path]
 </code></pre>
+</div>
 
 <h2 id="path-parameters-6">Path parameters</h2>
 
@@ -759,13 +776,13 @@ Binary data ...
   </thead>
   <tbody>
     <tr>
-      <td><code>token</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">token</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The link token.</td>
     </tr>
     <tr>
-      <td><code>path</code></td>
-      <td><code>string</code></td>
+      <td><code class="highlighter-rouge">path</code></td>
+      <td><code class="highlighter-rouge">string</code></td>
       <td>The path for reaching sub-resources.</td>
     </tr>
   </tbody>
@@ -773,8 +790,9 @@ Binary data ...
 
 <h2 id="response-7">Response</h2>
 
-<pre><code>Status: 201 Created
+<div class="highlighter-rouge"><pre class="highlight"><code>Status: 201 Created
 </code></pre>
+</div>
 
     </div>
   </div>

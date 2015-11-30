@@ -29,9 +29,9 @@
         </a>
 
         <nav class="masthead-nav">
-          <a  href="/manifesto">Manifesto</a>
-          <a  href="/documentation/">Documentation</a>
-          <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
+            <!--a  href="/manifesto">Manifesto</a>-->
+          <a  href="https://www.gitbook.com/book/clawio/clawio/details">Documentation</a>
+          <a href="https://github.com/clawio" target="_blank">GitHub</a>
         </nav>
       </div>
     </header>
@@ -117,11 +117,11 @@
 
 <p>To connect to the WebDAV API the client must connect to the following URL:</p>
 
-<p><code>http://yourdomain.com/api/v1/webdav/:storagepath</code></p>
+<p><code class="highlighter-rouge">http://yourdomain.com/api/v1/webdav/:storagepath</code></p>
 
-<p>Where <code>:storagepath</code> is one of the storages defined.</p>
+<p>Where <code class="highlighter-rouge">:storagepath</code> is one of the storages defined.</p>
 
-<p>Example: <code>http://yourdomain.com/api/v1/webdav/local</code></p>
+<p>Example: <code class="highlighter-rouge">http://yourdomain.com/api/v1/webdav/local</code></p>
 
 <p>Once you have submitted you authentication credentials you can start submitting your WebDAV requests.</p>
 
@@ -136,7 +136,7 @@
 
 <p>Example using curl:</p>
 
-<pre><code>curl -X PROPFIND http://localhost:57008/api/v1/webdav/local -H "Depth: 1" -u demo:demo
+<div class="highlighter-rouge"><pre class="highlight"><code>curl -X PROPFIND http://localhost:57008/api/v1/webdav/local -H "Depth: 1" -u demo:demo
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;d:multistatus xmlns:d="DAV:"&gt;
     &lt;d:response&gt;
@@ -183,6 +183,7 @@
     &lt;/d:response&gt;
 &lt;/d:multistatus&gt;
 </code></pre>
+</div>
 
     </div>
   </div>

@@ -29,9 +29,9 @@
         </a>
 
         <nav class="masthead-nav">
-          <a  href="/manifesto">Manifesto</a>
-          <a  href="/documentation/">Documentation</a>
-          <a href="https://github.com/clawio/clawio" target="_blank">GitHub</a>
+            <!--a  href="/manifesto">Manifesto</a>-->
+          <a  href="https://www.gitbook.com/book/clawio/clawio/details">Documentation</a>
+          <a href="https://github.com/clawio" target="_blank">GitHub</a>
         </nav>
       </div>
     </header>
@@ -41,14 +41,12 @@
         <div class="container">
           <div class="columns">
             <div class="one-half left">
-              <p>The Scalable Sync and Share Server</p>
-              <p style="color:yellow">In R&D phase</p>
-              <a href="/manifesto" class="btn btn-reverse">
-                Read the manifesto
+              <p>Cloud Synchronisation Benchmarking Framework</p>
+              <a href="https://clawio.gitbooks.io/clawio/content/getting/index.html" class="btn btn-reverse">
+                Getting started
               </a>
             </div>
-            <div class="one-half right">
-              <p class="lead" style="color:yellow">“We don't believe in companies, we believe in protocols. Companies appear and disappear but protocols always remain”</p>
+              <p class="lead" style="color:yellow">“ClawIO benchmarks cloud synchronisation protocols in order to help organisations to choose the right data backend”</p>
             </div>
           </div>
        </div>
@@ -57,20 +55,20 @@
       <div class="container about-that">
         <div class="columns">
           <div class="one-fourth column">
-            <h2>Based on CERNBox</h2>
-            <p>CERNBox project at CERN settled the design bases for scalable sync and share servers. ClawIO has been built from scratch based on its solid principles.</p>
+            <h2>Composable</h2>
+            <p>ClawIO follows the micro service design and every component is encapsulated into a single logical unit. Every component is described in a Dockerfile and follows the 12 Factor App principles for coniguration</p>
           </div>
             <div class="one-fourth column">
-            <h2>Trust in open protocols</h2>
-            <p>ClawIO is not just a set of specifications. It will be reference implementation of open standards like <a href="https://owncloud.com/lp/opencloudmesh/">OpenCloudMesh</a> and a future Open Sync Protocol.</p>
+                <h2>Universal</h2>
+                <p>ClawIO is built on top of two universal technologies: HTTP and gRPC. HTTP is used for binary data handling and gRPC for inter component communication trough Protocol buffers.</p>
           </div>
           <div class="one-fourth column">
-            <h2>Implemented in Go!</h2>
-            <p>PHP does not offer advanced features related to concurrency and paralelism. ClawIO is being developed with Go to achieve incredible performance.</p>
+              <h2>Language agnostic</h2>
+              <p>Are you a Gopher? Do you like PHP ? Node ? Rust? Haskell? Perl?  You can extend the logical components of ClawIO as long as your language has libraries for creating HTTP and gRPC connections.</p>
           </div>
           <div class="one-fourth column">
-            <h2>Open source</h2>
-            <p>Available for use under the AGPLv3 license and built with open source tools.</p>
+              <h2>Powerful Design</h2>
+              <p>ClawIO has been designed with scalability in mind. It design is based on EOS and CERNBox, the components that power sync and sharing of the LHC data .</p>
           </div>
         </div>
       </div>
